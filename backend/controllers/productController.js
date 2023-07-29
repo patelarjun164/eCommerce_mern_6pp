@@ -4,79 +4,93 @@ const ErrorHandler = require('../utils/errorHandler');
 
 //Create Product -- Admin
 exports.createProduct = async (req, res, next) => {
-    const product = await Product.create(req.body);
 
-    res.status(201).json({
-        success: true,
-        product,
-    })
-}
+    try {
+        const product = await Product.create(req.body);
+
+        res.status(201).json({
+            success: true,
+            product,
+        })
+    } catch (error) {
+        next(error);
+    }
+};
 
 //Get all products
 exports.getAllProducts = async (req, res) => {
-    const products = await Product.find();
-
-    res.status(200).json({
-        success: true,
-        products,
-    });
+    
+    try {
+        const products = await Product.find();
+    
+        res.status(200).json({
+            success: true,
+            products,
+        })
+    } catch (error) {
+        next(error);
+    }
 }
+
 
 //Get Product Deatils
 exports.getProductDetails = async (req, res, next) => {
-
-    const product = await Product.findById(req.params.id);
-
-    if (!product) {
-        console.log("ErrP");
-       //return (next(new ErrorHandler("product Not found",404)));
-         const error = new ErrorHandler("Product Not Found", 404);
-         return next(error);
+    try {
+        const product = await Product.findById(req.params.id);
+    
+        if (!product) {
+            return (next(new ErrorHandler("product Not found", 404)));
+        }
+    
+        res.status(200).json({
+            success: true,
+            product,
+        })
+    } catch (error) {
+        next(error);
     }
-
-    res.status(200).json({
-        success: true,
-        product,
-    })
 }
 
 //Update product details -- Admin
 exports.updateProduct = async (req, res, next) => {
-    let product = await Product.findById(req.params.id);
-
-    if (!product) {
-        return res.status(500).json({
-            success: false,
-            message: "Product not found"
+    try {
+        let product = await Product.findById(req.params.id);
+    
+        if (!product) {
+            return (next(new ErrorHandler("product Not found", 404)));
+        }
+    
+        product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+            new: true,
+            runValidators: true,
+            useFindAndModify: false
+        });
+    
+        res.status(200).json({
+            success: true,
+            product,
         })
+    } catch (error) {
+        next(error);
     }
-
-    product = await Product.findByIdAndUpdate(req.params.id, req.body, {
-        new: true,
-        runValidators: true,
-        useFindAndModify: false
-    });
-
-    res.status(200).json({
-        success: true,
-        product,
-    })
 }
 
 //Delete a product -- Admin
 exports.deleteProduct = async (req, res, next) => {
-    let product = await Product.findById(req.params.id);
 
-    if (!product) {
-        return res.status(500).json({
-            success: false,
-            message: "Product not found"
+    try {
+        let product = await Product.findById(req.params.id);
+    
+        if (!product) {
+            return (next(new ErrorHandler("product Not found", 404)));
+        }
+    
+        await product.deleteOne();
+        res.status(200).json({
+            success: true,
+            message: `Product with the id ${req.params.id} has been deleted...!`,
         })
+    } catch (error) {
+        next(error);
     }
-
-    await product.deleteOne();
-    res.status(200).json({
-        success: true,
-        message: `Product with the id ${req.params.id} has been deleted...!`,
-    })
 }

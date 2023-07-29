@@ -7,11 +7,10 @@ app.use(express.json());
 //Routes import
 const product = require('./routes/productRoute');
 
+app.use("/api/v1",product);
 
 //Middleware for errors
 app.use(errorMiddleware);
 
-
-app.use("/api/v1",product);
 
 module.exports = app;
