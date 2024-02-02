@@ -22,7 +22,9 @@ exports.createProduct = async (req, res, next) => {
 exports.getAllProducts = async (req, res) => {
     
     try {
-        const apiFeature = new ApiFeatures(Product.find(), req.query).search();
+        const apiFeature = new ApiFeatures(Product.find(), req.query)
+        .search()
+        .filter();
         const products = await apiFeature.query;
         // const products = await Product.find();
     
