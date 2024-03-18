@@ -31,6 +31,7 @@ exports.getAllProducts = tryCatchWrapper(async (req, res, next) => {
     res.status(200).json({
         success: true,
         products,
+        productCount,
     })
 });
 
@@ -47,7 +48,6 @@ exports.getProductDetails = tryCatchWrapper(async (req, res, next) => {
     res.status(200).json({
         success: true,
         product,
-        productCount,
     })
 
 });
@@ -85,6 +85,6 @@ exports.deleteProduct = tryCatchWrapper(async (req, res, next) => {
     await product.deleteOne();
     res.status(200).json({
         success: true,
-        message: `Product with the id ${req.params.id} has been deleted...!`,
+        message: `Product with the name ${product.name} and id ${req.params.id} has been deleted...!`,
     })
 });
