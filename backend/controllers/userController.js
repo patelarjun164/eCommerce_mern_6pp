@@ -59,5 +59,4 @@ exports.loginUser = tryCatchWrapper(async (req, res, next) => {
     //     success: true,
     //     token,
     // })
-
-})
+});
