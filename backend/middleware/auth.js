@@ -14,7 +14,7 @@ exports.isAuthenticatedUser = tryCatchWrapper(async (req, res, next) => {
     console.log(decodedData);
 
     req.user = await User.findById(decodedData.id);
-    console.log(req.user);
+    // console.log(req.user);
     next();
 });
 

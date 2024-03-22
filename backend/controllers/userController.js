@@ -148,3 +148,62 @@ exports.resetPassword = tryCatchWrapper(async (req, res, next) => {
 
     sendToken(user, 200, res);
 });
+
+//Get User Details
+exports.getUserDetails = tryCatchWrapper(async (req, res, next) => {
+
+    const user = await User.findById(req.user.id);
+
+    res.status(200).json({
+        success: true,
+        user,
+    });
+})
+
+//Update user password
+exports.updatePassword = tryCatchWrapper(async (req, res, next) => {
+
+    const user = await User.findById(req.user.id).select("+password");
+
+    const isPasswordMatched = await user.comparePassword(req.body.oldPassword);
+
+    if (!isPasswordMatched) {
+        return next(new ErrorHandler("Old Password is incorrect",400));
+    }
+
+    if(req.body.newPassword != req.body.confirmPassword) {
+        return next(new ErrorHandler("Passwords do NOT match",400));
+    }
+
+    user.password = req.body.newPassword;
+
+    await user.save();
+
+    sendToken(user, 200, res);
+
+    res.status(200).json({
+        success: true,
+        user,
+    });
+})
+
+//Update User Profile
+exports.updateProfile = tryCatchWrapper(async (req, res, next) => {
+
+    const newUserData = {
+        name: req.body.name,
+        email: req.body.email,
+    }
+
+    //Avater image and id pending
+
+    const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
+        new: true,
+        runValidators: true,
+        userFindAndModify: false,
+    });
+
+    res.status(200).json({
+        success: true,
+    });
+})
