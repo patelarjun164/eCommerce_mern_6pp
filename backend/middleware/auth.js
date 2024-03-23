@@ -20,7 +20,7 @@ exports.isAuthenticatedUser = tryCatchWrapper(async (req, res, next) => {
 
 exports.authorizedRoles = (...roles) => {
     return (req, res, next) => {
-        console.log(req.user);
+        // console.log(req.user);
         if (!roles.includes(req.user.role)) {
             return next(
                 new ErrorHandler(
