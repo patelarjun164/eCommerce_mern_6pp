@@ -1,13 +1,14 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react';
 import { CgMouse } from 'react-icons/cg';
-import Product from './Product.js';
+import ProductCard from './ProductCard.js';
 import './Home.css';
 import MetaData from '../layout/MetaData.js';
-import { getProduct } from '../../actions/productAction.js';
+import { clearErrors, getProduct } from '../../actions/productAction.js';
 // eslint-disable-next-line no-unused-vars
 import { useSelector, useDispatch } from 'react-redux';
 import Loader from '../layout/Loader/Loader.jsx';
+import { useAlert } from 'react-alert';
 
 const product = {
     _id: "Arjun",
@@ -19,6 +20,7 @@ const product = {
 };
 
 const Home = () => {
+    const alert = useAlert();
     const dispatch = useDispatch();
 
     const { loading, error, products, productsCount } = useSelector(
@@ -26,8 +28,14 @@ const Home = () => {
     );
 
     useEffect(() => {
+
+        if(error){
+            alert.error(error);
+            dispatch(clearErrors());
+          }
+
         dispatch(getProduct());
-    }, [dispatch])
+    }, [alert, dispatch, error])
 
     return (
         <>
@@ -37,7 +45,7 @@ const Home = () => {
                 <>
                     <MetaData title="ECommerce" />
                     <div className="banner">
-                        <p>Welocme to E-commerce</p>
+                        <p>Welcome to E-commerce</p>
                         <h1>FIND AMAZING PRODUCTS BELOW</h1>
 
                         <a href="#container">
@@ -52,7 +60,7 @@ const Home = () => {
                     <div className="container" id="container">
                         {products && products.map(product => {
                             return (
-                                <Product product={product} />
+                                <ProductCard product={product} />
                             );
                         })}
                     </div>

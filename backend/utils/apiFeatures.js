@@ -5,12 +5,12 @@ class ApiFeatures {
     }
 
     search() {
-        const keyword = this.queryStr.keyword ? {
+        const keyword = this.queryStr.keyword && {
             name: {
                 $regex: this.queryStr.keyword,
                 $options: "i"
             },
-        } : {};
+        };
 
         // console.log(keyword);
         
@@ -27,14 +27,14 @@ class ApiFeatures {
         removeFields.forEach((key)=> delete queryCopy[key]);
         
         //Filter for Price and Rating
-        console.log(queryCopy);
+        // console.log(queryCopy);
 
         let queryStr = JSON.stringify(queryCopy);
-        console.log(queryStr);
+        // console.log(queryStr);
         queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g, (key) => `$${key}`);
         this.query = this.query.find(JSON.parse(queryStr));
 
-        console.log(queryStr);
+        // console.log(queryStr);
         return this;
     }
 

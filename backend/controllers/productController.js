@@ -19,20 +19,29 @@ exports.createProduct = tryCatchWrapper(async (req, res, next) => {
 //Get all products
 exports.getAllProducts = tryCatchWrapper(async (req, res, next) => {
 
-    const resultPerPage = 8;
-    const productCount = await Product.countDocuments();
+    const resultPerPage = 3;
+    const productsCount = await Product.countDocuments();
 
     const apiFeature = new ApiFeatures(Product.find(), req.query)
         .search()
         .filter()
-        .pagination(resultPerPage);
-    const products = await apiFeature.query;
-    // const products = await Product.find();
+
+
+    // By calling .clone(), you create a copy of the original query object before applying pagination. This allows you to independently get the filtered count and then the paginated results.
+    let products = await apiFeature.query.clone();
+
+    let filteredProductsCount = products.length;
+
+    apiFeature.pagination(resultPerPage);
+
+    products = await apiFeature.query;
 
     res.status(200).json({
         success: true,
         products,
-        productCount,
+        productsCount,
+        resultPerPage,
+        filteredProductsCount,
     })
 });
 
