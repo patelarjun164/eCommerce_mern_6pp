@@ -260,11 +260,12 @@
   }
 
   .detailsBlock-4 {
-    font: 500 2.5vmax sans-serif;
+    font: 500 2vmax sans-serif;
+    margin: 1.5vmax 4.5vmax;
   }
 
   .detailsBlock-4 > p {
-    font: 300 1.8vmax sans-serif;
+    font: 300 1.5vmax sans-serif;
   }
 
   .submitReview {
@@ -274,10 +275,13 @@
     margin: 3vmax 0;
   }
 
+  
   .reviewCard > p {
-    font: 600 3vw "Roboto";
+    font: 600 5vw "Roboto";
   }
   .reviewCardComment {
-    font: 300 5vw cursive;
+    font: 300 4vw cursive;
   }
+
+  
 }

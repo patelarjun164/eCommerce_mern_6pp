@@ -13,6 +13,14 @@
   flex-wrap: wrap;
   padding: 0 5vmax;
   justify-content: center;
+  min-height: 30vh;
+}
+
+.na {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 40vh;
 }
 
 .paginationBox {
@@ -72,10 +80,6 @@
   top: 10vmax;
 }
 
-.slider {
-  margin: 2.5vmax 0;
-}
-
 .categoryBox {
   padding: 0%;
 }
@@ -93,6 +97,11 @@
   color: tomato;
 }
 
+.filterBox > fieldset {
+  border: 1px solid rgba(0, 0, 0, 0.363);
+  margin-top: 0.5vmax;
+}
+
 @media screen and (max-width: 600px) {
   .filterBox {
     width: 20vmax;
@@ -102,5 +111,15 @@
 
   .page-link {
     font: 300 1.7vmax "Roboto";
+  }
+
+  .category-link {
+    font: 400 1.8vmax "Roboto";
+  }
+
+  .filterBox > fieldset {
+    margin-top: 2vmax;
+    font: 300 1vmax "Roboto";
+    border: 1px solid rgba(0, 0, 0, 0.363);
   }
 }
