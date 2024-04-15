@@ -1,5 +1,5 @@
 .banner {
-  background-image: url("../../images/cover.jfif");
+  background-image: url("../../images/cover_AI.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -9,7 +9,7 @@
   text-align: center;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: rgb(0, 0, 0);
 }
 
 .banner > h1 {
@@ -25,8 +25,9 @@
 .banner > a > button {
   margin-bottom: 5vmax;
   cursor: pointer;
-  background-color: white;
-  border: 1px solid white;
+  color: #ffffff;
+  background-color: black;
+  border: 1px solid black;
   border-radius: 0;
   padding: 1vmax;
   transition: all 0.5s;
@@ -35,18 +36,18 @@
 }
 .banner > a > button:hover {
   background-color: rgba(255, 255, 255, 0);
-  color: white;
+  color: black;
 }
 
 .banner::after {
-  content: "";
+  /* content: ""; */
   width: 100vw;
   height: 100vmin;
   background-color: #ffffff;
-  position: absolute;
+  /* position: absolute; */
   top: 0%;
   left: 0;
-  clip-path: polygon(100% 68%, 0 100%, 100% 100%);
+  /* clip-path: polygon(100% 68%, 0 100%, 100% 100%); */
   max-width: 100%;
 }
 
@@ -118,6 +119,10 @@
 }
 
 @media screen and (max-width: 600px) {
+  .banner > p {
+    font: 500 2vmax "Lucida Sans";
+  }
+
   .productCard > p {
     font-size: 1.7vmax;
   }

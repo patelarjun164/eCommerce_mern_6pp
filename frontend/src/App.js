@@ -8,6 +8,7 @@ import Home from './component/Home/Home.js';
 import ProductDetails from './component/Product/ProductDetails.js';
 import Products from './component/Product/Products.jsx';
 import Search from './component/Product/Search.jsx';
+import LoginSignUp from './component/User/LoginSignUp.jsx';
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
         <Route extact path='/products' Component={Products} />
         <Route path='/products/:keyword' Component={Products} />
         <Route extact path='/search' Component={Search} />
+        <Route extact path='/login' Component={LoginSignUp} />
       </Routes>
       <Footer />
     </Router>

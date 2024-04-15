@@ -6,7 +6,6 @@ import { FaSearch, FaShoppingCart } from "react-icons/fa";
 import { MdAccountCircle } from "react-icons/md";
 
 const options = {
-    burgerColor: "white",
     burgerColorHover: "#eb4034",
     logo,
     searchIcon: true,
