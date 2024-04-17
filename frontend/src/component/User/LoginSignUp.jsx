@@ -1,6 +1,6 @@
 import './LoginSignUp.css';
-// import Loader from '../layout/Loader/Loader';
-import React, { useRef, useState } from 'react';
+import Loader from '../layout/Loader/Loader';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import MailOutlineIcon from "@material-ui/icons/MailOutline";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
@@ -8,8 +8,19 @@ import FaceIcon from "@material-ui/icons/Face";
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import DefaultProfilePic from '../../images/Profile.png';
+import { useAlert } from 'react-alert';
+import { useNavigate } from 'react-router-dom';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { clearErrors, login, register } from '../../actions/userAction';
 
 const LoginSignUp = () => {
+    const dispatch = useDispatch();
+    const alert = useAlert();
+    const navigate = useNavigate();
+
+    const { error, loading, isAuthenticated } = useSelector(state => state.user);
+
     const loginTab = useRef(null);
     const registerTab = useRef(null);
     const switcherTab = useRef(null);
@@ -28,7 +39,7 @@ const LoginSignUp = () => {
     const { name, email, password } = user;
 
     const [avatar, setAvatar] = useState();
-    const [avatarPreview, setAvatarPreview] = useState(DefaultProfilePic);
+    const [avatarPreview, setAvatarPreview] = useState(DefaultProfilePic );
 
     const changeLoginPIcon = () => {
         setPIconToggle(!pIconToggle);
@@ -49,13 +60,13 @@ const LoginSignUp = () => {
         }
     }
 
-    const loginSubmit = () => {
-        console.log("Login Form Submitted!!!");
+    const loginSubmit = (e) => {
+        e.preventDefault();
+        dispatch(login(loginEmail, loginPassword));
     }
 
     const registerSubmit = (e) => {
         e.preventDefault();
-
         const myForm = new FormData();
 
         myForm.set("name", name);
@@ -63,7 +74,7 @@ const LoginSignUp = () => {
         myForm.set("password", password);
         myForm.set("avatar", avatar);
 
-        console.log("Signup Form Submitted!!!");
+        dispatch(register(name, email, password, avatar));
     }
 
     const registerDataChange = (e) => {
@@ -83,6 +94,17 @@ const LoginSignUp = () => {
         }
     }
 
+    useEffect(() => {
+        if (error) {
+            alert.error(error);
+            dispatch(clearErrors());
+        }
+
+        if(isAuthenticated) {
+            navigate("/account");
+        }
+    },[dispatch, error, alert, isAuthenticated, navigate]);
+
     const switchTabs = (e, tab) => {
         if (tab === "login") {
             switcherTab.current.classList.add("shiftToNeutral");
@@ -101,6 +123,8 @@ const LoginSignUp = () => {
     };
 
     return (
+       <>
+        {loading ? <Loader /> : 
         <>
             <div className="LoginSignUpContainer">
                 <div className="LoginSignUpBox">
@@ -163,7 +187,7 @@ const LoginSignUp = () => {
                                 required
                                 name='email'
                                 value={email}
-                                onChange={(e) => setLoginEmail(e.target.value)}
+                                onChange={registerDataChange}
                             />
                         </div>
 
@@ -201,7 +225,8 @@ const LoginSignUp = () => {
                     </form>
                 </div>
             </div>
-        </>
+        </>}
+       </>
     )
 }
 
