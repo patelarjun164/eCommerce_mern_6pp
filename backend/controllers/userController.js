@@ -10,10 +10,10 @@ const cloudinary = require('cloudinary');
 exports.registerUser = tryCatchWrapper(async (req, res, next) => {
 
     const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
-        folder:"avatars",
+        folder: "avatars",
         width: 150,
-        crop: "scale"
-    })
+        crop: "scale",
+      });
 
     const { name, email, password } = req.body;
     const user = await User.create({
@@ -175,11 +175,11 @@ exports.updatePassword = tryCatchWrapper(async (req, res, next) => {
     const isPasswordMatched = await user.comparePassword(req.body.oldPassword);
 
     if (!isPasswordMatched) {
-        return next(new ErrorHandler("Old Password is incorrect",400));
+        return next(new ErrorHandler("Old Password is incorrect", 400));
     }
 
-    if(req.body.newPassword != req.body.confirmPassword) {
-        return next(new ErrorHandler("Passwords do NOT match",400));
+    if (req.body.newPassword != req.body.confirmPassword) {
+        return next(new ErrorHandler("Passwords do NOT match", 400));
     }
 
     user.password = req.body.newPassword;
@@ -231,8 +231,8 @@ exports.getSingleUser = tryCatchWrapper(async (req, res, next) => {
 
     const user = await User.findById(req.params.id);
 
-    if(!user) {
-        return next(new ErrorHandler(`User does not exist with Id: ${req.params.id}`,404))
+    if (!user) {
+        return next(new ErrorHandler(`User does not exist with Id: ${req.params.id}`, 404))
     }
 
     res.status(200).json({
@@ -266,8 +266,8 @@ exports.deleteUser = tryCatchWrapper(async (req, res, next) => {
 
     const user = await User.findById(req.params.id);
 
-    if(!user) {
-        return next(new ErrorHandler(`User does not exist with Id: ${req.params.id}`,404))
+    if (!user) {
+        return next(new ErrorHandler(`User does not exist with Id: ${req.params.id}`, 404))
     }
 
     await user.deleteOne();

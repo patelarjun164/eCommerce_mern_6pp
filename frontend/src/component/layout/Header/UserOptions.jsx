@@ -6,7 +6,7 @@ import DashboardIcon from "@material-ui/icons/Dashboard";
 import PersonIcon from "@material-ui/icons/Person";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import ListAltIcon from "@material-ui/icons/ListAlt";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+// import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { useNavigate } from 'react-router-dom';
 import { useAlert } from "react-alert";
 import { logout } from "../../../actions/userAction";
@@ -50,15 +50,15 @@ const UserOptions = ({ user }) => {
 
     return (
         <>
-        <Backdrop open={open} style={{zIndex: "10"}}/>
+            <Backdrop open={open} style={{ zIndex: "10" }} />
             <SpeedDial
-            className="speedDial"
+                className="speedDial"
                 ariaLabel="SpeedDial basic example"
                 onClose={() => setOpen(false)}
                 onOpen={() => setOpen(true)}
                 open={open}
-                style={{zIndex: "11"}}
-                direction={window.innerWidth <= 600 ? 'up':'down'}
+                style={{ zIndex: "11" }}
+                direction={window.innerWidth <= 600 ? 'up' : 'down'}
                 icon={
                     <img
                         className='speedDialIcon'

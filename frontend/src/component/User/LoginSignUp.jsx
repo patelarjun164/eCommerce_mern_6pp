@@ -63,6 +63,9 @@ const LoginSignUp = () => {
     const loginSubmit = (e) => {
         e.preventDefault();
         dispatch(login(loginEmail, loginPassword));
+        if(!error) {
+            alert.success("LoggedIn Successfully...!");
+        }
     }
 
     const registerSubmit = (e) => {
@@ -74,7 +77,7 @@ const LoginSignUp = () => {
         myForm.set("password", password);
         myForm.set("avatar", avatar);
 
-        dispatch(register(name, email, password, avatar));
+        dispatch(register(myForm));
     }
 
     const registerDataChange = (e) => {

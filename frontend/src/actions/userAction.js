@@ -12,15 +12,18 @@ import {
     LOAD_USER_FAIL,
     LOGOUT_SUCCESS,
     LOGOUT_FAIL,
+    UPDATE_PROFILE_REQUEST,
+    UPDATE_PROFILE_SUCCESS,
+    UPDATE_PROFILE_FAIL,
     CLEAR_ERRORS,
 } from '../constants/userConstants';
 
 //Login
 export const login = (email, password) => async (dispatch) => {
     try {
-        dispatch({ type: LOGIN_REQUEST});
+        dispatch({ type: LOGIN_REQUEST });
 
-        const config = { headers: { "Content-Type":"application/json"}}
+        const config = { headers: { "Content-Type": "application/json" } }
 
         const { data } = await axios.post(
             `/api/v1/login`,
@@ -28,7 +31,7 @@ export const login = (email, password) => async (dispatch) => {
             config,
         );
 
-        dispatch( {
+        dispatch({
             type: LOGIN_SUCCESS,
             payload: data.user,
         })
@@ -38,22 +41,23 @@ export const login = (email, password) => async (dispatch) => {
 }
 
 //Register
-export const register = (name, email, password, avatar) => async (dispatch) => {
+export const register = (userData) => async (dispatch) => {
     try {
-        dispatch({ type: REGISTER_USER_REQUEST});
+        dispatch({ type: REGISTER_USER_REQUEST });
 
-        const config = { headers: { "Content-Type":"application/json"}}
+        const config = { headers: { "Content-Type": "application/json" } }
 
         const { data } = await axios.post(
             `/api/v1/register`,
-            { name, email, password, avatar},
+            userData,
             config,
         );
 
-        dispatch( {
+        dispatch({
             type: REGISTER_USER_SUCCESS,
             payload: data.user,
         })
+
 
     } catch (error) {
         dispatch({ type: REGISTER_USER_FAIL, payload: error.response.data.message })
@@ -63,11 +67,11 @@ export const register = (name, email, password, avatar) => async (dispatch) => {
 //Load User
 export const loadUser = () => async (dispatch) => {
     try {
-        dispatch({ type: LOAD_USER_REQUEST});
+        dispatch({ type: LOAD_USER_REQUEST });
 
         const { data } = await axios.get("/api/v1/me");
 
-        dispatch( {
+        dispatch({
             type: LOAD_USER_SUCCESS,
             payload: data.user,
         })
@@ -82,13 +86,32 @@ export const logout = () => async (dispatch) => {
 
         await axios.get("/api/v1/logout");
 
-        dispatch( { type: LOGOUT_SUCCESS });
+        dispatch({ type: LOGOUT_SUCCESS });
     } catch (error) {
         dispatch({ type: LOGOUT_FAIL, payload: error.response.data.message })
     }
 }
 
-export const clearErrors = () => async(dispatch) => {
+//Update Profile
+export const updateProfile = (userData) => async (dispatch) => {
+    try {
+        dispatch({ type: UPDATE_PROFILE_REQUEST });
+
+        const config = { headers: { "Content-Type": "application/json" } };
+
+        const { data } = await axios.put(`/api/v1/me/update`,userData,config);
+
+        dispatch({
+            type: UPDATE_PROFILE_SUCCESS,
+            payload: data.success,
+        })
+
+    } catch (error) {
+        dispatch({ type: UPDATE_PROFILE_FAIL, payload: error.response.data.message })
+    }
+}
+
+export const clearErrors = () => async (dispatch) => {
     dispatch({
         type: CLEAR_ERRORS,
     })
