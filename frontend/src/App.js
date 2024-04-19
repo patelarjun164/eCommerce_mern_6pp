@@ -13,9 +13,11 @@ import Profile from './component/User/Profile.jsx';
 import LoginSignUp from './component/User/LoginSignUp.jsx';
 import ProtectedRoute from './component/Route/ProtectedRoute.jsx';
 import UpdateProfile from './component/User/UpdateProfile.jsx';
+import UpdatePassword from './component/User/UpdatePassword.jsx';
 import store from './store.js';
 import { loadUser } from './actions/userAction.js';
 import { useSelector } from 'react-redux';
+
 
 function App() {
   const { user, isAuthenticated } = useSelector(state => state.user);
@@ -26,7 +28,6 @@ function App() {
         families: ["Roboto", "Droid Sans", "Chilanka"],
       },
     });
-
 
     store.dispatch(loadUser());
   }, [])
@@ -53,6 +54,13 @@ function App() {
             element={
               <ProtectedRoute>
                 <UpdateProfile />
+              </ProtectedRoute>
+            }
+          />
+          <Route exact path="/password/update"
+            element={
+              <ProtectedRoute>
+                <UpdatePassword />
               </ProtectedRoute>
             }
           />

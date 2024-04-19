@@ -13,7 +13,7 @@ exports.registerUser = tryCatchWrapper(async (req, res, next) => {
         folder: "avatars",
         width: 150,
         crop: "scale",
-      });
+    });
 
     const { name, email, password } = req.body;
     const user = await User.create({
@@ -178,8 +178,8 @@ exports.updatePassword = tryCatchWrapper(async (req, res, next) => {
         return next(new ErrorHandler("Old Password is incorrect", 400));
     }
 
-    if (req.body.newPassword != req.body.confirmPassword) {
-        return next(new ErrorHandler("Passwords do NOT match", 400));
+    if (req.body.newPassword !== req.body.confirmPassword) {
+        return next(new ErrorHandler("Passwords do not match", 400));
     }
 
     user.password = req.body.newPassword;
@@ -202,7 +202,25 @@ exports.updateProfile = tryCatchWrapper(async (req, res, next) => {
         email: req.body.email,
     }
 
-    //Avater image and id pending
+    if (req.body.avatar !== "") {
+        const user = await User.findById(req.user.id);
+
+        const imageId = user.avatar.public_id;
+
+        await cloudinary.v2.uploader.destroy(imageId);
+
+        const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+            folder: "avatars",
+            width: 150,
+            crop: "scale",
+        });
+
+        newUserData.avatar = {
+            public_id: myCloud.public_id,
+            url: myCloud.secure_url
+        }
+
+    }
 
     const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
         new: true,

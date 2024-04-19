@@ -44,28 +44,17 @@ const LoginSignUp = () => {
     const changeLoginPIcon = () => {
         setPIconToggle(!pIconToggle);
 
-        if (pIconLoginRef.current.type === "password") {
-            pIconLoginRef.current.type = "text";
-        } else if (pIconLoginRef.current.type === "text") {
-            pIconLoginRef.current.type = "password";
-        }
+        pIconLoginRef.current.type = (pIconLoginRef.current.type === "password") ? "text" : "password";
     }
-    const changeSignUpPIcon = () => {
+    const changeSignUpPIcon = (e) => {
         setPIconToggle(!pIconToggle);
 
-        if (pIconSignUpRef.current.type === "password") {
-            pIconSignUpRef.current.type = "text";
-        } else if (pIconSignUpRef.current.type === "text") {
-            pIconSignUpRef.current.type = "password";
-        }
+        pIconSignUpRef.current.type = (pIconSignUpRef.current.type === "password") ? "text" : "password";
     }
 
     const loginSubmit = (e) => {
         e.preventDefault();
         dispatch(login(loginEmail, loginPassword));
-        if(!error) {
-            alert.success("LoggedIn Successfully...!");
-        }
     }
 
     const registerSubmit = (e) => {

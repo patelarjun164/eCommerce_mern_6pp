@@ -117,7 +117,7 @@ const UpdateProfile = () => {
 
                                 <input
                                     type='submit'
-                                    value="Update Profile"
+                                    value="Update"
                                     className='updateProfileBtn'
                                 />
                             </form>
