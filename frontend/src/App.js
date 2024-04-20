@@ -71,6 +71,7 @@ function App() {
           <Route exact path="/password/reset/:token" 
               element={<ResetPassword />} />
           <Route extact path='/login' element={<LoginSignUp />} />
+
         </Routes>
         <Footer />
       </Router>
