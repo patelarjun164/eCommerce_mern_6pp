@@ -19,6 +19,7 @@ const ResetPassword = () => {
   const navigate = useNavigate();
 
   const [PasswordInputType, ToggleIcon] = usePasswordToggle();
+  const [confirmPassInputType, confirmPassToggleIcon] = usePasswordToggle();
   const { error, loading, success } = useSelector((state) => state.forgotPassword);
 
   const [password, setPassword] = useState("");
@@ -83,13 +84,13 @@ const ResetPassword = () => {
                 <div className="resetPassword">
                   <LockIcon />
                   <input
-                    type={PasswordInputType}
+                    type={confirmPassInputType}
                     placeholder="Confirm Password"
                     required
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                   />
-                  <span className='pIcon'>{ToggleIcon}
+                  <span className='pIcon'>{confirmPassToggleIcon}
                   </span>
                 </div>
                 <input

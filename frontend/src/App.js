@@ -16,6 +16,7 @@ import UpdateProfile from './component/User/UpdateProfile.jsx';
 import UpdatePassword from './component/User/UpdatePassword.jsx';
 import ForgotPassword from './component/User/ForgotPassword.jsx';
 import ResetPassword from './component/User/ResetPassword.jsx';
+import Cart from './component/Cart/cart.jsx';
 import store from './store.js';
 import { loadUser } from './actions/userAction.js';
 import { useSelector } from 'react-redux';
@@ -71,6 +72,14 @@ function App() {
           <Route exact path="/password/reset/:token" 
               element={<ResetPassword />} />
           <Route extact path='/login' element={<LoginSignUp />} />
+
+          <Route exact path="/cart"
+            element={
+              <ProtectedRoute>
+                <Cart />
+              </ProtectedRoute>
+            }
+          />
 
         </Routes>
         <Footer />

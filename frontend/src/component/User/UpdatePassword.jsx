@@ -10,6 +10,7 @@ import LockOpenIcon from "@material-ui/icons/LockOpen";
 import LockIcon from "@material-ui/icons/Lock";
 import VpnKeyIcon from "@material-ui/icons/VpnKey";
 import { useNavigate } from "react-router-dom";
+import usePasswordToggle from "../Hooks/usePasswordToggle";
 
 const UpdatePassword = () => {
   const dispatch = useDispatch();
@@ -17,6 +18,10 @@ const UpdatePassword = () => {
   const navigate = useNavigate();
 
   const { error, isUpdated, loading } = useSelector((state) => state.profile);
+
+  const [oldPassInputType, oldPassToggleIcon] = usePasswordToggle();
+  const [newPassInputType, newPassToggleIcon] = usePasswordToggle();
+  const [confirmPassInputType, confirmPassToggleIcon] = usePasswordToggle();
 
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -60,7 +65,7 @@ const UpdatePassword = () => {
           <MetaData title="Change Password" />
           <div className="updatePasswordContainer">
             <div className="updatePasswordBox">
-              <h2 className="updatePasswordHeading">Update Profile</h2>
+              <h2 className="updatePasswordHeading">Update Password</h2>
 
               <form
                 className="updatePasswordForm"
@@ -69,33 +74,39 @@ const UpdatePassword = () => {
                 <div className="updatePassword">
                   <VpnKeyIcon />
                   <input
-                    type="password"
+                    type={oldPassInputType}
                     placeholder="Old Password"
                     required
                     value={oldPassword}
                     onChange={(e) => setOldPassword(e.target.value)}
                   />
+                  <span className='pIcon'>{oldPassToggleIcon}
+                  </span>
                 </div>
 
                 <div className="updatePassword">
                   <LockOpenIcon />
                   <input
-                    type="password"
+                    type={newPassInputType}
                     placeholder="New Password"
                     required
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
                   />
+                  <span className='pIcon'>{newPassToggleIcon}
+                  </span>
                 </div>
                 <div className="updatePassword">
                   <LockIcon />
                   <input
-                    type="password"
+                    type={confirmPassInputType}
                     placeholder="Confirm Password"
                     required
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                   />
+                  <span className='pIcon'>{confirmPassToggleIcon}
+                  </span>
                 </div>
                 <input
                   type="submit"

@@ -184,6 +184,11 @@ exports.updatePassword = tryCatchWrapper(async (req, res, next) => {
         return next(new ErrorHandler("Passwords do not match", 400));
     }
 
+    const isNewPasswordSame = await user.comparePassword(req.body.newPassword);
+    if (isNewPasswordSame) {
+        return next(new ErrorHandler("New Password should not be same as Old one", 400));
+    }
+
     user.password = req.body.newPassword;
 
     await user.save();
