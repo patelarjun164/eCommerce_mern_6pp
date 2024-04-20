@@ -108,7 +108,7 @@
   .profileContainer > div:first-child > h1 {
     font: 500 3.2vmax "Roboto";
     margin-bottom: 1.7vmax;
-    padding-bottom: 1.3vmax;
+    padding: 0 2vmax 1.3vmax;
     border-bottom: 1px solid rgba(0, 0, 0, 0.205);
     transform: translateY(-2vmax);
   }

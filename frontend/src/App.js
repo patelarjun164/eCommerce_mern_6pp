@@ -14,22 +14,25 @@ import LoginSignUp from './component/User/LoginSignUp.jsx';
 import ProtectedRoute from './component/Route/ProtectedRoute.jsx';
 import UpdateProfile from './component/User/UpdateProfile.jsx';
 import UpdatePassword from './component/User/UpdatePassword.jsx';
+import ForgotPassword from './component/User/ForgotPassword.jsx';
+import ResetPassword from './component/User/ResetPassword.jsx';
 import store from './store.js';
 import { loadUser } from './actions/userAction.js';
 import { useSelector } from 'react-redux';
-
 
 function App() {
   const { user, isAuthenticated } = useSelector(state => state.user);
 
   React.useEffect(() => {
+    
     WebFont.load({
       google: {
         families: ["Roboto", "Droid Sans", "Chilanka"],
       },
     });
 
-    store.dispatch(loadUser());
+      store.dispatch(loadUser());
+    
   }, [])
 
   return (
@@ -64,6 +67,9 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route exact path="/password/forgot" element={<ForgotPassword />} />
+          <Route exact path="/password/reset/:token" 
+              element={<ResetPassword />} />
           <Route extact path='/login' element={<LoginSignUp />} />
         </Routes>
         <Footer />

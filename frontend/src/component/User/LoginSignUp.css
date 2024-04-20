@@ -86,9 +86,9 @@
   }
 
   .pIcon {
-    position: absolute;
-    transform: translateX(18.7vmax);
-    font-size: 1.6vmax;
+    position:absolute;
+    transform:translateX(18.5vmax);
+    font-size: 1.4vmax;
     color: rgba(0, 0, 0, 0.623);
     cursor: pointer;
   }
@@ -200,8 +200,8 @@
 
     .pIcon {
         transform: translateX(32vmax);
+        font-size: 2.5vmax;
       }
-  
     .loginForm > a {
       font: 500 1.8vmax "Gill Sans";
     }

@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./UpdatePassword.css";
 import Loader from "../layout/Loader/Loader";
 import { useDispatch, useSelector } from "react-redux";
@@ -52,11 +52,11 @@ const UpdatePassword = () => {
   }, [dispatch, error, alert, isUpdated, navigate]);
 
   return (
-    <Fragment>
+    <>
       {loading ? (
         <Loader />
       ) : (
-        <Fragment>
+        <>
           <MetaData title="Change Password" />
           <div className="updatePasswordContainer">
             <div className="updatePasswordBox">
@@ -66,7 +66,7 @@ const UpdatePassword = () => {
                 className="updatePasswordForm"
                 onSubmit={updatePasswordSubmit}
               >
-                <div className="loginPassword">
+                <div className="updatePassword">
                   <VpnKeyIcon />
                   <input
                     type="password"
@@ -77,7 +77,7 @@ const UpdatePassword = () => {
                   />
                 </div>
 
-                <div className="loginPassword">
+                <div className="updatePassword">
                   <LockOpenIcon />
                   <input
                     type="password"
@@ -87,7 +87,7 @@ const UpdatePassword = () => {
                     onChange={(e) => setNewPassword(e.target.value)}
                   />
                 </div>
-                <div className="loginPassword">
+                <div className="updatePassword">
                   <LockIcon />
                   <input
                     type="password"
@@ -105,9 +105,9 @@ const UpdatePassword = () => {
               </form>
             </div>
           </div>
-        </Fragment>
+        </>
       )}
-    </Fragment>
+    </>
   );
 };
 
