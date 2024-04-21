@@ -6,8 +6,8 @@
 
 .speedDialIcon {
   border-radius: 100%;
-  /* width: 4.1vmax;
-    height: 4.1vmax; */
+  width: 4.1vmax;
+    height: 4.1vmax;
   width: 56px;
   height: 56px;
 }
@@ -21,7 +21,7 @@
   .speedDialIcon {
     border: 1px solid rgba(0, 0, 0, 0.651);
     border-radius: 100%;
-    /* width: 6.8vmax;
-        height: 6.8vmax; */
+    width: 6.8vmax;
+    height: 6.8vmax;
   }
 }

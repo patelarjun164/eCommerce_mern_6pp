@@ -13,7 +13,7 @@ const options = {
     profileIcon: true,
     ProfileIconElement: MdAccountCircle,
     cartIcon: true,
-    cartcartIconUrl: "/cart",
+    cartIconUrl: "/cart",
     CartIconElement: FaShoppingCart,
     logoWidth: "20vmax",
     navColor1: "white",
