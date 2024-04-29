@@ -7,7 +7,7 @@ import LockOpenIcon from "@material-ui/icons/LockOpen";
 import FaceIcon from "@material-ui/icons/Face";
 import DefaultProfilePic from '../../images/Profile.png';
 import { useAlert } from 'react-alert';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { clearErrors, login, register } from '../../actions/userAction';
@@ -17,8 +17,9 @@ const LoginSignUp = () => {
     const dispatch = useDispatch();
     const alert = useAlert();
     const navigate = useNavigate();
+    const location = useLocation();
 
-    const [PasswordInputType , ToggleIcon] = usePasswordToggle();
+    const [PasswordInputType, ToggleIcon] = usePasswordToggle();
     const { error, loading, isAuthenticated } = useSelector(state => state.user);
 
     const loginTab = useRef(null);
@@ -72,6 +73,13 @@ const LoginSignUp = () => {
         }
     }
 
+    const searchParams = new URLSearchParams(location.search);
+    // console.log(`searchParams:  ${searchParams}`);
+    // console.log(`searchParams.get('redirect'): ${searchParams.get('redirect')}`);
+    const redirect = searchParams.get('redirect') || 'account';
+    //after evolution, if searchParams having redirect query than redirect value become 'shipping' not '/shipping'
+    //so navigate(shipping) will not work so we have to provide "/" prefix redirect
+
     useEffect(() => {
         if (error) {
             alert.error(error);
@@ -79,9 +87,9 @@ const LoginSignUp = () => {
         }
 
         if (isAuthenticated) {
-            navigate("/account");
+            navigate(`/${redirect}`);
         }
-    }, [dispatch, error, alert, isAuthenticated, navigate]);
+    }, [dispatch, error, alert, isAuthenticated, navigate, redirect]);
 
     const switchTabs = (e, tab) => {
         if (tab === "login") {

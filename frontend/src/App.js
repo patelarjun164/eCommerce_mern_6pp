@@ -16,10 +16,13 @@ import UpdateProfile from './component/User/UpdateProfile.jsx';
 import UpdatePassword from './component/User/UpdatePassword.jsx';
 import ForgotPassword from './component/User/ForgotPassword.jsx';
 import ResetPassword from './component/User/ResetPassword.jsx';
+import Shipping from './component/Cart/Shipping.jsx';
 import Cart from './component/Cart/Cart.jsx';
+import ConfirmOrder from './component/Cart/ConfirmOrder.jsx';
 import store from './store.js';
 import { loadUser } from './actions/userAction.js';
 import { useSelector } from 'react-redux';
+import Payment from './component/Cart/Payment.jsx';
 
 function App() {
   const { user, isAuthenticated } = useSelector(state => state.user);
@@ -73,6 +76,30 @@ function App() {
               element={<ResetPassword />} />
           <Route extact path='/login' element={<LoginSignUp />} />
           <Route extact path='/cart' element={<Cart />} />
+
+          <Route path="/shipping"
+            element={
+              <ProtectedRoute>
+                <Shipping />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route path="/order/confirm"
+            element={
+              <ProtectedRoute>
+                <ConfirmOrder />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route path="/process/payment"
+            element={
+              <ProtectedRoute>
+                <Payment />
+              </ProtectedRoute>
+            }
+          />
 
         </Routes>
         <Footer />
