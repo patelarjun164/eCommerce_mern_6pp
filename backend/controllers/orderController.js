@@ -56,9 +56,9 @@ exports.myOrders = tryCatchWrapper(async (req, res, next) => {
 
     const orders = await Order.find({ user: req.user._id });
 
-    // if (!orders) {
-    //     return (next(new ErrorHandler("You've not placed any order yet", 404)));
-    // }
+    if (!orders) {
+        return (next(new ErrorHandler("You've not placed any order yet", 404)));
+    }
 
     res.status(200).json({
         success: true,

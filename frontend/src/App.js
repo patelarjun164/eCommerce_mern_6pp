@@ -19,10 +19,13 @@ import ResetPassword from './component/User/ResetPassword.jsx';
 import Shipping from './component/Cart/Shipping.jsx';
 import Cart from './component/Cart/Cart.jsx';
 import ConfirmOrder from './component/Cart/ConfirmOrder.jsx';
+import OrderSuccess from './component/Cart/OrderSuccess.jsx';
+import Payment from './component/Cart/Payment.jsx';
+import MyOrders from './component/Order/MyOrders.jsx';
+import OrderDetails from './component/Order/OrderDetails.jsx';
 import store from './store.js';
 import { loadUser } from './actions/userAction.js';
 import { useSelector } from 'react-redux';
-import Payment from './component/Cart/Payment.jsx';
 
 function App() {
   const { user, isAuthenticated } = useSelector(state => state.user);
@@ -97,6 +100,30 @@ function App() {
             element={
               <ProtectedRoute>
                 <Payment />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route path="/success"
+            element={
+              <ProtectedRoute>
+                <OrderSuccess />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route path="/orders"
+            element={
+              <ProtectedRoute>
+                <MyOrders />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route path="/order/:orderId"
+            element={
+              <ProtectedRoute>
+                <OrderDetails />
               </ProtectedRoute>
             }
           />

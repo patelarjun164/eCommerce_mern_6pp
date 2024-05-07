@@ -54,7 +54,7 @@ const Shipping = () => {
         phoneNo,
       })
     );
-    navigate("/order/confirm/#confirmOrderPage");
+    navigate("/order/confirm");
   };
 
   return (

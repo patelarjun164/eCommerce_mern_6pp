@@ -68,6 +68,10 @@ const orderSchema = new mongoose.Schema({
         status: {
             type: String,
             required:true
+        },
+        paymentId: {
+            type: String,
+            required:true
         }
     },
 

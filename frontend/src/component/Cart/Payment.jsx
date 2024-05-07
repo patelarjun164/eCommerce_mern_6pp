@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect} from "react";
 import CheckoutSteps from "../Cart/CheckoutSteps";
 import { useSelector, useDispatch } from "react-redux";
 import MetaData from "../layout/MetaData";
@@ -6,8 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useAlert } from "react-alert";
 import "./Payment.css";
 import axios from "axios";
-// import { createOrder, clearErrors } from "../../actions/orderActions";
-import { clearErrors } from "../../actions/orderActions";
+import { createOrder, clearErrors } from "../../actions/orderActions";
 import CompanyLogo from "../../images/logo.png";
 
 const Payment = () => {
@@ -15,28 +14,27 @@ const Payment = () => {
 
   const dispatch = useDispatch();
   const alert = useAlert();
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  //   const { shippingInfo, cartItems } = useSelector((state) => state.cart);
+  const { shippingInfo, cartItems } = useSelector((state) => state.cart);
   const { error } = useSelector((state) => state.newOrder);
-  const { user } = useSelector((state) => state.user)
-  // eslint-disable-next-line no-unused-vars
-  const [orderId, setOrderId] = useState("");
+  const { user } = useSelector((state) => state.user);
 
-  //   const order = {
-  //     shippingInfo,
-  //     orderItems: cartItems,
-  //     itemsPrice: orderInfo.subtotal,
-  //     taxPrice: orderInfo.tax,
-  //     shippingPrice: orderInfo.shippingCharges,
-  //     totalPrice: orderInfo.totalPrice,
-  //   };
+  const orderData = {
+    shippingInfo,
+    orderItems: cartItems,
+    itemPrice: orderInfo.subtotal,
+    taxPrice: orderInfo.tax,
+    shippingPrice: orderInfo.shippingCharges,
+    totalPrice: orderInfo.totalPrice,
+  };
 
   const amount = Math.round(orderInfo.totalPrice);
 
   const handlePayment = async () => {
-
-    const { data: { key } } = await axios.get("/api/v1/payment/getRzpKey");
+    const {
+      data: { key },
+    } = await axios.get("/api/v1/payment/getRzpKey");
 
     const {
       data: { order },
@@ -52,14 +50,28 @@ const Payment = () => {
       description: "Payment of your purchases at ShoppyNexa.com",
       image: CompanyLogo,
       order_id: order.id,
-      handler: async function(response) {
-        const body = {...response}
-        const {data: {success, razorpay_order_id }} = await axios.post("/api/v1/payment/validate", body);
+      handler: async function (response) {
+        const body = { ...response };
+        // console.log("response", body);
+        const {
+          data: { success, status, razorpay_order_id, razorpay_payment_id },
+        } = await axios.post("/api/v1/payment/validate", body);
 
         // console.log(success, razorpay_payment_id, razorpay_order_id);
 
-        if(success){
-          navigate(`/success?reference=${razorpay_order_id}`);
+        if (success) {
+          orderData.paymentInfo = {
+            id: razorpay_order_id,
+            status: status,
+            paymentId: razorpay_payment_id,
+          };
+
+          // console.log(orderData);
+          dispatch(createOrder(orderData));
+
+          navigate(`/success`);
+        } else {
+          alert.error("There's some issue while processing payment ");
         }
       },
       prefill: {
@@ -91,9 +103,7 @@ const Payment = () => {
       <CheckoutSteps activeStep={2} />
       <div className="container">
         <div className="paymentContainer">
-          <button onClick={handlePayment} className="buy_btn">
-            Pay
-          </button>
+          <button onClick={handlePayment}>Pay</button>
         </div>
       </div>
     </Fragment>
