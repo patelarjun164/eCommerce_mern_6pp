@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react';
 import { CgMouse } from 'react-icons/cg';
 import ProductCard from './ProductCard.js';
@@ -10,20 +9,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import Loader from '../layout/Loader/Loader.jsx';
 import { useAlert } from 'react-alert';
 
-const product = {
-    _id: "Arjun",
-    name: "Blue Shirt",
-    images: [{
-        url: "https://cdn.pixabay.com/photo/2017/08/17/10/23/shirt-2650677_1280.jpg",
-    }],
-    price: 1200,
-};
-
 const Home = () => {
     const alert = useAlert();
     const dispatch = useDispatch();
 
-    const { loading, error, products, productsCount } = useSelector(
+    const { loading, error, products } = useSelector(
         (state) => state.products
     );
 

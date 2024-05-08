@@ -106,6 +106,7 @@ exports.createProductReview = tryCatchWrapper(async (req, res, next) => {
 
     const review = {
         user: req.user._id,
+        avatar: req.user.avatar.url,
         name: req.user.name,
         rating: Number(rating),
         comment,
@@ -113,7 +114,11 @@ exports.createProductReview = tryCatchWrapper(async (req, res, next) => {
 
     const product = await Product.findById(productId);
 
-    const isReviewed = product.reviews.forEach((rev) => { rev.user.toString() === req.user._id.toString() });
+
+    const isReviewed = !!(product.reviews.find((rev) => {
+        return rev.user.toString() === req.user._id.toString();
+    }));
+    //Here find method returnting object if rev and req is same, so to convert into boolean from object !! added to code.
 
     if (isReviewed) {
         product.reviews.forEach((rev) => {
@@ -124,7 +129,7 @@ exports.createProductReview = tryCatchWrapper(async (req, res, next) => {
         });
     }
     else {
-        product.reviews.push(review);
+        product.reviews.unshift(review);
         product.numOfReviews = product.reviews.length;
     }
 
@@ -138,7 +143,7 @@ exports.createProductReview = tryCatchWrapper(async (req, res, next) => {
 
     await product.save({ validateBeforeSave: false });
     res.status(200).json({
-        sucess: true,
+        success: true,
         product,
     });
 });

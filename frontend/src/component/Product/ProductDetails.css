@@ -179,7 +179,9 @@
   padding: 3vmax;
 }
 .reviewCard > img {
-  width: 5vmax;
+  border-radius: 100%;
+  width: 4vmax;
+  margin-bottom: 0.5vmax;
 }
 .reviewCard > p {
   color: rgba(0, 0, 0, 0.836);
