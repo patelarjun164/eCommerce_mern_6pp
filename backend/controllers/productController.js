@@ -45,6 +45,17 @@ exports.getAllProducts = tryCatchWrapper(async (req, res, next) => {
     })
 });
 
+//Get all products -- Admin
+exports.getAdminProducts = tryCatchWrapper(async (req, res, next) => {
+
+    const products = await Product.find();
+
+    res.status(200).json({
+        success: true,
+        products,
+    })
+});
+
 
 //Get Product Deatils
 exports.getProductDetails = tryCatchWrapper(async (req, res, next) => {

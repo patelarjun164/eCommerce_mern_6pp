@@ -23,6 +23,8 @@ import OrderSuccess from './component/Cart/OrderSuccess.jsx';
 import Payment from './component/Cart/Payment.jsx';
 import MyOrders from './component/Order/MyOrders.jsx';
 import OrderDetails from './component/Order/OrderDetails.jsx';
+import Dashboard from './component/Admin/Dashboard.jsx';
+import ProductList from './component/Admin/ProductList.jsx';
 import store from './store.js';
 import { loadUser } from './actions/userAction.js';
 import { useSelector } from 'react-redux';
@@ -125,6 +127,22 @@ function App() {
             element={
               <ProtectedRoute>
                 <OrderDetails />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route path="/admin/dashboard"
+            element={
+              <ProtectedRoute isAdminRoute={true}>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route path="/admin/products"
+            element={
+              <ProtectedRoute isAdminRoute={true}>
+                <ProductList />
               </ProtectedRoute>
             }
           />

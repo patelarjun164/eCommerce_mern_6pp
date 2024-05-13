@@ -53,7 +53,7 @@ const UserOptions = ({ user }) => {
         navigate("/");
     }
     function dashboard() {
-        navigate("/dashboard");
+        navigate("/admin/dashboard");
     }
 
     return (
