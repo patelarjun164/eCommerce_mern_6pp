@@ -77,7 +77,7 @@
   width: 10vmax;
   position: absolute;
   left: 4vmax;
-  top: 10vmax;
+  top: 12vmax;
 }
 
 .categoryBox {
@@ -101,6 +101,7 @@
   border: 1px solid rgba(0, 0, 0, 0.363);
   margin-top: 0.5vmax;
 }
+
 
 @media screen and (max-width: 600px) {
   .filterBox {

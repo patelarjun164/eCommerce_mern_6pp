@@ -64,5 +64,8 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://192.168.33.242:4000"
+  "proxy": "http://192.168.33.242:4000",
+  "devServer": {
+    "allowedHosts": ["localhost", "127.0.0.1"]
+  }
 }

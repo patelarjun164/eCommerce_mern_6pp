@@ -75,6 +75,7 @@
   width: 14vmax;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   text-decoration: none;
   color: rgb(48, 48, 48);
   margin: 2vmax;
@@ -82,11 +83,11 @@
   padding-bottom: 0.5vmax;
 }
 
-.productCard > img {
+.productCard > div > img {
   width: 14vmax;
 }
 
-.productCard > div {
+.productCard > div > div {
   margin: 0.5vmax;
   display: flex;
   justify-content: flex-start;
@@ -98,14 +99,14 @@
   font: 300 0.7vmax "Roboto";
 }
 
-.productCard > p {
+.productCard >div > p {
   font-family: "Roboto";
   font-size: 1.2vmax;
   margin: 1vmax 0.5vmax;
   margin-bottom: 0;
 }
 
-.productCard > span {
+.productCard > div > span {
   margin: 0.5vmax;
   color: tomato;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
@@ -123,20 +124,20 @@
     font: 500 2vmax "Lucida Sans";
   }
 
-  .productCard > p {
+  .productCard > div > p {
     font-size: 1.7vmax;
   }
 
-  .productCard > div {
+  .productCard > div >  div {
     margin: 0vmax;
     display: block;
   }
 
-  .productCard > span {
+  .productCard > div >  span {
     font-size: 1.5vmax;
   }
 
-  .productCard > div > span {
+  .productCard > div > div > span {
     margin: 0 0.5vmax;
     font: 300 1vmax "Roboto";
   }

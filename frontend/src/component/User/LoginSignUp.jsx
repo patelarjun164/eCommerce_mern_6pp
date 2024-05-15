@@ -1,14 +1,12 @@
 import './LoginSignUp.css';
 import Loader from '../layout/Loader/Loader';
 import React, { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import MailOutlineIcon from "@material-ui/icons/MailOutline";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 import FaceIcon from "@material-ui/icons/Face";
 import DefaultProfilePic from '../../images/Profile.png';
 import { useAlert } from 'react-alert';
-import { useNavigate, useLocation } from 'react-router-dom';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { clearErrors, login, register } from '../../actions/userAction';
 import usePasswordToggle from '../Hooks/usePasswordToggle';
