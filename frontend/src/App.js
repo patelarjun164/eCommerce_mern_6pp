@@ -27,6 +27,7 @@ import Dashboard from './component/Admin/Dashboard.jsx';
 import ProductList from './component/Admin/ProductList.jsx';
 import NewProduct from './component/Admin/NewProduct.jsx';
 import UpdateProduct from './component/Admin/UpdateProduct.jsx';
+import OrderList from './component/Admin/OrderList.jsx';
 import store from './store.js';
 import { loadUser } from './actions/userAction.js';
 import { useSelector } from 'react-redux';
@@ -161,6 +162,14 @@ function App() {
             element={
               <ProtectedRoute isAdminRoute={true}>
                 <NewProduct />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route path="/admin/orders"
+            element={
+              <ProtectedRoute isAdminRoute={true}>
+                <OrderList />
               </ProtectedRoute>
             }
           />
