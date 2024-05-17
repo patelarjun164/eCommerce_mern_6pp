@@ -6,9 +6,10 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   clearErrors,
   getAdminProduct,
-  // deleteProduct,
+  deleteProduct,
 } from "../../actions/productAction";
-import { Link } from "react-router-dom";
+import { DELETE_PRODUCT_RESET } from "../../constants/productConstants";
+import { Link, useNavigate } from "react-router-dom";
 import { useAlert } from "react-alert";
 import { Button } from "@material-ui/core";
 import MetaData from "../layout/MetaData";
@@ -18,18 +19,18 @@ import SideBar from "./Sidebar";
 
 const ProductList = () => {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const alert = useAlert();
 
   const { error, products, loading } = useSelector((state) => state.products);
 
-  // const { error: deleteError, isDeleted } = useSelector(
-  //   (state) => state.product
-  // );
+  const { error: deleteError, isDeleted } = useSelector(
+    (state) => state.product
+  );
 
-  // const deleteProductHandler = (id) => {
-  //   dispatch(deleteProduct(id));
-  // };
+  const deleteProductHandler = (id) => {
+    dispatch(deleteProduct(id));
+  };
 
   useEffect(() => {
     if (error) {
@@ -37,19 +38,19 @@ const ProductList = () => {
       dispatch(clearErrors());
     }
 
-    // if (deleteError) {
-    //   alert.error(deleteError);
-    //   dispatch(clearErrors());
-    // }
+    if (deleteError) {
+      alert.error(deleteError);
+      dispatch(clearErrors());
+    }
 
-    // if (isDeleted) {
-    //   alert.success("Product Deleted Successfully");
-    //   history.push("/admin/dashboard");
-    //   dispatch({ type: DELETE_PRODUCT_RESET });
-    // }
+    if (isDeleted) {
+      alert.success("Product Deleted Successfully");
+      // navigate("/admin/dashboard");
+      dispatch({ type: DELETE_PRODUCT_RESET });
+    }
 
     dispatch(getAdminProduct());
-  }, [dispatch, alert, error]);
+  }, [dispatch, alert, error, deleteError, isDeleted, navigate]);
 
   const columns = [
     { field: "id", headerName: "Product ID", minWidth: 250},
@@ -88,9 +89,9 @@ const ProductList = () => {
             </Link>
 
             <Button
-              // onClick={() =>
-              //   deleteProductHandler(params.getValue(params.id, "id"))
-              // }
+              onClick={() =>
+                deleteProductHandler(params.getValue(params.id, "id"))
+              }
             >
               <DeleteIcon />
             </Button>

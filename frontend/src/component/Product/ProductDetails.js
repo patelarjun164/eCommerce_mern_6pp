@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import './ProductDetails.css';
 import Carousel from 'react-material-ui-carousel';
+import NoAvailImg from '../../images/Not_Avilable_image.png'
 import { useDispatch, useSelector } from 'react-redux';
 import { clearErrors, getProductDetails, newReview } from '../../actions/productAction';
 import { useParams } from 'react-router-dom';
@@ -98,7 +99,7 @@ const ProductDetails = () => {
           <div className="ProductDetails">
             <div>
               <Carousel className='carousel'>
-                {product.images &&
+                {product.images === undefined || product.images.length === 0 ?<img className="CarouselImage" src={ NoAvailImg } alt={product.name} /> :
                   product.images.map((item, index) => {
                     return (
                       <img

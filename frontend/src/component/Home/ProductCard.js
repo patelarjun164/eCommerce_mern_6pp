@@ -2,6 +2,7 @@ import React from 'react';
 import './Home.css';
 import { Link } from 'react-router-dom';
 import { Rating } from "@material-ui/lab";
+import NoAvailImg from '../../images/Not_Avilable_image.png';
 
 
 const ProductCard = ({ product }) => {
@@ -13,7 +14,7 @@ const ProductCard = ({ product }) => {
     }
     return (
         <Link className="productCard" to={`/product/${product._id}`}>
-            <img src={product.images[0].url} alt={product.name} />
+            <img src={product.images.length !== 0 ? product.images[0].url : NoAvailImg} alt={product.name} />
             <div className="productDetails">
                 <p>{product.name}</p>
                 <div>
