@@ -141,7 +141,6 @@ exports.updateProduct = tryCatchWrapper(async (req, res, next) => {
         }
 
         req.body.images = imagesLinks;
-        console.log("reBOdy after cloudinary", req.body.images);
     }
 
     product = await Product.findByIdAndUpdate(req.params.id, req.body, {

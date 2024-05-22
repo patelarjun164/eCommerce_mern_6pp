@@ -1,5 +1,4 @@
-// import React, { useEffect } from "react";
-import React from "react";
+import React, { useEffect } from "react";
 import Sidebar from "./Sidebar.jsx";
 import "./Dashboard.css";
 import { Typography } from "@material-ui/core";
@@ -14,26 +13,30 @@ import {
   Title,
   Tooltip,
   Legend,
-} from 'chart.js';
-import { Doughnut, Line } from 'react-chartjs-2';
-import { useSelector } from "react-redux";
-// import { getAdminProduct } from "../../actions/productAction";
-// import { getAllOrders } from "../../actions/orderAction.js";
+} from "chart.js";
+import { Doughnut, Line } from "react-chartjs-2";
+import { useSelector, useDispatch } from "react-redux";
+import { getAdminProduct } from "../../actions/productAction";
+import { getAllOrders } from "../../actions/orderActions.js";
 // import { getAllUsers } from "../../actions/userAction.js";
 import MetaData from "../layout/MetaData";
 
-ChartJS.register(CategoryScale,
+ChartJS.register(
+  CategoryScale,
   ArcElement,
   LinearScale,
   PointElement,
   LineElement,
   Title,
   Tooltip,
-  Legend,);
+  Legend
+);
 
 const Dashboard = () => {
-
+  const dispatch = useDispatch();
   const { products } = useSelector((state) => state.products);
+
+  const { orders } = useSelector((state) => state.allOrders);
 
   let outOfStock = 0;
 
@@ -44,9 +47,20 @@ const Dashboard = () => {
       }
     });
 
+  useEffect(() => {
+    dispatch(getAdminProduct());
+    dispatch(getAllOrders());
+    // dispatch(getAllUsers());
+  }, [dispatch]);
 
+  let totalAmount = 0;
 
-    const lineState = {
+  orders &&
+    orders.forEach((item) => {
+      totalAmount += item.totalPrice;
+    });
+
+  const lineState = {
     labels: ["Initial Amount", "Amount Earned"],
     datasets: [
       {
@@ -70,7 +84,6 @@ const Dashboard = () => {
   };
 
   return (
-      
     <div className="dashboard">
       <Sidebar />
 
@@ -80,7 +93,7 @@ const Dashboard = () => {
         <div className="dashboardSummary">
           <div>
             <p>
-              Total Amount <br /> ₹2000
+              Total Amount <br /> ₹{totalAmount}
             </p>
           </div>
           <div className="dashboardSummaryBox2">
@@ -90,7 +103,7 @@ const Dashboard = () => {
             </Link>
             <Link to="/admin/orders">
               <p>Orders</p>
-              <p>4</p>
+              <p>{orders && orders.length}</p>
             </Link>
             <Link to="/admin/users">
               <p>Users</p>
@@ -100,16 +113,16 @@ const Dashboard = () => {
         </div>
 
         <div className="lineChart">
-          <Line data={{...lineState}} />
+          <Line data={{ ...lineState }} />
         </div>
 
         <div className="doughnutChart">
-          <Doughnut data={{...doughnutState}} />
+          <Doughnut data={{ ...doughnutState }} />
         </div>
       </div>
       <MetaData title="Dashboard - Admin Panel" />
     </div>
-  )
-}
+  );
+};
 
-export default Dashboard
+export default Dashboard;

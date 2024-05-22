@@ -28,6 +28,9 @@ import ProductList from './component/Admin/ProductList.jsx';
 import NewProduct from './component/Admin/NewProduct.jsx';
 import UpdateProduct from './component/Admin/UpdateProduct.jsx';
 import OrderList from './component/Admin/OrderList.jsx';
+import ProcessOrder from './component/Admin/ProcessOrder.jsx';
+import UsersList from './component/Admin/UsersList.jsx';
+import UpdateUser from './component/Admin/UpdateUser.jsx';
 import store from './store.js';
 import { loadUser } from './actions/userAction.js';
 import { useSelector } from 'react-redux';
@@ -36,15 +39,15 @@ function App() {
   const { user, isAuthenticated } = useSelector(state => state.user);
 
   React.useEffect(() => {
-    
+
     WebFont.load({
       google: {
         families: ["Roboto", "Droid Sans", "Chilanka"],
       },
     });
 
-      store.dispatch(loadUser());
-    
+    store.dispatch(loadUser());
+
   }, [])
 
   return (
@@ -81,8 +84,8 @@ function App() {
             }
           />
           <Route exact path="/password/forgot" element={<ForgotPassword />} />
-          <Route exact path="/password/reset/:token" 
-              element={<ResetPassword />} />
+          <Route exact path="/password/reset/:token"
+            element={<ResetPassword />} />
           <Route extact path='/login' element={<LoginSignUp />} />
           <Route extact path='/cart' element={<Cart />} />
 
@@ -170,6 +173,30 @@ function App() {
             element={
               <ProtectedRoute isAdminRoute={true}>
                 <OrderList />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route path="/admin/order/:id"
+            element={
+              <ProtectedRoute isAdminRoute={true}>
+                <ProcessOrder />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route path="/admin/users"
+            element={
+              <ProtectedRoute isAdminRoute={true}>
+                <UsersList />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route path="/admin/user/:id"
+            element={
+              <ProtectedRoute isAdminRoute={true}>
+                <UpdateUser />
               </ProtectedRoute>
             }
           />

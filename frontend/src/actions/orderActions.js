@@ -15,6 +15,9 @@ import {
     DELETE_ORDER_REQUEST,
     DELETE_ORDER_SUCCESS,
     DELETE_ORDER_FAIL,
+    UPDATE_ORDER_REQUEST,
+    UPDATE_ORDER_SUCCESS,
+    UPDATE_ORDER_FAIL,
 } from "../constants/orderConstants";
 
 import axios from "axios";
@@ -110,6 +113,32 @@ export const deleteOrder = (orderId) => async (dispatch) => {
         })
     }
 }
+
+// Update Order -- Admin
+export const updateOrder = (id, order) => async (dispatch) => {
+  try {
+    dispatch({ type: UPDATE_ORDER_REQUEST });
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const { data } = await axios.put(
+      `/api/v1/admin/order/${id}`,
+      order,
+      config
+    );
+
+    dispatch({ type: UPDATE_ORDER_SUCCESS, payload: data.success });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_ORDER_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
 
 //Clear Errors
 export const clearErrors = () => async (dispatch) => {

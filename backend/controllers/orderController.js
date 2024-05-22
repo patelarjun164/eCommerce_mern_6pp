@@ -83,18 +83,17 @@ exports.getAllOrders = tryCatchWrapper(async (req, res, next) => {
     });
 });
 
-//Update Order Status  -- Admin
+// Update Order Status  -- Admin
 async function updateStock(productId, quantity) {
-    
-    const product = await Product.findById(productId);
-
-    product.stock -= quantity;
-    
-    await product.save();
+    await Product.findByIdAndUpdate(
+        productId,
+        { $inc: { stock: -quantity } }
+    )
 }
 
 exports.updateOrder = tryCatchWrapper(async (req, res, next) => {
 
+    console.log("reqBody", req.body.status);
     const order = await Order.findById(req.params.id);
 
     if (!order) {
@@ -105,23 +104,41 @@ exports.updateOrder = tryCatchWrapper(async (req, res, next) => {
         return next(new ErrorHandler("You Have already delivered this order", 400));
     }
 
-    order.orderItems.forEach(async (order) => {
-        await updateStock(order.product, order.quantity);
-    });
-
+    if (req.body.status === "Shipped") {
+        order.orderItems.forEach(async (o) => {
+            await updateStock(o.product, o.quantity);
+        });
+    }
     order.orderStatus = req.body.status;
+
     if (req.body.status === "Delivered") {
         order.deliveredAt = Date.now();
     }
 
-    await order.save({validateBeforeSave: false})
+    await order.save({ validateBeforeSave: false });
+
+    // order.orderItems.forEach(async (order) => {
+    //     await updateStock(order.product, order.quantity);
+    // });
+
+    // if (req.body.status === "Delivered") {
+    //     order.deliveredAt = Date.now();
+    // }
+
+    // // await order.save({validateBeforeSave: false})
+    // order = await Order.findByIdAndUpdate(req.params.id, req.body, {
+    //     new: true,
+    //     runValidators: true,
+    //     useFindAndModify: false,
+    //     validateBeforeSave: false
+    // });
     res.status(200).json({
         success: true
     });
 });
 
 //Delete order --- Admin
-exports.deleteOrder = tryCatchWrapper(async (req,res, next) => {
+exports.deleteOrder = tryCatchWrapper(async (req, res, next) => {
 
     const order = await Order.findById(req.params.id);
 
@@ -132,7 +149,7 @@ exports.deleteOrder = tryCatchWrapper(async (req,res, next) => {
     await order.deleteOne();
 
     res.status(200).json({
-        success:true,
-        message:`Order with orderId: ${req.params.id} Deleted Succesfully!`
+        success: true,
+        message: `Order with orderId: ${req.params.id} Deleted Succesfully!`
     });
 });
