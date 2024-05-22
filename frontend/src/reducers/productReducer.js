@@ -24,7 +24,14 @@ import {
     UPDATE_PRODUCT_SUCCESS,
     UPDATE_PRODUCT_FAIL,
     UPDATE_PRODUCT_RESET,
-    CLEAR_ERRORS
+    ALL_REVIEW_REQUEST,
+    ALL_REVIEW_SUCCESS,
+    ALL_REVIEW_FAIL,
+    DELETE_REVIEW_REQUEST,
+    DELETE_REVIEW_SUCCESS,
+    DELETE_REVIEW_RESET,
+    DELETE_REVIEW_FAIL,
+    CLEAR_ERRORS,
 } from '../constants/productConstants';
 
 export const productsReducer = (state = { products: [] }, action) => {
@@ -237,4 +244,78 @@ export const newReviewReducer = (state = {}, action) => {
         default:
             return state;
     }
+};
+
+
+export const productReviewsReducer = (state = { reviews: [] }, action) => {
+
+    switch (action.type) {
+        case ALL_REVIEW_REQUEST:
+            return {
+                ...state,
+                loading: true,
+            }
+
+        case ALL_REVIEW_SUCCESS:
+            return {
+                loading: false,
+                reviews: action.payload,
+            }
+
+        case ALL_REVIEW_FAIL:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload,
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null,
+            }
+
+        default:
+            return state;
+    }
+};
+
+export const reviewReducer = (state = {}, action) => {
+
+switch (action.type) {
+    case DELETE_REVIEW_REQUEST:
+        return {
+            ...state,
+            loading: true,
+        }
+
+    case DELETE_REVIEW_SUCCESS:
+        return {
+            loading: false,
+            isDeleted: action.payload,
+        }
+
+    case DELETE_REVIEW_FAIL:
+        return {
+            ...state,
+            loading: false,
+            error: action.payload,
+        }
+
+    case DELETE_REVIEW_RESET:
+        return {
+            ...state,
+            loading: false,
+            isDeleted: false,
+        }
+
+    case CLEAR_ERRORS:
+        return {
+            ...state,
+            error: null,
+        }
+
+    default:
+        return state;
+}
 };

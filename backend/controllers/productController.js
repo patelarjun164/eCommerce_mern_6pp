@@ -257,7 +257,14 @@ exports.deleteReview = tryCatchWrapper(async (req, res, next) => {
         totalRating += rev.rating;
     });
 
-    const ratings = totalRating / reviews.length;
+    let ratings;
+
+    if (reviews.length === 0) {
+        ratings = 0;
+    } else {
+        ratings = totalRating / reviews.length;
+    }
+
 
     const numOfReviews = reviews.length;
 

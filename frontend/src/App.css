@@ -9,6 +9,10 @@
     -webkit-appearance: none;
     margin: 0;
   }
+
+  body {
+    cursor: url(./images/cursor.png), auto;
+  }
   
   /* Firefox
   input[type="number"] {

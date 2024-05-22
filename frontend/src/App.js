@@ -31,6 +31,8 @@ import OrderList from './component/Admin/OrderList.jsx';
 import ProcessOrder from './component/Admin/ProcessOrder.jsx';
 import UsersList from './component/Admin/UsersList.jsx';
 import UpdateUser from './component/Admin/UpdateUser.jsx';
+import ProductReviews from './component/Admin/ProductReviews.jsx';
+import NotFound from './component/layout/NotFound/NotFound.jsx';
 import store from './store.js';
 import { loadUser } from './actions/userAction.js';
 import { useSelector } from 'react-redux';
@@ -200,6 +202,16 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+          <Route path="/admin/reviews"
+            element={
+              <ProtectedRoute isAdminRoute={true}>
+                <ProductReviews />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route path="*" element={<NotFound />} />
 
         </Routes>
         <Footer />

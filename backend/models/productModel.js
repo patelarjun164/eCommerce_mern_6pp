@@ -58,7 +58,6 @@ const productSchema = new mongoose.Schema({
             },
             avatar:{
                 type: String,
-                required: true,
             },
             rating: {
                 type: Number,
