@@ -3,7 +3,7 @@ import Header from './component/layout/Header/Header';
 import UserOptions from './component/layout/Header/UserOptions.jsx';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import WebFont from 'webfontloader';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Footer from './component/layout/Footer/Footer';
 import Home from './component/Home/Home.js';
 import ProductDetails from './component/Product/ProductDetails.js';
@@ -33,14 +33,14 @@ import UsersList from './component/Admin/UsersList.jsx';
 import UpdateUser from './component/Admin/UpdateUser.jsx';
 import ProductReviews from './component/Admin/ProductReviews.jsx';
 import NotFound from './component/layout/NotFound/NotFound.jsx';
-import store from './store.js';
 import { loadUser } from './actions/userAction.js';
 import { useSelector } from 'react-redux';
+import store from './store.js';
 
 function App() {
   const { user, isAuthenticated } = useSelector(state => state.user);
 
-  React.useEffect(() => {
+  useEffect(() => {
 
     WebFont.load({
       google: {
@@ -53,7 +53,6 @@ function App() {
   },[])
 
   return (
-    <div className="App">
       <Router>
         <Header />
         {isAuthenticated && <UserOptions user={user} />}
@@ -64,6 +63,7 @@ function App() {
           <Route path='/products/:keyword' element={<Products />} />
 
           <Route extact path='/search' element={<Search />} />
+          
           <Route exact path="/account"
             element={
               <ProtectedRoute>
@@ -216,7 +216,6 @@ function App() {
         </Routes>
         <Footer />
       </Router>
-    </div>
   );
 }
 

@@ -93,7 +93,6 @@ const ProductDetails = () => {
 
   return (
     <>
-      <ScrollRestoration>
         {loading ? <Loader /> : (
           <>
             <Metadata title={`${product.name}`} />
@@ -205,7 +204,6 @@ const ProductDetails = () => {
             )}
           </>
         )}
-      </ScrollRestoration>
     </>
   )
 }
