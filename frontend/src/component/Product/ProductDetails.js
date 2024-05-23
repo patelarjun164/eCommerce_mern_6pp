@@ -5,7 +5,7 @@ import Carousel from 'react-material-ui-carousel';
 import NoAvailImg from '../../images/Not_Avilable_image.png'
 import { useDispatch, useSelector } from 'react-redux';
 import { clearErrors, getProductDetails, newReview } from '../../actions/productAction';
-import { useParams } from 'react-router-dom';
+import { useParams, ScrollRestoration } from 'react-router-dom';
 import ReviewCard from './ReviewCard.js';
 import Loader from '../layout/Loader/Loader.jsx';
 import { useAlert } from 'react-alert'
@@ -30,7 +30,7 @@ const ProductDetails = () => {
   const { product, loading, error } = useSelector((state) => state.productDetails);
 
   const { success, error: reviewError } = useSelector((state) => state.newReview);
-  
+
   const options = {
     size: "large",
     value: product.ratings,
@@ -84,126 +84,128 @@ const ProductDetails = () => {
       alert.error(reviewError);
       dispatch(clearErrors());
     }
-    if(success) {
+    if (success) {
       alert.success("Review Submitted Successfully")
-      dispatch({type: NEW_REVIEW_RESET});
+      dispatch({ type: NEW_REVIEW_RESET });
     }
     dispatch(getProductDetails(id));
   }, [alert, dispatch, error, id, reviewError, success])
 
   return (
     <>
-      {loading ? <Loader /> : (
-        <>
-          <Metadata title={`${product.name}`} />
-          <div className="ProductDetails">
-            <div>
-              <Carousel className='carousel'>
-                {product.images === undefined || product.images.length === 0 ?<img className="CarouselImage" src={ NoAvailImg } alt={product.name} /> :
-                  product.images.map((item, index) => {
-                    return (
-                      <img
-                        className="CarouselImage"
-                        key={item.url}
-                        src={item.url}
-                        alt={`${index} Slide`}
-                      />
-                    )
-                  })
-                }
-              </Carousel>
-            </div>
+      <ScrollRestoration>
+        {loading ? <Loader /> : (
+          <>
+            <Metadata title={`${product.name}`} />
+            <div className="ProductDetails">
+              <div>
+                <Carousel className='carousel'>
+                  {product.images === undefined || product.images.length === 0 ? <img className="CarouselImage" src={NoAvailImg} alt={product.name} /> :
+                    product.images.map((item, index) => {
+                      return (
+                        <img
+                          className="CarouselImage"
+                          key={item.url}
+                          src={item.url}
+                          alt={`${index} Slide`}
+                        />
+                      )
+                    })
+                  }
+                </Carousel>
+              </div>
 
-            <div>
-              <div className="detailsBlock-1">
-                <h2>{product.name}</h2>
-                <p>Product # {product._id}</p>
-              </div>
-              <div className="detailsBlock-2">
-                <Rating {...options} />
-                <span className="detailsBlock-2-span">
-                  ({product.numOfReviews} Reviews)
-                </span>
-              </div>
-              <div className="detailsBlock-3">
-                <h1>{`₹${product.price}`}</h1>
-                <div className="detailsBlock-3-1">
-                  <div className="detailsBlock-3-1-1">
-                    <button onClick={decreaseQuantity}>-</button>
-                    <input readOnly type="number" value={quantity} />
-                    <button onClick={increaseQuantity}>+</button>
+              <div>
+                <div className="detailsBlock-1">
+                  <h2>{product.name}</h2>
+                  <p>Product # {product._id}</p>
+                </div>
+                <div className="detailsBlock-2">
+                  <Rating {...options} />
+                  <span className="detailsBlock-2-span">
+                    ({product.numOfReviews} Reviews)
+                  </span>
+                </div>
+                <div className="detailsBlock-3">
+                  <h1>{`₹${product.price}`}</h1>
+                  <div className="detailsBlock-3-1">
+                    <div className="detailsBlock-3-1-1">
+                      <button onClick={decreaseQuantity}>-</button>
+                      <input readOnly type="number" value={quantity} />
+                      <button onClick={increaseQuantity}>+</button>
+                    </div>
+                    <button
+                      disabled={product.stock < 1 ? true : false}
+                      onClick={addToCartHandler}
+                    >
+                      Add to Cart
+                    </button>
                   </div>
-                  <button
-                    disabled={product.stock < 1 ? true : false}
-                    onClick={addToCartHandler}
-                  >
-                    Add to Cart
-                  </button>
+
+                  <p>
+                    Status:
+                    <b className={product.stock < 1 ? "redColor" : "greenColor"}>
+                      <span> </span>
+                      {product.stock < 1 ? "OutOfStock" : "InStock"}
+                    </b>
+                  </p>
                 </div>
 
-                <p>
-                  Status:
-                  <b className={product.stock < 1 ? "redColor" : "greenColor"}>
-                    <span> </span>
-                    {product.stock < 1 ? "OutOfStock" : "InStock"}
-                  </b>
-                </p>
+                <div className="detailsBlock-4">
+                  Description : <p>{product.description}</p>
+                </div>
+
+                <button className="submitReview" onClick={submitReviewToggle}>
+                  Submit Review
+                </button>
               </div>
+            </div>
+            <h3 className="reviewsHeading">REVIEWS</h3>
 
-              <div className="detailsBlock-4">
-                Description : <p>{product.description}</p>
+            <Dialog
+              aria-labelledby="simple-dialog-title"
+              open={open}
+              onClose={submitReviewToggle}
+            >
+              <DialogTitle>Submit Review</DialogTitle>
+              <DialogContent className="submitDialog">
+                <Rating
+                  onChange={(e) => setRating(e.target.value)}
+                  value={rating}
+                  size="large"
+                />
+
+                <textarea
+                  className="submitDialogTextArea"
+                  cols="30"
+                  rows="5"
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                ></textarea>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={submitReviewToggle} color="secondary">
+                  Cancel
+                </Button>
+                <Button onClick={reviewSubmitHandler} color="primary">
+                  Submit
+                </Button>
+              </DialogActions>
+            </Dialog>
+
+            {product.reviews && product.reviews[0] ? (
+              <div className="reviews">
+                {product.reviews &&
+                  product.reviews.map((review) => (
+                    <ReviewCard key={review._id} review={review} />
+                  ))}
               </div>
-
-              <button className="submitReview" onClick={submitReviewToggle}>
-                Submit Review
-              </button>
-            </div>
-          </div>
-          <h3 className="reviewsHeading">REVIEWS</h3>
-
-          <Dialog
-            aria-labelledby="simple-dialog-title"
-            open={open}
-            onClose={submitReviewToggle}
-          >
-            <DialogTitle>Submit Review</DialogTitle>
-            <DialogContent className="submitDialog">
-              <Rating
-                onChange={(e) => setRating(e.target.value)}
-                value={rating}
-                size="large"
-              />
-
-              <textarea
-                className="submitDialogTextArea"
-                cols="30"
-                rows="5"
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-              ></textarea>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={submitReviewToggle} color="secondary">
-                Cancel
-              </Button>
-              <Button onClick={reviewSubmitHandler} color="primary">
-                Submit
-              </Button>
-            </DialogActions>
-          </Dialog>
-
-          {product.reviews && product.reviews[0] ? (
-            <div className="reviews">
-              {product.reviews &&
-                product.reviews.map((review) => (
-                  <ReviewCard key={review._id} review={review} />
-                ))}
-            </div>
-          ) : (
-            <p className="noReviews">No Reviews Yet</p>
-          )}
-        </>
-      )}
+            ) : (
+              <p className="noReviews">No Reviews Yet</p>
+            )}
+          </>
+        )}
+      </ScrollRestoration>
     </>
   )
 }

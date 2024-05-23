@@ -14,20 +14,20 @@
 
 .banner > h1 {
   margin: 5vmax;
-  color:  #FFFFE0;
+  color:  black;
   font: 600 2.5vmax "Roboto";
 }
 
 .banner > p {
   font: 300 1.4vmax "Lucida Sans";
-  color:  #FFFFE0;
+  color: black;
 }
 
 .banner > a > button {
   margin-bottom: 5vmax;
   cursor: pointer;
-  color: black;
-  background-color: #FFFFE0;
+  color: #FFFFE0;
+  background-color:  black;
   border: 1px solid black;
   border-radius: 0;
   padding: 1vmax;
