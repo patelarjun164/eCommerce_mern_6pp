@@ -50,7 +50,7 @@ function App() {
 
     store.dispatch(loadUser());
 
-  }, [])
+  },[])
 
   return (
     <div className="App">
@@ -141,7 +141,7 @@ function App() {
 
           <Route path="/admin/dashboard"
             element={
-              <ProtectedRoute isAdminRoute={true}>
+              <ProtectedRoute isAdmin={true}>
                 <Dashboard />
               </ProtectedRoute>
             }
@@ -149,7 +149,7 @@ function App() {
 
           <Route path="/admin/products"
             element={
-              <ProtectedRoute isAdminRoute={true}>
+              <ProtectedRoute isAdmin={true}>
                 <ProductList />
               </ProtectedRoute>
             }
@@ -157,7 +157,7 @@ function App() {
 
           <Route path="/admin/product/:id"
             element={
-              <ProtectedRoute isAdminRoute={true}>
+              <ProtectedRoute isAdmin={true}>
                 <UpdateProduct />
               </ProtectedRoute>
             }
@@ -165,7 +165,7 @@ function App() {
 
           <Route path="/admin/product"
             element={
-              <ProtectedRoute isAdminRoute={true}>
+              <ProtectedRoute isAdmin={true}>
                 <NewProduct />
               </ProtectedRoute>
             }
@@ -173,7 +173,7 @@ function App() {
 
           <Route path="/admin/orders"
             element={
-              <ProtectedRoute isAdminRoute={true}>
+              <ProtectedRoute isAdmin={true}>
                 <OrderList />
               </ProtectedRoute>
             }
@@ -181,7 +181,7 @@ function App() {
 
           <Route path="/admin/order/:id"
             element={
-              <ProtectedRoute isAdminRoute={true}>
+              <ProtectedRoute isAdmin={true}>
                 <ProcessOrder />
               </ProtectedRoute>
             }
@@ -189,7 +189,7 @@ function App() {
 
           <Route path="/admin/users"
             element={
-              <ProtectedRoute isAdminRoute={true}>
+              <ProtectedRoute isAdmin={true}>
                 <UsersList />
               </ProtectedRoute>
             }
@@ -197,7 +197,7 @@ function App() {
 
           <Route path="/admin/user/:id"
             element={
-              <ProtectedRoute isAdminRoute={true}>
+              <ProtectedRoute isAdmin={true}>
                 <UpdateUser />
               </ProtectedRoute>
             }
@@ -205,7 +205,7 @@ function App() {
 
           <Route path="/admin/reviews"
             element={
-              <ProtectedRoute isAdminRoute={true}>
+              <ProtectedRoute isAdmin={true}>
                 <ProductReviews />
               </ProtectedRoute>
             }
