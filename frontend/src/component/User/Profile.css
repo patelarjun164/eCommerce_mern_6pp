@@ -55,9 +55,9 @@
 }
 
 .profileContainer > div:last-child {
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: flex-start;
-  padding: 5vmax;
+  padding: 7vmax 5vmax;
   box-sizing: border-box;
 }
 
@@ -95,6 +95,23 @@
   background-color: rgb(31, 31, 31);
 }
 
+.profileContainer > div:last-child > div:last-child > button {
+  border: none;
+  border-radius: 0.5vmax;
+  background-color: rgb(68, 68, 68);
+  font: 400 1vmax "Roboto";
+  color: white;
+  text-decoration: none;
+  padding: 0.5vmax;
+  text-align: center;
+  transition: all 0.5s;
+  margin: 1vmax 0;
+}
+
+.profileContainer > div:last-child > div:last-child > button:hover {
+  background-color: rgb(31, 31, 31);
+}
+
 @media screen and (max-width: 600px) {
   .profileContainer {
     flex-direction: column;
@@ -103,7 +120,6 @@
   .profileContainer > div:first-child {
     justify-content: center;
   }
-  
 
   .profileContainer > div:first-child > h1 {
     font: 500 3.2vmax "Roboto";
@@ -138,12 +154,18 @@
     font: 400 2vmax roboto;
     margin: 1vmax 0;
   }
-  
+
   .profileContainer > div:last-child > div:last-child {
     width: 70%;
+    margin-bottom: 10vmax;
   }
 
   .profileContainer > div:last-child > div:last-child > a {
+    font: 400 1.8vmax "Roboto";
+    padding: 1.5vmax 0.5vmax;
+    margin: 1.5vmax 0.5vmax;
+  }
+  .profileContainer > div:last-child > div:last-child > button {
     font: 400 1.8vmax "Roboto";
     padding: 1.5vmax 0.5vmax;
     margin: 1.5vmax 0.5vmax;
