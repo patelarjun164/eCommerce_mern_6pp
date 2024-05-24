@@ -36,11 +36,13 @@ import NotFound from './component/layout/NotFound/NotFound.jsx';
 import { loadUser } from './actions/userAction.js';
 import { useSelector } from 'react-redux';
 import store from './store.js';
+import ScrollToTop from './component/Hooks/ScrollToTop.js';
 
 function App() {
   const { user, isAuthenticated } = useSelector(state => state.user);
 
   useEffect(() => {
+
 
     WebFont.load({
       google: {
@@ -50,172 +52,173 @@ function App() {
 
     store.dispatch(loadUser());
 
-  },[])
+  }, [])
 
   return (
-      <Router>
-        <Header />
-        {isAuthenticated && <UserOptions user={user} />}
-        <Routes>
-          <Route extact path='/' element={<Home />} />
-          <Route extact path='/product/:id' element={<ProductDetails />} />
-          <Route extact path='/products' element={<Products />} />
-          <Route path='/products/:keyword' element={<Products />} />
+    <Router>
+      <ScrollToTop />
+      <Header />
+      {isAuthenticated && <UserOptions user={user} />}
+      <Routes>
+        <Route extact path='/' element={<Home />} />
+        <Route extact path='/product/:id' element={<ProductDetails />} />
+        <Route extact path='/products' element={<Products />} />
+        <Route path='/products/:keyword' element={<Products />} />
 
-          <Route extact path='/search' element={<Search />} />
-          
-          <Route exact path="/account"
-            element={
-              <ProtectedRoute>
-                <Profile />
-              </ProtectedRoute>
-            }
-          />
-          <Route exact path="/me/update"
-            element={
-              <ProtectedRoute>
-                <UpdateProfile />
-              </ProtectedRoute>
-            }
-          />
-          <Route exact path="/password/update"
-            element={
-              <ProtectedRoute>
-                <UpdatePassword />
-              </ProtectedRoute>
-            }
-          />
-          <Route exact path="/password/forgot" element={<ForgotPassword />} />
-          <Route exact path="/password/reset/:token"
-            element={<ResetPassword />} />
-          <Route extact path='/login' element={<LoginSignUp />} />
-          <Route extact path='/cart' element={<Cart />} />
+        <Route extact path='/search' element={<Search />} />
 
-          <Route path="/shipping"
-            element={
-              <ProtectedRoute>
-                <Shipping />
-              </ProtectedRoute>
-            }
-          />
+        <Route exact path="/account"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route exact path="/me/update"
+          element={
+            <ProtectedRoute>
+              <UpdateProfile />
+            </ProtectedRoute>
+          }
+        />
+        <Route exact path="/password/update"
+          element={
+            <ProtectedRoute>
+              <UpdatePassword />
+            </ProtectedRoute>
+          }
+        />
+        <Route exact path="/password/forgot" element={<ForgotPassword />} />
+        <Route exact path="/password/reset/:token"
+          element={<ResetPassword />} />
+        <Route extact path='/login' element={<LoginSignUp />} />
+        <Route extact path='/cart' element={<Cart />} />
 
-          <Route path="/order/confirm"
-            element={
-              <ProtectedRoute>
-                <ConfirmOrder />
-              </ProtectedRoute>
-            }
-          />
+        <Route path="/shipping"
+          element={
+            <ProtectedRoute>
+              <Shipping />
+            </ProtectedRoute>
+          }
+        />
 
-          <Route path="/process/payment"
-            element={
-              <ProtectedRoute>
-                <Payment />
-              </ProtectedRoute>
-            }
-          />
+        <Route path="/order/confirm"
+          element={
+            <ProtectedRoute>
+              <ConfirmOrder />
+            </ProtectedRoute>
+          }
+        />
 
-          <Route path="/success"
-            element={
-              <ProtectedRoute>
-                <OrderSuccess />
-              </ProtectedRoute>
-            }
-          />
+        <Route path="/process/payment"
+          element={
+            <ProtectedRoute>
+              <Payment />
+            </ProtectedRoute>
+          }
+        />
 
-          <Route path="/orders"
-            element={
-              <ProtectedRoute>
-                <MyOrders />
-              </ProtectedRoute>
-            }
-          />
+        <Route path="/success"
+          element={
+            <ProtectedRoute>
+              <OrderSuccess />
+            </ProtectedRoute>
+          }
+        />
 
-          <Route path="/order/:orderId"
-            element={
-              <ProtectedRoute>
-                <OrderDetails />
-              </ProtectedRoute>
-            }
-          />
+        <Route path="/orders"
+          element={
+            <ProtectedRoute>
+              <MyOrders />
+            </ProtectedRoute>
+          }
+        />
 
-          <Route path="/admin/dashboard"
-            element={
-              <ProtectedRoute isAdmin={true}>
-                <Dashboard />
-              </ProtectedRoute>
-            }
-          />
+        <Route path="/order/:orderId"
+          element={
+            <ProtectedRoute>
+              <OrderDetails />
+            </ProtectedRoute>
+          }
+        />
 
-          <Route path="/admin/products"
-            element={
-              <ProtectedRoute isAdmin={true}>
-                <ProductList />
-              </ProtectedRoute>
-            }
-          />
+        <Route path="/admin/dashboard"
+          element={
+            <ProtectedRoute isAdmin={true}>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
 
-          <Route path="/admin/product/:id"
-            element={
-              <ProtectedRoute isAdmin={true}>
-                <UpdateProduct />
-              </ProtectedRoute>
-            }
-          />
+        <Route path="/admin/products"
+          element={
+            <ProtectedRoute isAdmin={true}>
+              <ProductList />
+            </ProtectedRoute>
+          }
+        />
 
-          <Route path="/admin/product"
-            element={
-              <ProtectedRoute isAdmin={true}>
-                <NewProduct />
-              </ProtectedRoute>
-            }
-          />
+        <Route path="/admin/product/:id"
+          element={
+            <ProtectedRoute isAdmin={true}>
+              <UpdateProduct />
+            </ProtectedRoute>
+          }
+        />
 
-          <Route path="/admin/orders"
-            element={
-              <ProtectedRoute isAdmin={true}>
-                <OrderList />
-              </ProtectedRoute>
-            }
-          />
+        <Route path="/admin/product"
+          element={
+            <ProtectedRoute isAdmin={true}>
+              <NewProduct />
+            </ProtectedRoute>
+          }
+        />
 
-          <Route path="/admin/order/:id"
-            element={
-              <ProtectedRoute isAdmin={true}>
-                <ProcessOrder />
-              </ProtectedRoute>
-            }
-          />
+        <Route path="/admin/orders"
+          element={
+            <ProtectedRoute isAdmin={true}>
+              <OrderList />
+            </ProtectedRoute>
+          }
+        />
 
-          <Route path="/admin/users"
-            element={
-              <ProtectedRoute isAdmin={true}>
-                <UsersList />
-              </ProtectedRoute>
-            }
-          />
+        <Route path="/admin/order/:id"
+          element={
+            <ProtectedRoute isAdmin={true}>
+              <ProcessOrder />
+            </ProtectedRoute>
+          }
+        />
 
-          <Route path="/admin/user/:id"
-            element={
-              <ProtectedRoute isAdmin={true}>
-                <UpdateUser />
-              </ProtectedRoute>
-            }
-          />
+        <Route path="/admin/users"
+          element={
+            <ProtectedRoute isAdmin={true}>
+              <UsersList />
+            </ProtectedRoute>
+          }
+        />
 
-          <Route path="/admin/reviews"
-            element={
-              <ProtectedRoute isAdmin={true}>
-                <ProductReviews />
-              </ProtectedRoute>
-            }
-          />
+        <Route path="/admin/user/:id"
+          element={
+            <ProtectedRoute isAdmin={true}>
+              <UpdateUser />
+            </ProtectedRoute>
+          }
+        />
 
-          <Route path="*" element={<NotFound />} />
+        <Route path="/admin/reviews"
+          element={
+            <ProtectedRoute isAdmin={true}>
+              <ProductReviews />
+            </ProtectedRoute>
+          }
+        />
 
-        </Routes>
-        <Footer />
-      </Router>
+        <Route path="*" element={<NotFound />} />
+
+      </Routes>
+      <Footer />
+    </Router>
   );
 }
 
