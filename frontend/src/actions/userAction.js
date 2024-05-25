@@ -4,6 +4,9 @@ import {
     LOGIN_REQUEST,
     LOGIN_SUCCESS,
     LOGIN_FAIL,
+    BIOAUTH_LOGIN_REQUEST,
+    BIOAUTH_LOGIN_SUCCESS,
+    BIOAUTH_LOGIN_FAIL,
     REGISTER_USER_REQUEST,
     REGISTER_USER_SUCCESS,
     REGISTER_USER_FAIL,
@@ -58,6 +61,27 @@ export const login = (email, password) => async (dispatch) => {
         })
     } catch (error) {
         dispatch({ type: LOGIN_FAIL, payload: error.response.data.message })
+    }
+}
+//BioAuth Login
+export const bioAuthLogin = (email) => async (dispatch) => {
+    try {
+        dispatch({ type: BIOAUTH_LOGIN_REQUEST });
+
+        const config = { headers: { "Content-Type": "application/json" } }
+
+        const { data } = await axios.post(
+            `/api/v1/login`,
+            { email },
+            config,
+        );
+
+        dispatch({
+            type: BIOAUTH_LOGIN_SUCCESS,
+            payload: data.user,
+        })
+    } catch (error) {
+        dispatch({ type: BIOAUTH_LOGIN_FAIL, payload: error.response.data.message })
     }
 }
 

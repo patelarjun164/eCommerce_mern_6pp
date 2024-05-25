@@ -104,6 +104,19 @@
   .loginForm > a:hover {
     color: black;
   }
+
+  .loginForm > p {
+    color: rgba(0, 0, 0, 0.651);
+    text-decoration: none;
+    align-self: flex-end;
+    transition: all 0.5s;
+    font: 500 0.8vmax "Gill Sans";
+    gap: 0.5vmax;
+  }
+
+  .loginForm > p:hover {
+    color: black;
+  }
   
   #registerImage > img {
     width: 3vmax;
@@ -135,7 +148,7 @@
   .loginBtn,
   .signUpBtn {
     border: none;
-    background-color: tomato;
+    background-color:tomato;
     color: white;
     font: 300 0.9vmax "Roboto";
     width: 100%;
@@ -149,6 +162,26 @@
   
   .loginBtn:hover,
   .signUpBtn:hover {
+    background-color: rgb(179, 66, 46);
+  }
+  
+  
+  .bioAuthLoginBtn{
+    border: none;
+    background-color: tomato;
+    color: white;
+    font: 300 0.9vmax "Roboto";
+    width: 100%;
+    padding: 0.8vmax;
+    cursor: pointer;
+    transition: all 0.5s;
+    border-radius: 4px;
+    outline: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.219);
+    margin-top: 1vmax;
+  }
+  
+  .bioAuthLoginBtn:hover{
     background-color: rgb(179, 66, 46);
   }
   
@@ -182,8 +215,15 @@
       font: 300 1.5vmax "Roboto";
     }
   
-    .loginForm,
+    .loginForm {
+      margin-top: 10vmax;
+      justify-content: unset;
+      gap: 4vmax;
+      padding: 5vmax;
+    }
+
     .signUpForm {
+      margin-top: -8vmax;
       padding: 5vmax;
     }
   
@@ -205,6 +245,9 @@
     .loginForm > a {
       font: 500 1.8vmax "Gill Sans";
     }
+    .loginForm > p {
+      font: 500 1.8vmax "Gill Sans";
+    }
   
     #registerImage > img {
       width: 7vmax;
@@ -222,5 +265,11 @@
     .signUpBtn {
       font: 300 1.9vmax "Roboto";
       padding: 1.8vmax;
+    }
+
+    .bioAuthLoginBtn {
+      font: 300 1.9vmax "Roboto";
+      padding: 1.8vmax;
+      margin-top: 1vmax;
     }
   }

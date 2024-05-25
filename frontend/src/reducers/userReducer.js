@@ -2,6 +2,9 @@ import {
     LOGIN_REQUEST,
     LOGIN_SUCCESS,
     LOGIN_FAIL,
+    BIOAUTH_LOGIN_REQUEST,
+    BIOAUTH_LOGIN_SUCCESS,
+    BIOAUTH_LOGIN_FAIL,
     REGISTER_USER_REQUEST,
     REGISTER_USER_SUCCESS,
     REGISTER_USER_FAIL,
@@ -45,6 +48,7 @@ export const userReducer = (state = { user: {} }, action) => {
 
     switch (action.type) {
         case LOGIN_REQUEST:
+        case BIOAUTH_LOGIN_REQUEST:
         case REGISTER_USER_REQUEST:
         case LOAD_USER_REQUEST:
             return {
@@ -53,6 +57,7 @@ export const userReducer = (state = { user: {} }, action) => {
             }
 
         case LOGIN_SUCCESS:
+        case BIOAUTH_LOGIN_SUCCESS:
         case REGISTER_USER_SUCCESS:
         case LOAD_USER_SUCCESS:
             return {
@@ -70,6 +75,7 @@ export const userReducer = (state = { user: {} }, action) => {
             }
 
         case LOGIN_FAIL:
+        case BIOAUTH_LOGIN_FAIL:
         case REGISTER_USER_FAIL:
             return {
                 ...state,
