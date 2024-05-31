@@ -10,11 +10,15 @@ const {
     generateAuthenticationOptions,
     verifyAuthenticationResponse
 } = require('@simplewebauthn/server');
+const { LocalStorage } = require('node-localstorage');
 
 if (!globalThis.crypto) {
     globalThis.crypto = crypto;
 }
 
+const localStorage = new LocalStorage('./scratch');
+localStorage.removeItem('authData');
+localStorage.removeItem('regChallange');
 //Reigster Biometrics
 exports.registerChallenge = tryCatchWrapper(async (req, res) => {
 
@@ -30,27 +34,20 @@ exports.registerChallenge = tryCatchWrapper(async (req, res) => {
     console.log("challengePayload", challengePayload);
     console.log("challengePayload.challenge", challengePayload.challenge);
 
-    //checking weather email and password entered by user or not
-    if (!email) {
-        return (next(new ErrorHandler("Please Enter Email", 400)))
-    }
+    const authData = {}
+    authData.email = email;
+    authData.challange = challengePayload.challenge;
+    localStorage.setItem('authData', JSON.stringify(authData));
+    // const value = localStorage.getItem('authData');
+    // console.log("authData", JSON.parse(value));
 
-    const user = await User.findOne({ email });
-
-    //checking weather user is exist or not
-    if (!user) {
-        return (next(new ErrorHandler("Email is not Valid...!", 401)));
-    }
-
-    challengeStore[userId] = challengePayload.challenge
-
-    return res.status(200).json({ options: challengePayload, success: true });
+    return res.status(200).json({ options: challengePayload, regChallange: challengePayload.challenge, success: true });
 });
 
 exports.registerVerify = tryCatchWrapper(async (req, res) => {
     const { cred } = req.body;
-    const userId = req.user.email;
-    const challenge = challengeStore[userId];
+    const authData = JSON.parse(localStorage.getItem('authData'));
+    const challenge = authData.challange;
     console.log("challange", challenge);
 
     console.log("challangeHello");
@@ -65,40 +62,50 @@ exports.registerVerify = tryCatchWrapper(async (req, res) => {
 
     if (!verificationResult.verified) return res.json({ error: 'could not verify' });
 
-    userStore[userId] = {...userStore[userId], passkey: verificationResult.registrationInfo};
-    console.log("user", userStore[userId]);
+    // userStore[userId] = {...userStore[userId], passkey: verificationResult.registrationInfo};
+    // console.log("user", userStore[userId]);
+    // localStorage.setItem('passkey', verificationResult.registrationInfo);
+
+    // console.log(localStorage.getItem('passkey'), localStorage.getItem('challange'))
+    authData.passkey = verificationResult.registrationInfo;
+    localStorage.setItem('authData', JSON.stringify(authData));
 
     return res.status(200).json({ verified: true });
 });
 
-exports.loginChallenge = tryCatchWrapper(async (req, res) => {
-    const userId = req.body.email;
-
+exports.loginChallenge = tryCatchWrapper(async (req, res, next) => {
+    const email = req.body.email;
+    const authData = JSON.parse(localStorage.getItem('authData'));
+    if(authData.email.toString() !== email.toString()){
+        return next(new ErrorHandler("Email is Not Registered with this Device to use biometrics", 404));
+    }
     const opts = await generateAuthenticationOptions({
         rpID: 'localhost',
     })
 
-    challengeStore[userId] = opts.challenge;
+    const challangeStore = {};
+    challangeStore.logChallange = opts.challenge;
+    localStorage.setItem('challangeStore', JSON.stringify(challangeStore));
 
     return res.status(200).json({ options: opts });
 });
 
 exports.loginVerify = tryCatchWrapper(async (req, res) => {
-    const userId = req.body.email;
+    // const email = req.body.email;
     const {cred} = req.body;
-    const user = userStore[userId];
-    const challenge = challengeStore[userId];
-    console.log(userStore[userId]);
+    const authData = JSON.parse(localStorage.getItem('authData'));
+    const challenge = JSON.parse(localStorage.getItem('challangeStore'));
+    console.log("challnage", challenge, "paskey", authData)
     const result = await verifyAuthenticationResponse({
-        expectedChallenge: challenge,
+        expectedChallenge: challenge.logChallange,
         expectedOrigin: 'http://localhost:3000',
         expectedRPID: 'localhost',
         response: cred,
-        authenticator: user.passkey
+        authenticator: authData.passkey
     })
 
     if (!result.verified) return res.json({ error: 'something went wrong' })
-    
+    console.log("Generate TOken");
     // Login the user: Session, Cookies, JWT
-    return res.json({ success: true, userId })
+    return res.json({ success: true })
 });
