@@ -70,7 +70,7 @@ const Profile = () => {
               </div>
               <div>
                 <h4>Joined On</h4>
-                <p>{String(user.createdAt).substring(0, 10)}</p>
+                <p>{`${String(user.createdAt).substring(0, 10)} (yyyy-mm-dd)`}</p>
               </div>
 
               <div>
