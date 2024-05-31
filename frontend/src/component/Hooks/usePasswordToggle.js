@@ -11,6 +11,7 @@ const usePasswordToggle = () => {
 
     const Icon = (
         <FontAwesomeIcon 
+            title={visible ? "Hide Password" : "Show Password"}
             icon={visible ? "fa-solid fa-eye-slash" : "fa-solid fa-eye"}
             onClick={() => setVisibility(!visible)}
         />

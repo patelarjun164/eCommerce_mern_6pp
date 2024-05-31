@@ -41,6 +41,7 @@ import {
     DELETE_USER_FAIL,
     CLEAR_ERRORS,
 } from '../constants/userConstants';
+import { startAuthentication } from "@simplewebauthn/browser";
 
 //Login
 export const login = (email, password) => async (dispatch) => {
@@ -70,11 +71,27 @@ export const bioAuthLogin = (email) => async (dispatch) => {
 
         const config = { headers: { "Content-Type": "application/json" } }
 
-        const { data } = await axios.post(
-            `/api/v1/login`,
-            { email },
-            config,
+        const { data } = await axios.post("/api/v1/bioauth/login-challenge", {email}, config);
+        const options = data.options;
+        console.log(options);
+
+        const authenticationResult = await startAuthentication(options);
+        console.log("authenticationResult", authenticationResult);
+
+        const verifyData = {
+            email: email,
+            cred: authenticationResult.id,
+        };
+
+        const resData = await axios.post(
+            "/api/v1/bioauth/login-verify",
+            verifyData,
+            config
         );
+
+        if (resData.data.verified) {
+            alert.success("Biometrices Registered Successfully...!");
+        }
 
         dispatch({
             type: BIOAUTH_LOGIN_SUCCESS,

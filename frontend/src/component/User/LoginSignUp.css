@@ -116,6 +116,7 @@
 
   .loginForm > p:hover {
     color: black;
+    cursor: pointer;
   }
   
   #registerImage > img {
@@ -168,6 +169,7 @@
   
   .bioAuthLoginBtn{
     border: none;
+    text-align: center;
     background-color: tomato;
     color: white;
     font: 300 0.9vmax "Roboto";

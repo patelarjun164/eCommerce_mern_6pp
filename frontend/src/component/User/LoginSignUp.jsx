@@ -8,7 +8,12 @@ import FaceIcon from "@material-ui/icons/Face";
 import DefaultProfilePic from "../../images/Profile.png";
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
-import { clearErrors, login, register } from "../../actions/userAction";
+import {
+  clearErrors,
+  login,
+  register,
+  bioAuthLogin,
+} from "../../actions/userAction";
 import usePasswordToggle from "../Hooks/usePasswordToggle";
 
 const LoginSignUp = () => {
@@ -43,7 +48,7 @@ const LoginSignUp = () => {
   const loginSubmit = (e) => {
     e.preventDefault();
     if (isBioAuth) {
-      dispatch(login(loginEmail));
+      dispatch(bioAuthLogin(loginEmail));
     } else {
       dispatch(login(loginEmail, loginPassword));
     }
@@ -172,8 +177,13 @@ const LoginSignUp = () => {
                   value={isBioAuth ? "Login Using Biometrics" : "Login"}
                   className={isBioAuth ? "bioAuthLoginBtn" : "loginBtn"}
                 />
-                {/* {!isBioAuth && <input type='submit' value='Login' className="loginBtn" />}
-                                {isBioAuth && <input type='submit' value='Login Using Biometrics' className="loginBtn" />} */}
+                {/* {isBioAuth ? (
+                  <button type="submit" className="bioAuthLoginBtn" >
+                    <Fingerprint /> Login Using Biometrics
+                  </button>
+                ) : (
+                  <input type="submit" value="Login" className="loginBtn" />
+                )} */}
               </form>
 
               <form
