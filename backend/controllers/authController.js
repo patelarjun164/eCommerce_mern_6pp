@@ -17,8 +17,6 @@ if (!globalThis.crypto) {
 }
 
 const localStorage = new LocalStorage('./scratch');
-localStorage.removeItem('authData');
-localStorage.removeItem('regChallange');
 //Reigster Biometrics
 exports.registerChallenge = tryCatchWrapper(async (req, res) => {
 
