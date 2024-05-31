@@ -1,0 +1,29 @@
+.paymentContainer {
+    min-height: 30vh;
+    display: flex;
+    align-items: center;
+}
+
+.paymentContainer button {
+    border: none;
+    background-color: tomato;
+    color: white;
+    font: 300 1vmax "Roboto";
+    width: 100%;
+    padding: 1vmax 3vmax;
+    cursor: pointer;
+    transition: all 0.5s;
+    outline: none;
+    margin: 2vmax;
+}
+
+@media screen and (max-width: 600px) {
+    .paymentContainer {
+        min-height: 51vh;
+    }
+
+    .paymentContainer button {
+      font: 300 4vw "Roboto";
+      padding: 4vw;
+    }
+}

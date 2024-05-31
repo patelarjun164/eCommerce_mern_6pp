@@ -103,7 +103,7 @@ const Payment = () => {
       <CheckoutSteps activeStep={2} />
       <div className="container">
         <div className="paymentContainer">
-          <button onClick={handlePayment}>Pay</button>
+          <button onClick={handlePayment}>Proceed to Payment Gateway</button>
         </div>
       </div>
     </Fragment>
