@@ -37,6 +37,8 @@ import { loadUser } from './actions/userAction.js';
 import { useSelector } from 'react-redux';
 import store from './store.js';
 import ScrollToTop from './component/Hooks/ScrollToTop.js';
+import About from './component/layout/About/About.jsx';
+import Contact from './component/layout/Contact/Conatct.jsx'
 
 function App() {
   const { user, isAuthenticated } = useSelector(state => state.user);
@@ -64,6 +66,9 @@ function App() {
         <Route extact path='/product/:id' element={<ProductDetails />} />
         <Route extact path='/products' element={<Products />} />
         <Route path='/products/:keyword' element={<Products />} />
+
+        <Route path='/about' element={<About />} />
+        <Route path='/contact' element={<Contact />} />
 
         <Route extact path='/search' element={<Search />} />
         <Route extact path='/login' element={<LoginSignUp />} />
