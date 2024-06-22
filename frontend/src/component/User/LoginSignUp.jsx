@@ -43,7 +43,7 @@ const LoginSignUp = () => {
 
   const [avatar, setAvatar] = useState();
   const [avatarPreview, setAvatarPreview] = useState(DefaultProfilePic);
-  const [isBioAuth, setIsBioAuth] = useState(true);
+  const [isBioAuth, setIsBioAuth] = useState(false);
 
   const loginSubmit = (e) => {
     e.preventDefault();
