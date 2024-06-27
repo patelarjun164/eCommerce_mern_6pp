@@ -42,6 +42,9 @@ import {
     DELETE_USER_FAIL,
     DELETE_USER_RESET,
     CLEAR_ERRORS,
+    BIOAUTH_REGISTER_REQUEST,
+    BIOAUTH_REGISTER_SUCCESS,
+    BIOAUTH_REGISTER_FAIL,
 } from '../constants/userConstants';
 
 export const userReducer = (state = { user: {} }, action) => {
@@ -66,6 +69,7 @@ export const userReducer = (state = { user: {} }, action) => {
                 isAuthenticated: true,
                 user: action.payload,
             }
+
 
         case LOGOUT_SUCCESS:
             return {
@@ -98,6 +102,40 @@ export const userReducer = (state = { user: {} }, action) => {
                 ...state,
                 loading: false,
                 error: action.payload,
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null,
+            }
+
+        default:
+            return state;
+    }
+
+}
+
+export const bioAuthReducer = (state = {}, action) => {
+    switch (action.type) {
+        case BIOAUTH_REGISTER_REQUEST:
+            return {
+                loading: true,
+                bioAuthRegistered: false
+            }
+
+        case BIOAUTH_REGISTER_SUCCESS:
+            return {
+                loading: false,
+                bioAuthRegistered: action.payload,
+            }
+
+        case BIOAUTH_REGISTER_FAIL:
+            return {
+                ...state,
+                loading: false,
+                bioAuthRegistered: false,
+                error: action.payload
             }
 
         case CLEAR_ERRORS:

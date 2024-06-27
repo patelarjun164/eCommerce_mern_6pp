@@ -41,7 +41,7 @@ import About from './component/layout/About/About.jsx';
 import Contact from './component/layout/Contact/Conatct.jsx'
 
 function App() {
-  const { user, isAuthenticated } = useSelector(state => state.user);
+  const { user, isAuthenticated, loading } = useSelector(state => state.user);
 
   useEffect(() => {
 
@@ -60,7 +60,7 @@ function App() {
     <Router>
       <ScrollToTop />
       <Header />
-      {isAuthenticated && <UserOptions user={user} />}
+      {isAuthenticated && !loading && <UserOptions user={user} />}
       <Routes>
         <Route extact path='/' element={<Home />} />
         <Route extact path='/product/:id' element={<ProductDetails />} />

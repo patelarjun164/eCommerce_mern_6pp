@@ -31,8 +31,8 @@ const LoginSignUp = () => {
   const registerTab = useRef(null);
   const switcherTab = useRef(null);
 
-  const [loginEmail, setLoginEmail] = useState("");
-  const [loginPassword, setLoginPassword] = useState("");
+  const [loginEmail, setLoginEmail] = useState("temp@gmail.com");
+  const [loginPassword, setLoginPassword] = useState("000000");
   const [user, setUser] = useState({
     name: "",
     email: "",

@@ -40,8 +40,11 @@ import {
     DELETE_USER_SUCCESS,
     DELETE_USER_FAIL,
     CLEAR_ERRORS,
+    BIOAUTH_REGISTER_REQUEST,
+    BIOAUTH_REGISTER_SUCCESS,
+    BIOAUTH_REGISTER_FAIL,
 } from '../constants/userConstants';
-import { startAuthentication } from "@simplewebauthn/browser";
+import { startAuthentication, startRegistration } from "@simplewebauthn/browser";
 
 //Login
 export const login = (email, password) => async (dispatch) => {
@@ -71,34 +74,30 @@ export const bioAuthLogin = (email) => async (dispatch) => {
 
         const config = { headers: { "Content-Type": "application/json" } }
 
-        const { data } = await axios.post("/api/v1/bioauth/login-challenge", {email}, config);
-        const options = data.options;
-        console.log(options);
+        const resp = await axios.post("/api/v1/bioauth/generate-authentication-options", { email }, config);
 
-        const authenticationResult = await startAuthentication(options);
-        console.log("authenticationResult", authenticationResult);
 
-        const verifyData = {
-            email: email,
-            cred: authenticationResult.id,
-        };
+        let asseResp = await startAuthentication(resp.data.options);
+        // console.log("authResult",asseResp);
 
-        const resData = await axios.post(
-            "/api/v1/bioauth/login-verify",
-            verifyData,
-            config
-        );
+        const verificationResp = await axios.post("/api/v1/bioauth/login-verify", {email: email,authResult: asseResp }, config);
 
-        if (resData.data.verified) {
-            alert.success("Biometrices Registered Successfully...!");
+        console.log("verificationResp", verificationResp);
+        if(verificationResp.data.success){
+            dispatch({
+                type: BIOAUTH_LOGIN_SUCCESS,
+                payload: verificationResp.data.user,
+            })
         }
-
-        dispatch({
-            type: BIOAUTH_LOGIN_SUCCESS,
-            payload: data.user,
-        })
     } catch (error) {
-        dispatch({ type: BIOAUTH_LOGIN_FAIL, payload: error.response.data.message })
+        let errorMessage;
+        if(error.name === 'NotAllowedError'){
+            errorMessage = "Authentication was canceled by the user or timed out. Please try again"
+        }
+        else {
+            errorMessage = error.message;
+        }
+        dispatch({ type: BIOAUTH_LOGIN_FAIL, payload: errorMessage })
     }
 }
 
@@ -122,7 +121,41 @@ export const register = (userData) => async (dispatch) => {
 
 
     } catch (error) {
-        dispatch({ type: REGISTER_USER_FAIL, payload: error.response.data.message })
+        let errorMessage;
+        if(error.name === 'NotAllowedError'){
+            errorMessage = "Registration was canceled by the user or timed out. Please try again"
+        }
+        else {
+            errorMessage = error.message;
+        }
+        dispatch({ type: REGISTER_USER_FAIL, payload: errorMessage })
+    }
+}
+
+//Bioauth Register
+export const bioAuthRegister = () => async (dispatch) => {
+    try {
+        dispatch({ type: BIOAUTH_REGISTER_REQUEST });
+        const resp = await axios.get("/api/v1/bioauth/generate-registration-options");
+
+        // Pass the options to the authenticator and wait for a response
+        let attResp = await startRegistration(resp.data.options);
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }
+
+        const verificationResp = await axios.post("/api/v1/bioauth/verify-registration", {cred: attResp},config);
+
+        dispatch({
+            type: BIOAUTH_REGISTER_SUCCESS,
+            payload: verificationResp.data.verified
+        });
+
+    } catch (error) {
+        dispatch({ type: BIOAUTH_REGISTER_FAIL, payload: error.message });
     }
 }
 

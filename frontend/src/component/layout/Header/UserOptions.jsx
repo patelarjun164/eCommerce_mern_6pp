@@ -20,8 +20,7 @@ const UserOptions = ({ user }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const alert = useAlert();
-    const { cartItems } = useSelector((state) => state.cart)
-
+    const { cartItems } = useSelector((state) => state.cart);
     const [open, setOpen] = useState(false);
     const options = [
         { icon: <ListAltIcon />, name: "Orders", func: orders },
@@ -32,7 +31,7 @@ const UserOptions = ({ user }) => {
         { icon: <ExitToAppIcon />, name: "Logout", func: logoutUser },
     ]
 
-    if (user.role === "admin") {
+    if (user && user.role === "admin") {
         options.unshift({
             icon: <DashboardIcon />, name: "Dashboard", func: dashboard
         })
@@ -58,6 +57,7 @@ const UserOptions = ({ user }) => {
 
     return (
         <>
+            
             <Backdrop open={open} style={{ zIndex: "10" }} />
             <SpeedDial
                 className="speedDial"
@@ -85,6 +85,7 @@ const UserOptions = ({ user }) => {
                     />
                 ))}
             </SpeedDial>
+            
         </>
     )
 }

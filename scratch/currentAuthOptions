@@ -1,0 +1,1 @@
+{"rpId":"localhost","challenge":"X2A1SCHbLhH9lqWTAEKOAnAa4rI2VR3Qo5fADYaqLAE","allowCredentials":[{"id":"1RvrJ3SNwJvc14TYg4BxUT4oihS9yujrSas195a8PoM","transports":["internal"],"type":"public-key"}],"timeout":60000,"userVerification":"preferred"}

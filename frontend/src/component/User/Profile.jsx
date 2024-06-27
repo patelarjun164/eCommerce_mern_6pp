@@ -1,51 +1,42 @@
 import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Metadata from "../layout/MetaData";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Loader from "../layout/Loader/Loader";
-import { startRegistration } from "@simplewebauthn/browser";
-import axios from "axios";
 import { useAlert } from "react-alert";
+import { bioAuthRegister, clearErrors } from "../../actions/userAction";
 import "./Profile.css";
 
 const Profile = () => {
   const navigate = useNavigate();
   const alert = useAlert();
+  const dispatch = useDispatch();
   const { user, loading, isAuthenticated } = useSelector((state) => state.user);
+  const {error, bioAuthRegistered} = useSelector((state) => state.userBioAuth);
+
   useEffect(() => {
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
+
+    if(bioAuthRegistered){
+      alert.success("Biometrices Registered successfully for this device...!");
+    }
+
     if (isAuthenticated === false) {
       navigate("/login");
     }
-  }, [isAuthenticated, navigate]);
+  }, [alert, bioAuthRegistered, dispatch, error, isAuthenticated, navigate]);
 
   const handleBioRegister = async () => {
     try {
-      const { data } = await axios.post("/api/v1/bioauth/register-challenge");
-      const options = data.options;
-      console.log(options);
-
-      const authenticationResult = await startRegistration({ ...options });
-      console.log("authenticationResult", authenticationResult);
-
-      const verifyData = {
-        cred: authenticationResult,
-      };
-
-      const config = { headers: { "Content-Type": "application/json" } };
-
-      const resData = await axios.post(
-        "/api/v1/bioauth/register-verify",
-        verifyData,
-        config
-      );
-
-      if (resData.data.verified) {
-        alert.success("Biometrices Registered Successfully...!");
-      }
+      dispatch(bioAuthRegister());
     } catch (error) {
-      alert.error("Biometric Registration Abort!!!");
+      alert.error("Biometric Registration Failed!!!");
     }
   };
+
   return (
     <>
       {loading ? (
