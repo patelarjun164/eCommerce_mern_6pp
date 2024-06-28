@@ -1,56 +1,66 @@
-import React from 'react';
-import { ReactNavbar } from "overlay-navbar";
-import logo from "../../../images/logo.png"
-import { FaSearch, FaShoppingCart } from "react-icons/fa";
-// import {MdAddShoppingCart } from "react-icons/md";
-import { MdAccountCircle } from "react-icons/md";
-
-const options = {
-    burgerColorHover: "#eb4034",
-    logo,
-    searchIcon: true,
-    SearchIconElement: FaSearch,
-    profileIcon: true,
-    ProfileIconElement: MdAccountCircle,
-    cartIcon: true,
-    cartIconUrl: "/cart",
-    CartIconElement: FaShoppingCart,
-    logoWidth: "20vmax",
-    navColor1: "white",
-    logoHoverSize: "10px",
-    logoHoverColor: "#eb4034",
-    link1Text: "Home",
-    link2Text: "Products",
-    link3Text: "Contact",
-    link4Text: "About",
-    link1Url: "/",
-    link2Url: "/products",
-    link3Url: "/contact",
-    link4Url: "/about",
-    link1Size: "1.3vmax",
-    link1Color: "#232323cc",
-    nav1justifyContent: "flex-end",
-    nav2justifyContent: "flex-end",
-    nav3justifyContent: "flex-start",
-    nav4justifyContent: "flex-start",
-    link1ColorHover: "#eb4034",
-    link1Margin: "1vmax",
-    profileIconUrl: "/login",
-    profileIconColor: "#232323cc",
-    searchIconColor: "#232323cc",
-    cartIconColor: "#232323cc",
-    profileIconColorHover: "#eb4034",
-    searchIconColorHover: "#eb4034",
-    cartIconColorHover: "#eb4034",
-    cartIconMargin: "1vmax",
-};
+import React, { useState } from 'react';
+import { FaUserCircle, FaShoppingCart, FaBars, FaTimes } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+import './Header.css';
 
 const Header = () => {
-    return (
-        <div>
-            <ReactNavbar {...options} />
-        </div>
-    )
-}
+  const [isOpen, setIsOpen] = useState(false);
 
-export default Header
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+  return (
+    <nav className="navbar">
+      <div className="navbar-container">
+        <Link to="/" className="navbar-logo">
+          Ecommerce
+        </Link>
+
+        <div className="menu-icon" onClick={toggleMenu}>
+          {isOpen ? <FaTimes /> : <FaBars />}
+        </div>
+
+        <ul className={isOpen ? 'nav-menu active' : 'nav-menu'}>
+          <li className="nav-item">
+            <Link to="/" className="nav-links">
+              Home
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/products" className="nav-links">
+              Products
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/contact" className="nav-links">
+              Contact
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/about" className="nav-links">
+              About
+            </Link>
+          </li>
+          <li className="nav-item">
+            <input type="text" className="search-bar" placeholder="Search..." />
+          </li>
+          <li className="nav-item">
+            <Link to="/account" className="nav-links">
+              <FaUserCircle className="nav-icon" />
+              <span className="nav-text">Account</span>
+            </Link>
+          </li>
+        </ul>
+          <div className="nav-item">
+            <Link to="/cart" className="nav-links">
+              <FaShoppingCart className="nav-icon" />
+              <span className="nav-text">Shopping Cart</span>
+            </Link>
+          </div>
+      </div>
+    </nav>
+  );
+};
+
+export default Header;

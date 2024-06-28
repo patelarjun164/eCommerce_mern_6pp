@@ -1,25 +1,121 @@
-.speedDial {
-  position: fixed;
-  right: 3vmax;
-  top: 3vmax;
+/* Header.css */
+.navbar {
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  position: relative;
+  top: 0;
+  width: 100%;
 }
 
-.speedDialIcon {
-  border-radius: 100%;
-  width: 4.1vmax;
-    height: 4.1vmax;
-  width: 56px;
-  height: 56px;
+.navbar-container {
+  display: flex;
+  align-items: center;
 }
 
-@media screen and (max-width: 600px) {
-  .speedDial {
-    bottom: 7vmax;
-    right: 4vmax;
+.navbar-logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: tomato;
+  text-decoration: none;
+}
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-item {
+  margin: 0 10px;
+}
+
+.nav-links {
+  color: black;
+  text-decoration: none;
+  padding: 10px;
+  transition: color 0.3s ease;
+  font-family: 'Roboto', sans-serif;
+}
+
+.nav-links:hover {
+  color: tomato;
+}
+
+.search-bar {
+  border: none;
+  outline: none;
+  padding: 8px;
+  border-radius: 20px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  font-family: 'Roboto', sans-serif;
+}
+
+.nav-icon {
+  font-size: 1.2rem;
+  margin-right: 5px;
+}
+
+.nav-text {
+  display: none;
+}
+
+@media screen and (max-width: 960px) {
+  .nav-menu {
+    flex-direction: column;
+    width: 100%;
+    position: absolute;
+    top: 80px;
+    left: -100%;
+    opacity: 1;
+    transition: all 0.5s ease;
   }
 
-  .speedDialIcon {
-    border: 1px solid rgba(0, 0, 0, 0.651);
-    border-radius: 100%;
+  .nav-menu.active {
+    background-color: white;
+    left: 0;
+    opacity: 1;
+    z-index: 1;
+  }
+
+  .nav-item {
+    width: 100%;
+    text-align: center;
+    margin: 0;
+  }
+
+  .nav-links {
+    text-align: center;
+    padding: 15px;
+    width: 100%;
+    display: table;
+  }
+
+  .nav-links:hover {
+    color: tomato;
+    transition: none;
+  }
+
+  .menu-icon {
+    display: block;
+    color: tomato;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+
+  .search-bar {
+    width: 80%;
+    margin: 10px auto;
+  }
+
+  .nav-icon {
+    display: none;
+  }
+
+  .nav-text {
+    display: inline;
   }
 }

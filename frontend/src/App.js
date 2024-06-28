@@ -78,9 +78,9 @@ function App() {
         <Route exact path='/password/reset/:token' element={<ResetPassword />} />
 
         <Route element={<ProtectedRoute />}>
-          <Route exact path='/account' element={<Profile />} />
-          <Route exact path='/me/update' element={<UpdateProfile />} />
-          <Route exact path='/password/update' element={<UpdatePassword />} />
+          <Route path='/account' element={<Profile />} />
+          <Route path='/me/update' element={<UpdateProfile />} />
+          <Route path='/password/update' element={<UpdatePassword />} />
 
           <Route path='/shipping' element={<Shipping />} />
           <Route path='/order/confirm' element={<ConfirmOrder />} />
