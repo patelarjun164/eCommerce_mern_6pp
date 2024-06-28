@@ -25,14 +25,6 @@ exports.registerUser = tryCatchWrapper(async (req, res, next) => {
     });
 
     sendToken(user, 201, res);
-
-    //Wrap in sendToken Function
-    // const token = user.getJWTToken();
-    // res.status(201).json({
-    //     success: true,
-    //     token,
-    // })
-
 });
 
 //Login User
@@ -60,14 +52,6 @@ exports.loginUser = tryCatchWrapper(async (req, res, next) => {
     }
 
     sendToken(user, 200, res);
-
-    //wrap in sendToken Function
-    // const token = user.getJWTToken();
-
-    // res.status(200).json({
-    //     success: true,
-    //     token,
-    // })
 });
 
 //Logout User
@@ -203,15 +187,13 @@ exports.updatePassword = tryCatchWrapper(async (req, res, next) => {
 
 //Update User Profile
 exports.updateProfile = tryCatchWrapper(async (req, res, next) => {
-
     const newUserData = {
         name: req.body.name,
         email: req.body.email,
     }
-
-    if (req.body.avatar !== "") {
+    if (req.body.avatar !== undefined) {
         const user = await User.findById(req.user.id);
-
+        
         const imageId = user.avatar.public_id;
 
         await cloudinary.v2.uploader.destroy(imageId);
@@ -226,10 +208,9 @@ exports.updateProfile = tryCatchWrapper(async (req, res, next) => {
             public_id: myCloud.public_id,
             url: myCloud.secure_url
         }
-
     }
 
-    const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
+    await User.findByIdAndUpdate(req.user.id, newUserData, {
         new: true,
         runValidators: true,
         userFindAndModify: false,

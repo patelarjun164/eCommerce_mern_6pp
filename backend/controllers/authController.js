@@ -104,7 +104,6 @@ exports.loginChallenge = tryCatchWrapper(async (req, res, next) => {
 
     // console.log("options", options);
 
-    // localStorage.setItem("currentAuthOptions", JSON.stringify(options));
     user.currentAuthOptions = options;
     await user.save();
 
@@ -113,48 +112,38 @@ exports.loginChallenge = tryCatchWrapper(async (req, res, next) => {
 
 exports.loginVerify = tryCatchWrapper(async (req, res, next) => {
 
-    try {
+    const { email, authResult } = req.body;
+    // console.log("authResult", authResult);
+    const user = await User.findOne({ email: email });
+    const currentOptions = user.currentAuthOptions;
+    const passkeys = user.passkeys.filter(psk => psk.id == authResult.id);
+    const index = user.passkeys.findIndex(psk => psk.id == authResult.id);
+    const [passkey] = passkeys;
 
-        const { email, authResult } = req.body;
-        // console.log("authResult", authResult);
-        const user = await User.findOne({ email: email });
-        const currentOptions = user.currentAuthOptions;
-        const passkeys = user.passkeys.filter(psk => psk.id == authResult.id);
-        const [passkey] = passkeys;
-        // console.log("passkey", passkey);
-        // console.log("currentOptiions", currentOptions);
-
-        const verification = await verifyAuthenticationResponse({
-            response: authResult,
-            expectedChallenge: currentOptions.challenge,
-            expectedOrigin: 'http://localhost:3000',
-            expectedRPID: 'localhost',
-            authenticator: {
-                credentialID: passkey.id,
-                credentialPublicKey: passkey.publicKey.buffer,
-                counter: passkey.counter,
-                transports: passkey.transports,
-            }
-        });
-
-        // console.log("result", verification);
-        const { authenticationInfo, verified } = verification;
-        const { newCounter } = authenticationInfo;
-        if (verified) {
-            user.currentAuthOptions = {};
-            user.passkeys.forEach((psk) => {
-                if(psk.id === passkey.id){
-                    psk.counter = newCounter;
-                }
-            });
-            await user.save();
-            sendToken(user, 200, res);
-        } else {
-            return (next(new ErrorHandler("Fingerprint verification failed. Please try again.", 401)))
+    const verification = await verifyAuthenticationResponse({
+        response: authResult,
+        expectedChallenge: currentOptions.challenge,
+        expectedOrigin: 'http://localhost:3000',
+        expectedRPID: 'localhost',
+        authenticator: {
+            credentialID: passkey.id,
+            credentialPublicKey: passkey.publicKey.buffer,
+            counter: passkey.counter,
+            transports: passkey.transports,
         }
-        
+    });
 
-    } catch (error) {
-        return (next(new ErrorHandler("Error Occured...!", 401)))
+    const { authenticationInfo, verified } = verification;
+    const { newCounter } = authenticationInfo;
+    if (verified) {
+        user.currentAuthOptions = {};
+        await User.updateOne(
+            { email: user.email, [`passkeys.${index}`]: { $exists: true } },
+            { $set: { [`passkeys.${index}.counter`]: newCounter } }
+        );
+        await user.save();
+        sendToken(user, 200, res);
+    } else {
+        return (next(new ErrorHandler("Fingerprint verification failed. Please try again.", 401)))
     }
 });

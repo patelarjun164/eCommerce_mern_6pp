@@ -28,11 +28,14 @@ const UpdateProfile = () => {
 
     const registerSubmit = (e) => {
         e.preventDefault();
+        console.log(avatar);
         const myForm = new FormData();
 
         myForm.set("name", name);
         myForm.set("email", email);
-        myForm.set("avatar", avatar);
+        if(avatar){
+            myForm.set("avatar", avatar);
+        }
 
         dispatch(updateProfile(myForm));
     }
