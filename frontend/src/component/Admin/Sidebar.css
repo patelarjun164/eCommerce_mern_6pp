@@ -6,11 +6,15 @@
   }
   
   .sidebar > a:first-child {
+    margin-left: 2.5vw;
+    margin-top: 2.5vw;
     width: 10vmax;
     padding: 0;
   }
   .sidebar > a > img {
     width: 100%;
+    box-shadow: 10px 10px 5px rgba(85, 83, 83, 0.336);
+    border-radius: 1vw;
     transition: all 0.5s;
   }
   
@@ -46,9 +50,15 @@
     .sidebar {
       padding: 2rem 0 2rem 5vmax;
       justify-content: center;
+      align-items: center;
+    }
+    .sidebar > a:first-child {
+
+      width: 12vmax;
     }
     .sidebar > a:first-child > img {
       margin: 2vmax;
+      margin-left: -8vw;
     }
     .sidebar > a {
       width: 50%;

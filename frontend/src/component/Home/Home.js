@@ -33,7 +33,7 @@ const Home = () => {
                 <Loader />
              :
                 <>
-                    <MetaData title="ECommerce" />
+                    <MetaData title="ShoppyNexxa" />
                     <div className="banner">
                         <p>Welcome to E-commerce</p>
                         <h1>FIND AMAZING PRODUCTS BELOW</h1>
