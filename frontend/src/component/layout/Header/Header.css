@@ -1,95 +1,169 @@
-* {
+.navbar {
+  z-index: 1000;
+  backdrop-filter: blur(30px);
+  box-shadow: 5px 10px 10px rgba(227, 228, 237, 0.37);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 0.5rem;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  position: fixed;
+  width: 95%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 10px;
+  border-radius: 1vw;
+  text-align: center;
+}
+
+.nav-brand {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.nav-brand a img {
+  width: 3vw;
+  border-radius: 0.5vw;
+  margin-left: 1vw;
+}
+
+.nav-links {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
   margin: 0;
   padding: 0;
 }
 
-/* body {
-  min-height: 100vh;
-  background: url('laptop.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-} */
-
-nav {
-  background-color: white;
-  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
+.nav-links li {
+  margin-right: 2rem;
 }
 
-nav ul {
-  width: 100%;
-  list-style: none;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-nav li {
-  height: 50px;
-}
-
-nav a {
-  height: 100%;
-  padding: 0 30px;
+.nav-links a {
+  color: rgb(0, 0, 0);
+  font-weight: 800;
   text-decoration: none;
-  display: flex;
-  align-items: center;
+  transition: color 0.2s ease;
+}
+
+.nav-links a:hover {
+  color: tomato;
+}
+
+.search-bar {
+  position: relative;
+  margin-left: 1rem;
+}
+
+.search-bar input {
+  background-color: rgba(255, 255, 255, 0.089);
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  font-size: 1rem;
+}
+
+.search-bar input::placeholder {
   color: black;
 }
 
-nav a:hover {
-  background-color: #f0f0f0;
+.search-bar input:focus {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.527);
+  border-radius: 10px;
+  outline: none;
 }
 
-nav li:first-child {
-  margin-right: auto;
-}
-
-.sidebar {
-  position: fixed;
-  top: 0;
-  right: 0;
-  height: 100vh;
-  width: 250px;
-  background-color: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(12px);
-  box-shadow: -10px 0 10px rgba(0, 0, 0, 0.1);
-  list-style: none;
-  display: none;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-}
-
-.sidebar.visible {
+.nav-icons {
   display: flex;
+  align-items: center;
+  margin-left: 2rem;
 }
 
-.sidebar li {
-  width: 100%;
+.icon {
+  color: black;
+  font-size: 1.5rem;
+  margin-right: 1rem;
+  cursor: pointer;
 }
 
-.sidebar a {
-  width: 100%;
+.icon:hover {
+  color: tomato;
 }
 
-.menu-button {
+.nav-toggle {
   display: none;
 }
 
-@media (max-width: 800px) {
-  .hideOnMobile {
+@media (max-width: 768px) {
+  .search-bar-mobile input {
+    background-color: rgba(255, 255, 255, 0.089);
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    font-size: 1rem;
+    width: 60vw;
+  }
+
+  .search-bar-mobile input:focus {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.527);
+    border-radius: 10px;
+    outline: none;
+  }
+
+  .search-bar-mobile svg {
+    font-size: 1.2rem;
+    transform: translateX(-6vw) translateY(1vw);
+  }
+  .navbar {
+    height: 5vh;
+    margin-top: 0;
+    transition: right 1s ease;
+  }
+  .nav-links {
     display: none;
-  }
-
-  .menu-button {
-    display: block;
-  }
-}
-
-@media (max-width: 400px) {
-  .sidebar {
+    flex-direction: column;
+    position: absolute;
+    background: white;
+    right: -100%;
+    top: 100%;
+    left: 0;
     width: 100%;
+    height: 100vh;
+    transition: right 1s ease;
+  }
+
+  .nav-links a {
+    transition: color 0.2s ease;
+  }
+
+  .nav-links.open {
+    right: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    backdrop-filter: blur(30px);
+    transition: 1s ease-out;
+  }
+  .nav-links.open li {
+    font-size: 1.5rem;
+    margin-left: 5vw;
+    padding: 5vw;
+  }
+  .nav-toggle {
+    display: block;
+    cursor: pointer;
+  }
+
+  .nav-toggle svg {
+    font-size: 2rem;
+  }
+  .nav-brand a img {
+    width: 6vw;
   }
 }

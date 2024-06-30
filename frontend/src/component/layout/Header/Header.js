@@ -1,49 +1,58 @@
-import React, { useState } from 'react';
-import './Header.css';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import { FaUser, FaShoppingCart, FaBars, FaTimes, FaSearch } from 'react-icons/fa';
+import Logo from '../../../images/ShoppyNexxa-Logo.png'
+import './Header.css';
 
 const Header = () => {
-  const [sidebarVisible, setSidebarVisible] = useState(false);
+  const [isOpen, setIsOpen] = React.useState(false);
 
-  const showSidebar = () => {
-    setSidebarVisible(true);
-  };
-
-  const hideSidebar = () => {
-    setSidebarVisible(false);
+  const handleToggle = () => {
+    setIsOpen(!isOpen);
   };
 
   return (
-    <nav>
-      <ul className={`sidebar ${sidebarVisible ? 'visible' : ''}`}>
-        <li onClick={hideSidebar}>
-          <Link to="#">
-            <svg xmlns="http://www.w3.org/2000/svg" height="26" viewBox="0 96 960 960" width="26">
-              <path d="m249 849-42-42 231-231-231-231 42-42 231 231 231-231 42 42-231 231 231 231-42 42-231-231-231 231Z" />
-            </svg>
-          </Link>
-        </li>
-        <li><Link to="#">Blog</Link></li>
-        <li><Link to="#">Products</Link></li>
-        <li><Link to="#">About</Link></li>
-        <li><Link to="#">Forum</Link></li>
-        <li><Link to="#">Login</Link></li>
+    <nav className="navbar">
+      <div className="nav-brand">
+        <Link to="/"><img alt='logo' src={Logo} /></Link>
+      </div>
+      {window.innerWidth <= 748 && (
+        <>
+          <div className="search-bar-mobile">
+            <input type="text" placeholder="Search..." />
+            <FaSearch />
+          </div>
+        </>
+      )}
+      <ul className={`nav-links ${isOpen ? 'open' : ''}`}>
+        <li><Link to="/" onClick={handleToggle}>Home</Link></li>
+        <li><Link to="/products" onClick={handleToggle}>Products</Link></li>
+        <li><Link to="/contact" onClick={handleToggle}>Contact</Link></li>
+        <li><Link to="/about" onClick={handleToggle}>About</Link></li>
+        {window.innerWidth <= 748 && (
+          <>
+            <li><Link to="/cart" onClick={handleToggle}>Cart</Link></li>
+            <li><Link to="/acoount" onClick={handleToggle}>Account</Link></li>
+          </>
+        )}
+        {!(window.innerWidth <= 748) && (<>
+          <li>
+            <div className="search-bar">
+              <input type="text" placeholder="Search..." />
+              <FaSearch />
+            </div>
+          </li>
+        </>)}
       </ul>
-      <ul>
-        <li><Link to="#">Coding2go</Link></li>
-        <li className="hideOnMobile"><Link to="#">Blog</Link></li>
-        <li className="hideOnMobile"><Link to="#">Products</Link></li>
-        <li className="hideOnMobile"><Link to="#">About</Link></li>
-        <li className="hideOnMobile"><Link to="#">Forum</Link></li>
-        <li className="hideOnMobile"><Link to="#">Login</Link></li>
-        <li className="menu-button" onClick={showSidebar}>
-          <Link to="#">
-            <svg xmlns="http://www.w3.org/2000/svg" height="26" viewBox="0 96 960 960" width="26">
-              <path d="M120 816v-60h720v60H120Zm0-210v-60h720v60H120Zm0-210v-60h720v60H120Z" />
-            </svg>
-          </Link>
-        </li>
-      </ul>
+      {!(window.innerWidth <= 748) && (<>
+        <div className="nav-icons">
+          <Link to='/cart' aria-label="Cart"><FaShoppingCart className="icon" /></Link>
+          <Link to='/account' aria-label="Account"><FaUser className="icon" /></Link>
+        </div>
+      </>)}
+      <div className="nav-toggle" onClick={handleToggle} aria-label="Menu Toggle">
+        {isOpen ? <FaTimes /> : <FaBars />}
+      </div>
     </nav>
   );
 };
