@@ -2,6 +2,7 @@ const Order = require('../models/orderModel');
 const tryCatchWrapper = require('../middleware/tryCatchWrapper');
 const ErrorHandler = require('../utils/errorHandler');
 const Product = require('../models/productModel');
+const User = require('../models/userModel');
 
 //Create new order
 exports.newOrder = tryCatchWrapper(async (req, res, next) => {
@@ -93,7 +94,6 @@ async function updateStock(productId, quantity) {
 
 exports.updateOrder = tryCatchWrapper(async (req, res, next) => {
 
-    console.log("reqBody", req.body.status);
     const order = await Order.findById(req.params.id);
 
     if (!order) {
@@ -113,25 +113,21 @@ exports.updateOrder = tryCatchWrapper(async (req, res, next) => {
 
     if (req.body.status === "Delivered") {
         order.deliveredAt = Date.now();
+        let sellerDetails = [];
+        order.orderItems.forEach((item) => {
+            sellerDetails.push({
+                sellerId: item.seller,
+                earning: item.quantity * item.price,
+            });
+        });
+        sellerDetails.forEach(async (slr) => {
+            const seller = await User.findById(slr.sellerId);
+            seller.totalEarningAmount += slr.earning;
+            await seller.save();
+        })
     }
 
     await order.save({ validateBeforeSave: false });
-
-    // order.orderItems.forEach(async (order) => {
-    //     await updateStock(order.product, order.quantity);
-    // });
-
-    // if (req.body.status === "Delivered") {
-    //     order.deliveredAt = Date.now();
-    // }
-
-    // // await order.save({validateBeforeSave: false})
-    // order = await Order.findByIdAndUpdate(req.params.id, req.body, {
-    //     new: true,
-    //     runValidators: true,
-    //     useFindAndModify: false,
-    //     validateBeforeSave: false
-    // });
     res.status(200).json({
         success: true
     });

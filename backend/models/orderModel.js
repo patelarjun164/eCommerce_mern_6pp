@@ -50,6 +50,10 @@ const orderSchema = new mongoose.Schema({
             image: {
                 type: String,
                 required: true
+            },
+            seller: {
+                type: String,
+                required: true
             }
         }
     ],

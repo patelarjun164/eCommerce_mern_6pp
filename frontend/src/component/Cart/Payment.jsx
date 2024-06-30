@@ -46,8 +46,8 @@ const Payment = () => {
       key,
       amount: order.amount,
       currency: "INR",
-      name: "ShoppyNexa",
-      description: "Payment of your purchases at ShoppyNexa.com",
+      name: "ShoppyNexxa",
+      description: "Payment of your purchases at ShoppyNexxa.com",
       image: CompanyLogo,
       order_id: order.id,
       handler: async function (response) {

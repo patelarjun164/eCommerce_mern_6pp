@@ -32,6 +32,7 @@ export const createOrder = (order) => async (dispatch) => {
                 "Content-Type": "application/json",
             },
         }
+        console.log("order", order);
         const { data } = await axios.post("/api/v1/order/new", order, config);
         // console.log(data);
 
