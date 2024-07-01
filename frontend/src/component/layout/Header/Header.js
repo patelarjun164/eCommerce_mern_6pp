@@ -1,56 +1,54 @@
-import React from 'react';
-import { ReactNavbar } from "overlay-navbar";
-import logo from "../../../images/logo.png"
-import { FaSearch, FaShoppingCart } from "react-icons/fa";
-// import {MdAddShoppingCart } from "react-icons/md";
-import { MdAccountCircle } from "react-icons/md";
+import React, { useState } from "react";
+import "./Header.css";
 
-const options = {
-    burgerColorHover: "#eb4034",
-    logo,
-    searchIcon: true,
-    SearchIconElement: FaSearch,
-    profileIcon: true,
-    ProfileIconElement: MdAccountCircle,
-    cartIcon: true,
-    cartIconUrl: "/cart",
-    CartIconElement: FaShoppingCart,
-    logoWidth: "20vmax",
-    navColor1: "white",
-    logoHoverSize: "10px",
-    logoHoverColor: "#eb4034",
-    link1Text: "Home",
-    link2Text: "Products",
-    link3Text: "Contact",
-    link4Text: "About",
-    link1Url: "/",
-    link2Url: "/products",
-    link3Url: "/contact",
-    link4Url: "/about",
-    link1Size: "1.3vmax",
-    link1Color: "#232323cc",
-    nav1justifyContent: "flex-end",
-    nav2justifyContent: "flex-end",
-    nav3justifyContent: "flex-start",
-    nav4justifyContent: "flex-start",
-    link1ColorHover: "#eb4034",
-    link1Margin: "1vmax",
-    profileIconUrl: "/login",
-    profileIconColor: "#232323cc",
-    searchIconColor: "#232323cc",
-    cartIconColor: "#232323cc",
-    profileIconColorHover: "#eb4034",
-    searchIconColorHover: "#eb4034",
-    cartIconColorHover: "#eb4034",
-    cartIconMargin: "1vmax",
-};
+import { NavLink, Link} from "react-router-dom";
 
 const Header = () => {
-    return (
-        <div>
-            <ReactNavbar {...options} />
-        </div>
-    )
-}
+  const [menuOpen, setMenuOpen] = useState(false);
 
-export default Header
+  return (
+    <nav>
+      <Link to="/" className="title">
+        Website
+      </Link>
+      <div className="menu" onClick={() => setMenuOpen(!menuOpen)}>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <ul className={menuOpen ? "open" : ""}>
+        <li>
+          <NavLink to="/">Home</NavLink>
+        </li>
+        <li>
+          <NavLink to="/products">Products</NavLink>
+        </li>
+        <li>
+          <NavLink to="/contact">Contact</NavLink>
+        </li>
+        <li>
+          <NavLink to="/about">About</NavLink>
+        </li>
+        <li>
+          <input type="text" placeholder="Search..." />
+        </li>
+        <li className="cart-profile">
+          <NavLink to="/cart">Cart</NavLink>
+        </li>
+        <li className="cart-profile">
+          <NavLink to="/account">Profile</NavLink>
+        </li>
+      </ul>
+      <ul>
+      <li>
+          <NavLink to="/cart">Cart</NavLink>
+        </li>
+        <li>
+          <NavLink to="/account">Profile</NavLink>
+        </li>
+      </ul>
+    </nav>
+  );
+};
+
+export default Header;
