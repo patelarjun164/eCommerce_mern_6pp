@@ -71,7 +71,7 @@ const ResetPassword = () => {
                   <LockOpenIcon />
                   <input
                     type={PasswordInputType}
-                    placeholder="Password"
+                    placeholder="New Password"
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -85,7 +85,7 @@ const ResetPassword = () => {
                   <LockIcon />
                   <input
                     type={confirmPassInputType}
-                    placeholder="Confirm Password"
+                    placeholder="Confirm New Password"
                     required
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}

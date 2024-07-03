@@ -1,13 +1,11 @@
 .updateProfileContainer {
     width: 100vw;
-    height: 100vh;
+    height: 90vh;
     max-width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: rgb(231, 231, 231);
-    position: fixed;
-    top: 0%;
     left: 0;
   }
   
@@ -113,10 +111,17 @@
   @media screen and (max-width: 600px) {
     .updateProfileContainer {
       background-color: white;
+      height: 86vh;
     }
+
+    .updateProfileHeading {
+      font: 400 3vmax "Roboto";
+    }
+
     .updateProfileBox {
+      padding-top: 10vmax;
       width: 100vw;
-      height: 95vh;
+      height: 80vh;
     }
   
     .updateProfileForm {

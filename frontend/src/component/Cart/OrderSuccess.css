@@ -2,7 +2,7 @@
   margin: auto;
   text-align: center;
   padding: 10vmax;
-  height: 50vh;
+  height: 55vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -27,6 +27,10 @@
 }
 
 @media screen and (max-width: 600px) {
+  .orderSuccess {
+    height: 71vh;
+  }
+
   .orderSuccess > a {
     padding: 3vw 6vw;
     font: 400 4vw "Roboto";

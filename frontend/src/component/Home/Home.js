@@ -35,7 +35,7 @@ const Home = () => {
                 <>
                     <MetaData title="ShoppyNexxa" />
                     <div className="banner">
-                        <p>Welcome to E-commerce</p>
+                        <p>Welcome to ShoppyNexxa</p>
                         <h1>FIND AMAZING PRODUCTS BELOW</h1>
 
                         <a href="#container">

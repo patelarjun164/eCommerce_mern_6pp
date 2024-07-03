@@ -10,7 +10,7 @@ const About = () => {
   return (
     <div className="aboutSection">
       <div></div>
-      <div className="aboutSectionGradient"></div>
+      {/* <div className="aboutSectionGradient"></div> */}
       <div className="aboutSectionContainer">
         <Typography component="h1">About Us</Typography>
 
@@ -26,11 +26,11 @@ const About = () => {
               Visit Instagram
             </Button>
             <span>
-              This is a sample wesbite made by @arjun. If you want make website for your bussiness please contact me. Contact details are mentioned in contacttab section.
+            This website is designed and maintained by Arjun Patel. For professional website development services tailored to your business needs, please get in touch. You can find my contact details in the Contact section of the Navigation Bar.
             </span>
           </div>
           <div className="aboutSectionContainer2">
-            <Typography component="h2">Our Brands</Typography>
+            <Typography component="h2">Let's Connect!</Typography>
             <a
               href="https://github.com/patelarjun164"
               target="blank"

@@ -37,6 +37,10 @@ const Profile = () => {
     }
   };
 
+  const jionedOnYear = String(user.createdAt.slice(0,4));
+  const jionedOnMonth = String(user.createdAt.slice(5,7));
+  const jionedOnDay = String(user.createdAt.slice(8,10));
+
   return (
     <>
       {loading ? (
@@ -61,7 +65,7 @@ const Profile = () => {
               </div>
               <div>
                 <h4>Joined On</h4>
-                <p>{`${String(user.createdAt).substring(0, 10)} (yyyy-mm-dd)`}</p>
+                <p>{`${jionedOnDay}-${jionedOnMonth}-${jionedOnYear}`}</p>
               </div>
 
               <div>

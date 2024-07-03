@@ -1,0 +1,185 @@
+@import url("https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;700&display=swap");
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Titillium Web", sans-serif;
+}
+
+:root {
+  --mainColor: rgb(247, 109, 84);
+  --mainColorLight: #5767aa;
+  --secondaryColor: grey;
+  --textColor: white;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 5vmax;
+  padding: 0 2rem;
+  background-color: var(--mainColor);
+  color: var(--textColor);
+  box-shadow: 0 10px 10px rgba(51, 50, 50, 0.363);
+  z-index: 1000;
+}
+
+.brand-logo {
+  border-radius: 7px;
+  width: 3vmax;
+  margin-top: 0.5vmax;
+  cursor: pointer;
+}
+
+.brand-logo:hover {
+  transition: 0.2s ease-out;
+  scale: 1.1;
+  box-shadow: 3px 3px 5px rgba(53, 52, 52, 0.404);
+}
+
+.searchBar input {
+  background-color: rgba(255, 255, 255, 0.473);
+  width: 17vmax;
+  height: 2.6vmax;
+  margin-left: 0.5vw;
+  padding: 0.3vw 0.8vw;
+  border-radius: 20px;
+  border: none;
+}
+
+.searchBar input:focus {
+  transition: 0.2s ease-out;
+  scale: 1.01;
+  border: none;
+  outline: none;
+  box-shadow: 5px 5px 5px rgba(53, 52, 52, 0.404);
+}
+
+.cart-profile-mobile {
+  display: none;
+}
+
+.mobile-nav-icon {
+  display: none;
+}
+nav a {
+  margin: 0 1rem;
+  color: var(--textColor);
+  font-size: 1.5vw;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+nav a:hover {
+  transition: 0.2s ease-in;
+  color: var(--secondaryColor);
+}
+
+.cart-profile-desktop svg {
+    margin: 0 1rem;
+    color: var(--textColor);
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.cart-profile-desktop svg:hover {
+  transition: 0.2s ease-in;
+  color: var(--secondaryColor);
+}
+
+header .nav-btn {
+  padding: 5px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--textColor);
+  visibility: hidden;
+  opacity: 0;
+  font-size: 1.8rem;
+  display: none;
+}
+
+.searchBar2 {
+  display: none;
+}
+
+header div,
+nav {
+  display: flex;
+  align-items: center;
+}
+
+@media only screen and (width <=700px) {
+  .cart-profile-desktop {
+    display: none;
+  }
+
+  .cart-profile-mobile {
+    display: flex;
+  }
+
+  .mobile-nav-icon {
+    display: inline-block;
+    margin-right: 3vmax;
+  }
+  .brand-logo {
+    width: 4.5vmax;
+    margin-top: 0.5vmax;
+    cursor: pointer;
+  }
+
+  .searchBar input {
+    width: 73vw;
+    height: 5vmax;
+    margin-left: 0vw;
+    padding: 0.5vw 4vw;
+    /* border-radius: px; */
+    border: none;
+    margin-top: 12vmax;
+    margin-left: 6vmax;
+  }
+
+  header {
+    height: 7vmax;
+  }
+  header .nav-btn {
+    display: flex;
+    visibility: visible;
+    opacity: 1;
+  }
+
+  header nav {
+    position: fixed;
+    top: -100vh;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 1.5rem;
+    background-color: var(--mainColor);
+  }
+
+  header .responsive_nav {
+    transform: translateY(100vh);
+    z-index: 100;
+  }
+
+  nav .nav-close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 2rem;
+  }
+
+  nav a {
+    font-size: 1.5rem;
+    margin-left: 7vmax;
+    margin-top: 2vmax;
+  }
+}

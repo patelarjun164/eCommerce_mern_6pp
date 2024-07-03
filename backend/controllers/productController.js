@@ -40,10 +40,10 @@ exports.createProduct = tryCatchWrapper(async (req, res, next) => {
 //Get all products
 exports.getAllProducts = tryCatchWrapper(async (req, res, next) => {
 
-    const resultPerPage = 4;
+    const resultPerPage = 8;
     const productsCount = await Product.countDocuments();
 
-    const apiFeature = new ApiFeatures(Product.find(), req.query)
+    const apiFeature = new ApiFeatures(Product.find().sort({ createdAt: -1 }), req.query)
         .search()
         .filter()
 

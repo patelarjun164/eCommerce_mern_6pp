@@ -1,5 +1,4 @@
 #footer {
-  margin-top: 10vmax;
   margin-bottom: 0;
   padding: 2vmax;
   background-color: rgb(34, 33, 33);
@@ -98,7 +97,7 @@
 
   .midFooter > h1 {
     margin-bottom: 1vmax;
-    font-size: 3vmax;
+    font-size: 2.2vmax;
     font-family: "Roboto";
   }
   

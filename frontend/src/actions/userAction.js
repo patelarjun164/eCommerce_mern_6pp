@@ -121,14 +121,7 @@ export const register = (userData) => async (dispatch) => {
 
 
     } catch (error) {
-        let errorMessage;
-        if(error.name === 'NotAllowedError'){
-            errorMessage = "Registration was canceled by the user or timed out. Please try again"
-        }
-        else {
-            errorMessage = error.message;
-        }
-        dispatch({ type: REGISTER_USER_FAIL, payload: errorMessage })
+        dispatch({ type: REGISTER_USER_FAIL, payload: error.response.data.message })
     }
 }
 
@@ -155,7 +148,14 @@ export const bioAuthRegister = () => async (dispatch) => {
         });
 
     } catch (error) {
-        dispatch({ type: BIOAUTH_REGISTER_FAIL, payload: error.message });
+        let errorMessage;
+        if(error.name === 'NotAllowedError'){
+            errorMessage = "Registration was canceled by the user or timed out. Please try again"
+        }
+        else {
+            errorMessage = error.message;
+        }
+        dispatch({ type: BIOAUTH_REGISTER_FAIL, payload: errorMessage });
     }
 }
 

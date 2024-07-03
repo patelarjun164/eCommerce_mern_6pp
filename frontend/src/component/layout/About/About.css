@@ -5,27 +5,17 @@
     background-color: white;
     display: grid;
     grid-template-columns: 4fr 4fr;
-    position: fixed;
-  }
-  
-  .aboutSectionGradient {
-    background-image: linear-gradient(
-      to bottom right,
-      rgb(78, 81, 255),
-      rgb(74, 137, 189)
-    );
   }
   
   .aboutSectionContainer {
     position: absolute;
     left: 50%;
-    top: 50%;
+    top: 55%;
     background-color: rgb(255, 255, 255);
     width: 80vw;
     height: 80vh;
     transform: translateX(-50%) translateY(-50%);
-    box-shadow: -10px 10px 10px rgba(0, 0, 0, 0.192);
-  
+    box-shadow: -10px 10px 10px rgba(0, 0, 0, 0.192), 10px -10px 10px rgba(0, 0, 0, 0.192);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -90,6 +80,11 @@
   }
   
   @media screen and (max-width: 600px) {
+    .aboutSection {
+      height: 90vh;
+    }
+    
+
     .aboutSectionContainer > div {
       display: block;
     }

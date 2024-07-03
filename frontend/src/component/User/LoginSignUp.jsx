@@ -84,8 +84,6 @@ const LoginSignUp = () => {
   };
 
   const searchParams = new URLSearchParams(location.search);
-  // console.log(`searchParams:  ${searchParams}`);
-  // console.log(`searchParams.get('redirect'): ${searchParams.get('redirect')}`);
   const redirect = searchParams.get("redirect") || "account";
   //after evolution, if searchParams having redirect query than redirect value become 'shipping' not '/shipping'
   //so navigate(shipping) will not work so we have to provide "/" prefix redirect

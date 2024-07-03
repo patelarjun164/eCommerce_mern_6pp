@@ -7,7 +7,7 @@ import { useAlert } from "react-alert";
 import "./Payment.css";
 import axios from "axios";
 import { createOrder, clearErrors } from "../../actions/orderActions";
-import CompanyLogo from "../../images/logo.png";
+import CompanyLogo from "../../images/ShoppyNexxa Logo.png";
 
 const Payment = () => {
   const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));

@@ -5,7 +5,7 @@
   border-left: 1px solid rgba(0, 0, 0, 0.158);
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 150vh;
 }
 .newProductContainer h1 {
   color: rgba(0, 0, 0, 0.733);
@@ -18,10 +18,11 @@
   flex-direction: column;
   align-items: center;
   margin: auto;
+  margin-top: 5%;
   padding: 3vmax;
   justify-content: space-evenly;
   height: 70%;
-  width: 40vh;
+  width: 60vh;
   background-color: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.267);
 }
@@ -106,7 +107,8 @@
     background-color: rgb(255, 255, 255);
   }
   .createProductForm {
-    padding: 5vmax;
+    padding: 3vmax;
+    width: 40vmax;
   }
 
   .createProductForm > div > input,

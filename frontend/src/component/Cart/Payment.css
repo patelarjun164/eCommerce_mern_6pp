@@ -19,7 +19,7 @@
 
 @media screen and (max-width: 600px) {
     .paymentContainer {
-        min-height: 51vh;
+        min-height: 58vh;
     }
 
     .paymentContainer button {
