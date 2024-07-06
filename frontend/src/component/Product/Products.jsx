@@ -114,7 +114,7 @@ const Products = () => {
                 onChange={(e, newRating) => {
                   setRatings(newRating);
                 }}
-                valueLabelDisplay="on"
+                valueLabelDisplay="auto"
                 shiftStep={3}
                 marks
                 step={1}

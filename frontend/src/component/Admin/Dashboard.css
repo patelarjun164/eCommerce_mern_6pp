@@ -39,6 +39,7 @@
   width: 100%;
   margin: 0 2rem;
 }
+
 .dashboardSummaryBox2 > a {
   color: rgb(0, 0, 0);
   font: 300 2rem "Roboto";
@@ -54,6 +55,14 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
+
+.dashboardSummaryBox2 > a > p {
+  color: rgb(0, 0,0);
+}
+
+.dashboardSummaryBox2 > a:last-child > p {
+  color: rgb(255, 255, 255) ;
 }
 
 .dashboardSummaryBox2 > a:first-child {
@@ -93,8 +102,5 @@
     padding: 0.5rem;
     margin: 1rem;
     font: 300 0.9rem "Roboto";
-  }
-  .lineChart, .doughnutChart {
-    margin-top: 5vmax;
   }
 }

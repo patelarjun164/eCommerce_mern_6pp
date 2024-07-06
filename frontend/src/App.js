@@ -39,6 +39,8 @@ import store from './store.js';
 import ScrollToTop from './component/Hooks/ScrollToTop.js';
 import About from './component/layout/About/About.jsx';
 import Contact from './component/layout/Contact/Conatct.jsx'
+import EmailVerify from './component/EmailVerify/EmailVerify.jsx';
+import Tribute from './component/Route/Tribute/Tribute.jsx';
 
 function App() {
   const { user, isAuthenticated, loading } = useSelector(state => state.user);
@@ -69,6 +71,7 @@ function App() {
 
         <Route path='/about' element={<About />} />
         <Route path='/contact' element={<Contact />} />
+        <Route path='/aashish' element={<Tribute />} />
 
         <Route extact path='/search' element={<Search />} />
         <Route extact path='/login' element={<LoginSignUp />} />
@@ -76,6 +79,7 @@ function App() {
 
         <Route exact path='/password/forgot' element={<ForgotPassword />} />
         <Route exact path='/password/reset/:token' element={<ResetPassword />} />
+        <Route exact path='/user/:id/verify/:verificationToken' element={<EmailVerify />} />
 
         <Route element={<ProtectedRoute />}>
           <Route exact path='/account' element={<Profile />} />

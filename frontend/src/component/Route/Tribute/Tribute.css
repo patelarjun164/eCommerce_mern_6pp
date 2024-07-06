@@ -1,0 +1,65 @@
+/* src/TributePage.css */
+.tribute-page {
+    text-align: center;
+    padding: 20px;
+}
+
+.header {
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+.header p {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+}
+
+.photo-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.photo-container {
+    margin: 10px;
+    flex: 1 1 calc(25% - 20px);
+    box-sizing: border-box;
+    filter: drop-shadow(2px 2px 5px rgba(59, 59, 59, 0.507));
+    /* box-shadow: 5px 5px 10px rgba(59, 59, 59, 0.61); */
+}
+
+.photo {
+    width: 100%;
+    height: auto;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 1200px) {
+    .photo-container {
+        flex: 1 1 calc(33.333% - 20px);
+    }
+}
+
+@media (max-width: 992px) {
+    .photo-container {
+        flex: 1 1 calc(50% - 20px);
+    }
+}
+
+@media (max-width: 768px) {
+    .photo-container {
+        flex: 1 1 calc(50% - 20px);
+    }
+}
+
+@media (max-width: 576px) {
+    .photo-container {
+        flex: 1 1 calc(50% - 20px);
+    }
+}

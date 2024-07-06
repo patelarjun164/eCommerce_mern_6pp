@@ -14,7 +14,13 @@ exports.isAuthenticatedUser = tryCatchWrapper(async (req, res, next) => {
         const decodedData = jwt.verify(token, process.env.JWT_SECRET);
         // console.log(decodedData);
 
-        req.user = await User.findById(decodedData.id);
+        const user = await User.findById(decodedData.id);
+
+        if (!user.emailVerified) {
+            return next(new ErrorHandler("Email verification required. Please check your inbox and verify your email to log in.", 403));
+        }
+
+        req.user = user;
         // console.log(req.user);
         next();
     } catch (error) {

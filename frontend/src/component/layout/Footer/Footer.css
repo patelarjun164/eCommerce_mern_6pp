@@ -21,6 +21,7 @@
 }
 
 .leftFooter > p {
+  color: white;
   text-align: center;
   font-size: 1.2vmax;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
@@ -45,6 +46,7 @@
   color: #eb4034;
 }
 .midFooter > p {
+  color: white;
   max-width: 60%;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   margin: 1vmax auto;

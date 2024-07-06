@@ -43,6 +43,9 @@ import {
     BIOAUTH_REGISTER_REQUEST,
     BIOAUTH_REGISTER_SUCCESS,
     BIOAUTH_REGISTER_FAIL,
+    EMAIL_VERIFICATION_SUCCESS,
+    EMAIL_VERIFICATION_REQUEST,
+    EMAIL_VERIFICATION_FAIL,
 } from '../constants/userConstants';
 import { startAuthentication, startRegistration } from "@simplewebauthn/browser";
 
@@ -59,11 +62,16 @@ export const login = (email, password) => async (dispatch) => {
             config,
         );
 
-        dispatch({
-            type: LOGIN_SUCCESS,
-            payload: data.user,
-        })
+        if (data.mailSent) {
+            dispatch({ type: LOGIN_FAIL, emailVerification: !data.mailSent })
+        } else {
+            dispatch({
+                type: LOGIN_SUCCESS,
+                payload: data.user,
+            })
+        }
     } catch (error) {
+        // console.log("error", error);
         dispatch({ type: LOGIN_FAIL, payload: error.response.data.message })
     }
 }
@@ -80,22 +88,23 @@ export const bioAuthLogin = (email) => async (dispatch) => {
         let asseResp = await startAuthentication(resp.data.options);
         // console.log("authResult",asseResp);
 
-        const verificationResp = await axios.post("/api/v1/bioauth/login-verify", {email: email,authResult: asseResp }, config);
+        const verificationResp = await axios.post("/api/v1/bioauth/login-verify", { email: email, authResult: asseResp }, config);
 
-        console.log("verificationResp", verificationResp);
-        if(verificationResp.data.success){
+        // console.log("verificationResp", verificationResp);
+        if (verificationResp.data.mailSent) {
+            dispatch({ type: LOGIN_FAIL, emailVerification: !verificationResp.data.mailSent })
+        }
+        else if (verificationResp.data.success) {
             dispatch({
                 type: BIOAUTH_LOGIN_SUCCESS,
                 payload: verificationResp.data.user,
             })
         }
     } catch (error) {
-        let errorMessage;
-        if(error.name === 'NotAllowedError'){
+        // console.log("Error bioauth", error.response.data.message);
+        let errorMessage = error.response.data.message;
+        if (error.name === 'NotAllowedError') {
             errorMessage = "Authentication was canceled by the user or timed out. Please try again"
-        }
-        else {
-            errorMessage = error.message;
         }
         dispatch({ type: BIOAUTH_LOGIN_FAIL, payload: errorMessage })
     }
@@ -140,7 +149,7 @@ export const bioAuthRegister = () => async (dispatch) => {
             }
         }
 
-        const verificationResp = await axios.post("/api/v1/bioauth/verify-registration", {cred: attResp},config);
+        const verificationResp = await axios.post("/api/v1/bioauth/verify-registration", { cred: attResp }, config);
 
         dispatch({
             type: BIOAUTH_REGISTER_SUCCESS,
@@ -149,13 +158,29 @@ export const bioAuthRegister = () => async (dispatch) => {
 
     } catch (error) {
         let errorMessage;
-        if(error.name === 'NotAllowedError'){
+        if (error.name === 'NotAllowedError') {
             errorMessage = "Registration was canceled by the user or timed out. Please try again"
         }
         else {
             errorMessage = error.message;
         }
         dispatch({ type: BIOAUTH_REGISTER_FAIL, payload: errorMessage });
+    }
+}
+
+//Verify Email
+export const verifyEmail = (verificationToken) => async (dispatch) => {
+    try {
+        dispatch({ type: EMAIL_VERIFICATION_REQUEST });
+
+        const { data } = await axios.post(`/api/v1/email-verification/verify-token/${verificationToken}`);
+
+        dispatch({
+            type: EMAIL_VERIFICATION_SUCCESS,
+            payload: data.success,
+        })
+    } catch (error) {
+        dispatch({ type: EMAIL_VERIFICATION_FAIL, payload: error.response.data.message })
     }
 }
 

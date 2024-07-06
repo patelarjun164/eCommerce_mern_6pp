@@ -41,10 +41,13 @@ import {
     DELETE_USER_SUCCESS,
     DELETE_USER_FAIL,
     DELETE_USER_RESET,
-    CLEAR_ERRORS,
     BIOAUTH_REGISTER_REQUEST,
     BIOAUTH_REGISTER_SUCCESS,
     BIOAUTH_REGISTER_FAIL,
+    EMAIL_VERIFICATION_REQUEST,
+    EMAIL_VERIFICATION_SUCCESS,
+    EMAIL_VERIFICATION_FAIL,
+    CLEAR_ERRORS,
 } from '../constants/userConstants';
 
 export const userReducer = (state = { user: {} }, action) => {
@@ -86,6 +89,7 @@ export const userReducer = (state = { user: {} }, action) => {
                 loading: false,
                 isAuthenticated: false,
                 user: null,
+                emailVerification: action.emailVerification,
                 error: action.payload,
             }
 
@@ -156,6 +160,7 @@ export const profileReducer = (state = {}, action) => {
         case UPDATE_PASSWORD_REQUEST:
         case UPDATE_USER_REQUEST:
         case DELETE_USER_REQUEST:
+        case EMAIL_VERIFICATION_REQUEST:
             return {
                 ...state,
                 loading: true,
@@ -169,7 +174,12 @@ export const profileReducer = (state = {}, action) => {
                 loading: false,
                 isUpdated: action.payload,
             }
-
+        case EMAIL_VERIFICATION_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                emailVerified: action.payload,
+            }
         case DELETE_USER_SUCCESS:
             return {
                 ...state,
@@ -188,6 +198,14 @@ export const profileReducer = (state = {}, action) => {
                 error: action.payload,
             }
 
+        case EMAIL_VERIFICATION_FAIL:
+            return {
+                ...state,
+                loading: false,
+                emailVerified: false,
+                error: action.payload,
+            }
+
         case UPDATE_PROFILE_RESET:
         case UPDATE_PASSWORD_RESET:
         case UPDATE_USER_RESET:
@@ -195,6 +213,7 @@ export const profileReducer = (state = {}, action) => {
                 ...state,
                 isUpdated: false,
             }
+
 
         case DELETE_USER_RESET:
             return {
@@ -316,6 +335,8 @@ export const userDetailsReducer = (state = { user: {} }, action) => {
                 ...state,
                 error: null,
             };
+
+
 
         default:
             return state;

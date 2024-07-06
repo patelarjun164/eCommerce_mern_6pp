@@ -25,7 +25,7 @@
     text-decoration: none;
     color: rgba(0, 0, 0, 0.493);
     font: 200 1rem "Roboto";
-    padding: 2rem;
+    padding: 1rem 2rem;
     transition: all 0.5s;
   }
   .sidebar a:hover {
@@ -34,11 +34,23 @@
     /* transform: scale(1.020); */
   }
   
-  .sidebar a > P {
+  .sidebar a > p {
     display: flex;
     align-items: center;
   }
+
+  .treeItemLabel {
+    color:  rgb(0, 0, 0);
+    font-size: 1rem;
+  }
+
+  .MuiTreeItem-iconContainer svg {
+    color: black !important;
+    font-size: 1.3rem !important;
+  }
+  
   .sidebar a > p > svg {
+    font-size: 1.3rem;
     margin-right: 0.5rem;
   }
   
@@ -48,7 +60,7 @@
 
   @media screen and (max-width: 600px) {
     .sidebar {
-      padding: 2rem 0 2rem 5vmax;
+      padding: 2rem 0 0rem 5vmax;
       justify-content: center;
       align-items: center;
     }
@@ -62,13 +74,17 @@
     }
     .sidebar > a {
       width: 50%;
-    }
-    .sidebar a {
-      padding: 1.3rem;
+      padding: 0.8rem;
     }
     .sidebar a:hover {
       transform: scale(1.020);
     }
+    .sidebar a > P {
+      display: flex;
+      align-items: center;
+      font-size: 1rem;
+    }
+    
     /* .p-tag {
       font-size: 5rem;
     } */

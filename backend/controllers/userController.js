@@ -5,6 +5,9 @@ const sendToken = require('../utils/jwtToken');
 const sendEmail = require('../utils/sendEmail');
 const crypto = require('crypto');
 const cloudinary = require('cloudinary');
+const sendVerificationEmail = require('../utils/sendVerificationEmail');
+
+
 
 //Register a User 
 exports.registerUser = tryCatchWrapper(async (req, res, next) => {
@@ -24,7 +27,9 @@ exports.registerUser = tryCatchWrapper(async (req, res, next) => {
         },
     });
 
-    sendToken(user, 201, res);
+    await sendVerificationEmail(user, res);
+
+    // sendToken(user, 201, res);
 });
 
 //Login User
@@ -51,7 +56,12 @@ exports.loginUser = tryCatchWrapper(async (req, res, next) => {
         return (next(new ErrorHandler("Invalid Email Or Password", 401)))
     }
 
-    sendToken(user, 200, res);
+    if(user.emailVerified) {
+        sendToken(user, 200, res);
+    } else {
+        await sendVerificationEmail(user, res);
+        return;
+    }
 });
 
 //Logout User
@@ -142,6 +152,41 @@ exports.resetPassword = tryCatchWrapper(async (req, res, next) => {
     sendToken(user, 200, res);
 });
 
+//Generet Email For User verification - Used for resent Only
+exports.generateVerfEmail = tryCatchWrapper(async (req, res, next) => {
+    const user = await User.findById(req.params.id);
+    await  sendVerificationEmail(user, res);
+})
+
+//Verify Email
+exports.verifyEmail = tryCatchWrapper(async (req, res, next) => {
+    //Creating token hash
+    const emailVerificationToken = crypto
+        .createHash("sha256")
+        .update(req.params.token)
+        .digest("hex");
+
+    const user = await User.findOne({
+        emailVerificationToken,
+        emailVerificationExpire: { $gt: Date.now() },
+    })
+
+    if (!user) {
+        return next(new ErrorHandler("Email Verification Token is invalid or has been expired", 400));
+    }
+
+    user.emailVerified = true;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+
+    await user.save();
+    req.user = user;
+    res.status(200).json({
+        success: true,
+        message: `Verify User Successfully...!`,
+    });
+});
+
 //Get User Details
 exports.getUserDetails = tryCatchWrapper(async (req, res, next) => {
 
@@ -193,7 +238,7 @@ exports.updateProfile = tryCatchWrapper(async (req, res, next) => {
     }
     if (req.body.avatar !== undefined) {
         const user = await User.findById(req.user.id);
-        
+
         const imageId = user.avatar.public_id;
 
         await cloudinary.v2.uploader.destroy(imageId);

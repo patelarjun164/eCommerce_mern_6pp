@@ -77,7 +77,7 @@
   width: 10vmax;
   position: absolute;
   left: 4vmax;
-  top: 12vmax;
+  top: 16.5vmax;
 }
 
 .categoryBox {
@@ -100,6 +100,7 @@
 .filterBox > fieldset {
   border: 1px solid rgba(0, 0, 0, 0.363);
   margin-top: 0.5vmax;
+  padding: 0.2vmax 1vmax;
 }
 
 

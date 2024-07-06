@@ -2,6 +2,7 @@ const tryCatchWrapper = require('../middleware/tryCatchWrapper');
 const User = require('../models/userModel');
 const ErrorHandler = require('../utils/errorHandler');
 const sendToken = require('../utils/jwtToken');
+const sendVerificationEmail = require('../utils/sendVerificationEmail');
 const crypto = require('crypto');
 const {
     generateRegistrationOptions,
@@ -90,7 +91,7 @@ exports.loginChallenge = tryCatchWrapper(async (req, res, next) => {
         return (next(new ErrorHandler("Invalid Email or Password", 401)));
     }
 
-    if (!user.registrationOptions) {
+    if (user.registrationOptions === undefined) {
         return next(new ErrorHandler("To use Passwordless login, you need to register your biometrics first...!", 404));
     }
 
@@ -136,13 +137,19 @@ exports.loginVerify = tryCatchWrapper(async (req, res, next) => {
     const { authenticationInfo, verified } = verification;
     const { newCounter } = authenticationInfo;
     if (verified) {
-        user.currentAuthOptions = {};
-        await User.updateOne(
-            { email: user.email, [`passkeys.${index}`]: { $exists: true } },
-            { $set: { [`passkeys.${index}.counter`]: newCounter } }
-        );
-        await user.save();
-        sendToken(user, 200, res);
+
+        if (user.emailVerified) {
+            user.currentAuthOptions = {};
+            await User.updateOne(
+                { email: user.email, [`passkeys.${index}`]: { $exists: true } },
+                { $set: { [`passkeys.${index}.counter`]: newCounter } }
+            );
+            await user.save();
+            sendToken(user, 200, res);
+        } else {
+            await sendVerificationEmail(user, res);
+            return;
+        }
     } else {
         return (next(new ErrorHandler("Fingerprint verification failed. Please try again.", 401)))
     }

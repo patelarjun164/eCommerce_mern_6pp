@@ -32,10 +32,10 @@ function Navbar() {
   }
 
   useEffect(() => {
-    if(!location.pathname.includes("/products/")) {
+    if (!location.pathname.includes("/products/")) {
       searchRef.current.placeholder = "Type and press Enter to search...";
     }
-}, [location]);
+  }, [location]);
 
   return (
     <header>
@@ -55,8 +55,15 @@ function Navbar() {
           </form>
 
         </div>
+
         <Link to="/" onClick={showNavbar}>
           <FaHouseUser className="mobile-nav-icon" />Home
+        </Link>
+        <Link to="/account" className="cart-profile-mobile" onClick={showNavbar}>
+          <FaUser className="mobile-nav-icon" />Profile
+        </Link>
+        <Link to="/cart" className="cart-profile-mobile" onClick={showNavbar}>
+          <FaShoppingCart className="mobile-nav-icon" />Cart
         </Link>
         <Link to="/products" onClick={showNavbar}>
           <FaProductHunt className="mobile-nav-icon" />Products
@@ -66,13 +73,6 @@ function Navbar() {
         </Link>
         <Link to="/about" onClick={showNavbar}>
           <FaBuilding className="mobile-nav-icon" />About
-        </Link>
-        <Link to="/cart" className="cart-profile-mobile" onClick={showNavbar}>
-          <FaShoppingCart className="mobile-nav-icon" />Cart
-        </Link>
-
-        <Link to="/account" className="cart-profile-mobile" onClick={showNavbar}>
-          <FaUser className="mobile-nav-icon" />Profile
         </Link>
 
         <button

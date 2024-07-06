@@ -23,7 +23,7 @@ const LoginSignUp = () => {
   const location = useLocation();
 
   const [PasswordInputType, ToggleIcon] = usePasswordToggle();
-  const { error, loading, isAuthenticated } = useSelector(
+  const { error, loading, isAuthenticated, user: userFromState, emailVerification } = useSelector(
     (state) => state.user
   );
 
@@ -94,10 +94,18 @@ const LoginSignUp = () => {
       dispatch(clearErrors());
     }
 
-    if (isAuthenticated) {
+    if(emailVerification === false){
+      navigate(`/login`);
+      alert.error("Verify your email to onboard...!");
+      setTimeout(()=> {
+        alert.info(" A verification email has been sent. Please check your inbox (or spam folder) and follow the instructions to verify your email.")
+      },1500);
+    }
+
+    if (userFromState && isAuthenticated) {
       navigate(`/${redirect}`);
     }
-  }, [dispatch, error, alert, isAuthenticated, navigate, redirect]);
+  }, [dispatch, error, alert, isAuthenticated, navigate, redirect, user, userFromState, emailVerification]);
 
   const switchTabs = (e, tab) => {
     if (tab === "login") {
