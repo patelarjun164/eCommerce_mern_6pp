@@ -94,9 +94,8 @@ exports.forgotPassword = tryCatchWrapper(async (req, res, next) => {
 
     // const resetPasswordUrl = `${req.protocol}://${req.get("host")}/password/reset/${resetToken}`;
     const resetPasswordUrl = `${process.env.FRONTEND_URL}/password/reset/${resetToken}`;
-    const resetPasswordUrl2 = `${process.env.MOBILE_FRONTEND_URL}/password/reset/${resetToken}`;
 
-    const message = `Your password reset token is :- \n\n ${resetPasswordUrl} \n\n or \n\n ${resetPasswordUrl2} \n\n If you have not requested this email then, please ignore it`;
+    const message = `Hi ${user.name},\n\nWe received a request to reset your password for your account. Click the link below to reset your password:\n\n${resetPasswordUrl}\n\nIf you did not request a password reset, please ignore this email. This link will expire in 24 hours.\n\nThank you,\nThe ShoppyNexxa Team`;
 
     try {
 
