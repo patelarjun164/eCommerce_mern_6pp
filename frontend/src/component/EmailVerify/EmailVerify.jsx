@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import axios from "axios";
 import success from "../../images/success.png";
 import failure from "../../images/failure.png";
 import "./EmailVerify.css";
@@ -8,6 +7,7 @@ import Loader from "../layout/Loader/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { verifyEmail } from "../../actions/userAction";
 import { useAlert } from "react-alert";
+import api from "../../api";
 
 const EmailVerify = () => {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ const EmailVerify = () => {
   );
 
   const handleResendClick = async () => {
-    const { data } = await axios.post(
+    const { data } = await api.post(
       `/api/v1/email-verification/generate-email/${id}`
     );
     if (data.mailSent) {

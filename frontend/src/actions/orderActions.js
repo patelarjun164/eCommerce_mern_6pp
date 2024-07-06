@@ -20,7 +20,7 @@ import {
     UPDATE_ORDER_FAIL,
 } from "../constants/orderConstants";
 
-import axios from "axios";
+import api from "../api.js";
 
 //Create order
 export const createOrder = (order) => async (dispatch) => {
@@ -33,7 +33,7 @@ export const createOrder = (order) => async (dispatch) => {
             },
         }
         console.log("order", order);
-        const { data } = await axios.post("/api/v1/order/new", order, config);
+        const { data } = await api.post("/api/v1/order/new", order, config);
         // console.log(data);
 
         dispatch({ type: CREATE_ORDER_SUCCESS, payload: data });
@@ -51,7 +51,7 @@ export const myOrders = () => async (dispatch) => {
     try {
         dispatch({ type: MY_ORDERS_REQUEST });
 
-        const { data } = await axios.get("/api/v1/orders/me");
+        const { data } = await api.get("/api/v1/orders/me");
         // console.log(data);
 
         dispatch({ type: MY_ORDERS_SUCCESS, payload: data.orders });
@@ -69,7 +69,7 @@ export const getOrderDetails = (orderId) => async (dispatch) => {
     try {
         dispatch({ type: ORDER_DETAILS_REQUEST });
 
-        const { data } = await axios.get(`/api/v1/order/${orderId}`);
+        const { data } = await api.get(`/api/v1/order/${orderId}`);
 
         dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data.order });
 
@@ -86,7 +86,7 @@ export const getAllOrders = () => async (dispatch) => {
     try {
         dispatch({ type: ALL_ORDERS_REQUEST });
 
-        const { data } = await axios.get(`/api/v1/admin/orders`);
+        const { data } = await api.get(`/api/v1/admin/orders`);
 
         dispatch({ type: ALL_ORDERS_SUCCESS, payload: data.orders });
 
@@ -103,7 +103,7 @@ export const deleteOrder = (orderId) => async (dispatch) => {
     try {
         dispatch({ type: DELETE_ORDER_REQUEST });
 
-        const { data } = await axios.delete(`/api/v1/admin/order/${orderId}`);
+        const { data } = await api.delete(`/api/v1/admin/order/${orderId}`);
 
         dispatch({ type: DELETE_ORDER_SUCCESS, payload: data.success });
 
@@ -126,7 +126,7 @@ export const updateOrder = (id, order) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.put(
+    const { data } = await api.put(
       `/api/v1/admin/order/${id}`,
       order,
       config

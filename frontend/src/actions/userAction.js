@@ -1,4 +1,4 @@
-import axios from 'axios';
+import api from "../api.js";
 
 import {
     LOGIN_REQUEST,
@@ -56,7 +56,7 @@ export const login = (email, password) => async (dispatch) => {
 
         const config = { headers: { "Content-Type": "application/json" } }
 
-        const { data } = await axios.post(
+        const { data } = await api.post(
             `/api/v1/login`,
             { email, password },
             config,
@@ -82,13 +82,13 @@ export const bioAuthLogin = (email) => async (dispatch) => {
 
         const config = { headers: { "Content-Type": "application/json" } }
 
-        const resp = await axios.post("/api/v1/bioauth/generate-authentication-options", { email }, config);
+        const resp = await api.post("/api/v1/bioauth/generate-authentication-options", { email }, config);
 
 
         let asseResp = await startAuthentication(resp.data.options);
         // console.log("authResult",asseResp);
 
-        const verificationResp = await axios.post("/api/v1/bioauth/login-verify", { email: email, authResult: asseResp }, config);
+        const verificationResp = await api.post("/api/v1/bioauth/login-verify", { email: email, authResult: asseResp }, config);
 
         // console.log("verificationResp", verificationResp);
         if (verificationResp.data.mailSent) {
@@ -117,7 +117,7 @@ export const register = (userData) => async (dispatch) => {
 
         const config = { headers: { "Content-Type": "multipart/form-data" } }
 
-        const { data } = await axios.post(
+        const { data } = await api.post(
             `/api/v1/register`,
             userData,
             config,
@@ -138,7 +138,7 @@ export const register = (userData) => async (dispatch) => {
 export const bioAuthRegister = () => async (dispatch) => {
     try {
         dispatch({ type: BIOAUTH_REGISTER_REQUEST });
-        const resp = await axios.get("/api/v1/bioauth/generate-registration-options");
+        const resp = await api.get("/api/v1/bioauth/generate-registration-options");
 
         // Pass the options to the authenticator and wait for a response
         let attResp = await startRegistration(resp.data.options);
@@ -149,7 +149,7 @@ export const bioAuthRegister = () => async (dispatch) => {
             }
         }
 
-        const verificationResp = await axios.post("/api/v1/bioauth/verify-registration", { cred: attResp }, config);
+        const verificationResp = await api.post("/api/v1/bioauth/verify-registration", { cred: attResp }, config);
 
         dispatch({
             type: BIOAUTH_REGISTER_SUCCESS,
@@ -173,7 +173,7 @@ export const verifyEmail = (verificationToken) => async (dispatch) => {
     try {
         dispatch({ type: EMAIL_VERIFICATION_REQUEST });
 
-        const { data } = await axios.post(`/api/v1/email-verification/verify-token/${verificationToken}`);
+        const { data } = await api.post(`/api/v1/email-verification/verify-token/${verificationToken}`);
 
         dispatch({
             type: EMAIL_VERIFICATION_SUCCESS,
@@ -189,7 +189,7 @@ export const loadUser = () => async (dispatch) => {
     try {
         dispatch({ type: LOAD_USER_REQUEST });
 
-        const { data } = await axios.get("/api/v1/me");
+        const { data } = await api.get("/api/v1/me");
 
         dispatch({
             type: LOAD_USER_SUCCESS,
@@ -204,7 +204,7 @@ export const loadUser = () => async (dispatch) => {
 export const logout = () => async (dispatch) => {
     try {
 
-        await axios.get("/api/v1/logout");
+        await api.get("/api/v1/logout");
 
         dispatch({ type: LOGOUT_SUCCESS });
     } catch (error) {
@@ -219,7 +219,7 @@ export const updateProfile = (userData) => async (dispatch) => {
 
         const config = { headers: { "Content-Type": "multipart/form-data" } };
 
-        const { data } = await axios.put(`/api/v1/me/update`, userData, config);
+        const { data } = await api.put(`/api/v1/me/update`, userData, config);
 
         dispatch({
             type: UPDATE_PROFILE_SUCCESS,
@@ -238,7 +238,7 @@ export const updatePassword = (passwords) => async (dispatch) => {
 
         const config = { headers: { "Content-Type": "application/json" } };
 
-        const { data } = await axios.put(
+        const { data } = await api.put(
             `/api/v1/password/update`,
             passwords,
             config
@@ -261,7 +261,7 @@ export const forgotPassword = (email) => async (dispatch) => {
 
         const config = { headers: { "Content-Type": "application/json" } };
 
-        const { data } = await axios.post('/api/v1/password/forgot', email, config);
+        const { data } = await api.post('/api/v1/password/forgot', email, config);
 
         dispatch({
             type: FORGOT_PASSWORD_SUCCESS,
@@ -280,7 +280,7 @@ export const resetPassword = (token = "", passwords) => async (dispatch) => {
 
         const config = { headers: { "Content-Type": "application/json" } };
 
-        const { data } = await axios.put(
+        const { data } = await api.put(
             `/api/v1/password/reset/${token}`,
             passwords,
             config
@@ -308,7 +308,7 @@ export const getAllUsers = () => async (dispatch) => {
     try {
 
         dispatch({ type: ALL_USER_REQUEST });
-        const { data } = await axios.get("/api/v1/admin/users");
+        const { data } = await api.get("/api/v1/admin/users");
 
         dispatch({ type: ALL_USER_SUCCESS, payload: data.users });
     } catch (error) {
@@ -321,7 +321,7 @@ export const getUserDetails = (id) => async (dispatch) => {
     try {
 
         dispatch({ type: USER_DETAILS_REQUEST });
-        const { data } = await axios.get(`/api/v1/admin/user/${id}`);
+        const { data } = await api.get(`/api/v1/admin/user/${id}`);
 
         dispatch({ type: USER_DETAILS_SUCCESS, payload: data.user });
     } catch (error) {
@@ -336,7 +336,7 @@ export const updateUser = (id, userData) => async (dispatch) => {
 
         const config = { headers: { "Content-Type": "application/json" } };
 
-        const { data } = await axios.put(
+        const { data } = await api.put(
             `/api/v1/admin/user/${id}`,
             userData,
             config
@@ -356,7 +356,7 @@ export const deleteUser = (id) => async (dispatch) => {
     try {
         dispatch({ type: DELETE_USER_REQUEST });
 
-        const { data } = await axios.delete(`/api/v1/admin/user/${id}`);
+        const { data } = await api.delete(`/api/v1/admin/user/${id}`);
 
         dispatch({ type: DELETE_USER_SUCCESS, payload: data });
     } catch (error) {

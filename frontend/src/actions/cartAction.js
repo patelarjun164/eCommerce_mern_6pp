@@ -1,9 +1,9 @@
-import axios from 'axios';
+import api from "../api.js";
 import { ADD_TO_CART, REMOVE_CART_ITEM, SAVE_SHIPPING_INFO } from "../constants/cartConstants";
 
 //Add To Cart
 export const addItemsToCart = (id, quantity) => async (dispatch, getState) => {
-    const { data } = await axios.get(`/api/v1/product/${id}`);
+    const { data } = await api.get(`/api/v1/product/${id}`);
 
     dispatch({
         type: ADD_TO_CART,
@@ -23,7 +23,7 @@ export const addItemsToCart = (id, quantity) => async (dispatch, getState) => {
 
 //Remove Cart Item
 export const removeCartItem = (id) => async (dispatch, getState) => {
-    const { data } = await axios.get(`/api/v1/product/${id}`);
+    const { data } = await api.get(`/api/v1/product/${id}`);
 
     dispatch({
         type: REMOVE_CART_ITEM,
