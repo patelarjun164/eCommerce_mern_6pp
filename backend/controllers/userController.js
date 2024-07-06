@@ -101,7 +101,7 @@ exports.forgotPassword = tryCatchWrapper(async (req, res, next) => {
 
         await sendEmail({
             email: user.email,
-            subject: `Ecommerce Website Password Recovery`,
+            subject: `ShoppyNexxa Password Recovery`,
             message: message,
         });
 
