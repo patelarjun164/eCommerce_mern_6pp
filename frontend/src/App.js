@@ -17,7 +17,7 @@ import UpdatePassword from './component/User/UpdatePassword.jsx';
 import ForgotPassword from './component/User/ForgotPassword.jsx';
 import ResetPassword from './component/User/ResetPassword.jsx';
 import Shipping from './component/Cart/Shipping.jsx';
-import Cart from './component/Cart/Cart.jsx';
+import Cart from './component/Cart/Cart.jsx'
 import ConfirmOrder from './component/Cart/ConfirmOrder.jsx';
 import OrderSuccess from './component/Cart/OrderSuccess.jsx';
 import Payment from './component/Cart/Payment.jsx';
