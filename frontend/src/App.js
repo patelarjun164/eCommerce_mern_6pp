@@ -1,46 +1,46 @@
 import './App.css';
 import Header from './component/layout/Header/Header';
-import UserOptions from './component/layout/Header/UserOptions.jsx';
+import UserOptions from './component/layout/Header/UserOptions';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import WebFont from 'webfontloader';
 import React, { useEffect } from 'react';
 import Footer from './component/layout/Footer/Footer';
 import Home from './component/Home/Home.js';
 import ProductDetails from './component/Product/ProductDetails.js';
-import Products from './component/Product/Products.jsx';
-import Search from './component/Product/Search.jsx';
-import Profile from './component/User/Profile.jsx';
-import LoginSignUp from './component/User/LoginSignUp.jsx';
-import ProtectedRoute from './component/Route/ProtectedRoute.jsx';
-import UpdateProfile from './component/User/UpdateProfile.jsx';
-import UpdatePassword from './component/User/UpdatePassword.jsx';
-import ForgotPassword from './component/User/ForgotPassword.jsx';
-import ResetPassword from './component/User/ResetPassword.jsx';
-import Shipping from './component/Cart/Shipping.jsx';
-import Cart from './component/Cart/Cart.jsx'
-import ConfirmOrder from './component/Cart/ConfirmOrder.jsx';
-import OrderSuccess from './component/Cart/OrderSuccess.jsx';
-import Payment from './component/Cart/Payment.jsx';
-import MyOrders from './component/Order/MyOrders.jsx';
-import OrderDetails from './component/Order/OrderDetails.jsx';
-import Dashboard from './component/Admin/Dashboard.jsx';
-import ProductList from './component/Admin/ProductList.jsx';
-import NewProduct from './component/Admin/NewProduct.jsx';
-import UpdateProduct from './component/Admin/UpdateProduct.jsx';
-import OrderList from './component/Admin/OrderList.jsx';
-import ProcessOrder from './component/Admin/ProcessOrder.jsx';
-import UsersList from './component/Admin/UsersList.jsx';
-import UpdateUser from './component/Admin/UpdateUser.jsx';
-import ProductReviews from './component/Admin/ProductReviews.jsx';
-import NotFound from './component/layout/NotFound/NotFound.jsx';
+import Products from './component/Product/Products';
+import Search from './component/Product/Search';
+import Profile from './component/User/Profile';
+import LoginSignUp from './component/User/LoginSignUp';
+import ProtectedRoute from './component/Route/ProtectedRoute';
+import UpdateProfile from './component/User/UpdateProfile';
+import UpdatePassword from './component/User/UpdatePassword';
+import ForgotPassword from './component/User/ForgotPassword';
+import ResetPassword from './component/User/ResetPassword';
+import Shipping from './component/cart/Shipping';
+import Cart from './component/cart/Cart'
+import ConfirmOrder from './component/cart/ConfirmOrder';
+import OrderSuccess from './component/cart/OrderSuccess';
+import Payment from './component/cart/Payment';
+import MyOrders from './component/Order/MyOrders';
+import OrderDetails from './component/Order/OrderDetails';
+import Dashboard from './component/Admin/Dashboard';
+import ProductList from './component/Admin/ProductList';
+import NewProduct from './component/Admin/NewProduct';
+import UpdateProduct from './component/Admin/UpdateProduct';
+import OrderList from './component/Admin/OrderList';
+import ProcessOrder from './component/Admin/ProcessOrder';
+import UsersList from './component/Admin/UsersList';
+import UpdateUser from './component/Admin/UpdateUser';
+import ProductReviews from './component/Admin/ProductReviews';
+import NotFound from './component/layout/NotFound/NotFound';
 import { loadUser } from './actions/userAction.js';
 import { useSelector } from 'react-redux';
 import store from './store.js';
 import ScrollToTop from './component/Hooks/ScrollToTop.js';
-import About from './component/layout/About/About.jsx';
-import Contact from './component/layout/Contact/Conatct.jsx'
-import EmailVerify from './component/EmailVerify/EmailVerify.jsx';
-import Tribute from './component/Route/Tribute/Tribute.jsx';
+import About from './component/layout/About/About';
+import Contact from './component/layout/Contact/Conatct'
+import EmailVerify from './component/EmailVerify/EmailVerify';
+import Tribute from './component/Route/Tribute/Tribute';
 
 function App() {
   const { user, isAuthenticated, loading } = useSelector(state => state.user);

@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect} from "react";
-import CheckoutSteps from "../Cart/CheckoutSteps";
+import CheckoutSteps from "./CheckoutSteps";
 import { useSelector, useDispatch } from "react-redux";
 import MetaData from "../layout/MetaData";
 import { useNavigate } from "react-router-dom";
