@@ -19,7 +19,7 @@ const Tribute = () => {
         <div className="tribute-page">
             <div className="header">
                 <h1>Tribute to Aashish</h1>
-                <p>Aashish was a great friend and the first tester of my first webdevelopment project. He motivated me a lot.</p>
+                <p>Aashish was/is a great friend and the first tester of my first webdevelopment project. He motivated me a lot.</p>
             </div>
             <div className="photo-gallery">
                 {photos.map((photo, index) => (
