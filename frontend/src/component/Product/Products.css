@@ -105,10 +105,18 @@
 
 
 @media screen and (max-width: 600px) {
+  .products {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 2vmax;
+    justify-content: center;
+    min-height: 30vh;
+  }
   .filterBox {
     width: 20vmax;
     position: static;
     margin: auto;
+    margin-bottom: 2vmax;
   }
 
   .page-link {

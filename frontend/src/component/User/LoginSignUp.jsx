@@ -31,8 +31,8 @@ const LoginSignUp = () => {
   const registerTab = useRef(null);
   const switcherTab = useRef(null);
 
-  const [loginEmail, setLoginEmail] = useState("temp@gmail.com");
-  const [loginPassword, setLoginPassword] = useState("000000");
+  const [loginEmail, setLoginEmail] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -43,7 +43,7 @@ const LoginSignUp = () => {
 
   const [avatar, setAvatar] = useState();
   const [avatarPreview, setAvatarPreview] = useState(DefaultProfilePic);
-  const [isBioAuth, setIsBioAuth] = useState(true);
+  const [isBioAuth, setIsBioAuth] = useState(false);
 
   const loginSubmit = (e) => {
     e.preventDefault();
