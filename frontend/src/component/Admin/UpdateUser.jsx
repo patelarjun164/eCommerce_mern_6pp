@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useAlert } from "react-alert";
@@ -102,6 +101,7 @@ const UpdateUser = () => {
               <div>
                 <MailOutlineIcon />
                 <input
+                  readOnly="true"
                   type="email"
                   placeholder="Email"
                   required

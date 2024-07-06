@@ -26,16 +26,8 @@ const Sidebar = () => {
 
       <Link>
         <TreeView
-          defaultCollapseIcon={
-            <span className="treeItemIcon">
-              <ExpandMoreIcon />
-            </span>
-          }
-          defaultExpandIcon={
-            <span className="treeItemIcon">
-              <ImportExportIcon />
-            </span>
-          }
+          defaultCollapseIcon={<ExpandMoreIcon />}
+          defaultExpandIcon={<ImportExportIcon />}
         >
           <TreeItem
             nodeId="1"
@@ -45,11 +37,7 @@ const Sidebar = () => {
               <TreeItem
                 nodeId="2"
                 label={<span className="treeItemLabel">All</span>}
-                icon={
-                  <span className="treeItemIcon">
-                    <PostAddIcon />
-                  </span>
-                }
+                icon={<PostAddIcon />}
               />
             </Link>
 
@@ -57,11 +45,7 @@ const Sidebar = () => {
               <TreeItem
                 nodeId="3"
                 label={<span className="treeItemLabel">Create</span>}
-                icon={
-                  <span className="treeItemIcon">
-                    <AddIcon />
-                  </span>
-                }
+                icon={<AddIcon />}
               />
             </Link>
           </TreeItem>
