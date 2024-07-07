@@ -203,8 +203,8 @@ export const loadUser = () => async (dispatch) => {
 //LogOut User
 export const logout = () => async (dispatch) => {
     try {
-
-        await api.get("/api/v1/logout");
+        const config = {withCredentials: true }
+        await api.get("/api/v1/logout", config);
 
         dispatch({ type: LOGOUT_SUCCESS });
     } catch (error) {
