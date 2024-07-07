@@ -16,11 +16,11 @@ import UpdateProfile from './component/User/UpdateProfile';
 import UpdatePassword from './component/User/UpdatePassword';
 import ForgotPassword from './component/User/ForgotPassword';
 import ResetPassword from './component/User/ResetPassword';
-import Shipping from './component/cart/Shipping';
-import Cart from './component/cart/Cart'
-import ConfirmOrder from './component/cart/ConfirmOrder';
-import OrderSuccess from './component/cart/OrderSuccess';
-import Payment from './component/cart/Payment';
+import Shipping from './component/kart/Shipping.jsx';
+import Cart from './component/kart/Cart.jsx'
+import ConfirmOrder from './component/kart/ConfirmOrder.jsx';
+import OrderSuccess from './component/kart/OrderSuccess.jsx';
+import Payment from './component/kart/Payment.jsx';
 import MyOrders from './component/Order/MyOrders';
 import OrderDetails from './component/Order/OrderDetails';
 import Dashboard from './component/Admin/Dashboard';
