@@ -16,7 +16,7 @@ router.route("/email-verification/generate-email/:id").post(generateVerfEmail);
 
 router.route("/email-verification/verify-token/:token").post(verifyEmail);
 
-router.route("/logout").get(logoutUser);
+router.route("/logout").post(logoutUser);
 
 router.route("/me").get(isAuthenticatedUser, getUserDetails);
 

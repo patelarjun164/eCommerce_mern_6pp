@@ -69,11 +69,11 @@ exports.logoutUser = tryCatchWrapper(async (req, res, next) => {
 
     //options for cookie
     const options = {
+        expires: new Date(Date.now()),
         secure: true,
-        sameSite: 'None'
     }
-    
-    res.status(200).clearCookie('token', options).json({
+
+    res.status(200).cookie("token", "", options).json({
         success: true,
         message: "Logged Out!",
     });

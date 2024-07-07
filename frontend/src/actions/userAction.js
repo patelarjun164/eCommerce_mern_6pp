@@ -204,7 +204,7 @@ export const loadUser = () => async (dispatch) => {
 export const logout = () => async (dispatch) => {
     try {
         const config = {withCredentials: true }
-        await api.get("/api/v1/logout", config);
+        await api.post("/api/v1/logout", config);
 
         dispatch({ type: LOGOUT_SUCCESS });
     } catch (error) {
