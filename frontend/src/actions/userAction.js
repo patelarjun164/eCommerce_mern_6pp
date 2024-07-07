@@ -54,7 +54,7 @@ export const login = (email, password) => async (dispatch) => {
     try {
         dispatch({ type: LOGIN_REQUEST });
 
-        const config = { headers: { "Content-Type": "application/json" } }
+        const config = { headers: { "Content-Type": "application/json" }, withCredentials: true }
 
         const { data } = await api.post(
             `/api/v1/login`,
