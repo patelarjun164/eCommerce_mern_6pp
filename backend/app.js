@@ -10,6 +10,7 @@ const cors = require('cors');
 const corsOptions = {
     origin: 'https://shoppynexxa.vercel.app/', // Allow only this origin
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Allow specific methods
+    allowedHeaders: ['Content-Type', 'Authorization'],
     optionsSuccessStatus: 204, // Response status for successful OPTIONS requests
 };
 
