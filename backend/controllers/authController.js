@@ -22,7 +22,7 @@ exports.registerChallenge = tryCatchWrapper(async (req, res) => {
     // Generate registration options
     const options = await generateRegistrationOptions({
         rpName: 'ShoppyNexa',
-        rpID: 'localhost',
+        rpID: 'shoppynexxa.vercel.app',
         userName: user.email,
         attestationType: 'none',
         excludeCredentials: user.passkeys.map(passkey => ({
@@ -50,8 +50,8 @@ exports.registerVerify = tryCatchWrapper(async (req, res) => {
     const verification = await verifyRegistrationResponse({
         response: req.body.cred,
         expectedChallenge: currentOptions.challenge,
-        expectedOrigin: 'http://localhost:3000',
-        expectedRPID: 'localhost',
+        expectedOrigin: 'https://shoppynexxa.vercel.app',
+        expectedRPID: 'shoppynexxa.vercel.app',
     });
     const { verified, registrationInfo } = verification;
     const {
@@ -96,7 +96,7 @@ exports.loginChallenge = tryCatchWrapper(async (req, res, next) => {
     }
 
     const options = await generateAuthenticationOptions({
-        rpID: 'localhost',
+        rpID: 'shoppynexxa.vercel.app',
         allowCredentials: user.passkeys.map(passkey => ({
             id: passkey.id,
             transports: passkey.transports,
@@ -124,8 +124,8 @@ exports.loginVerify = tryCatchWrapper(async (req, res, next) => {
     const verification = await verifyAuthenticationResponse({
         response: authResult,
         expectedChallenge: currentOptions.challenge,
-        expectedOrigin: 'http://localhost:3000',
-        expectedRPID: 'localhost',
+        expectedOrigin: 'https://shoppynexxa.vercel.app',
+        expectedRPID: 'shoppynexxa.vercel.app',
         authenticator: {
             credentialID: passkey.id,
             credentialPublicKey: passkey.publicKey.buffer,
