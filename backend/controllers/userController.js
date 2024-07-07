@@ -70,6 +70,7 @@ exports.logoutUser = tryCatchWrapper(async (req, res, next) => {
     res.cookie("token", null, {
         expires: new Date(Date.now()),
         httponly: true,
+        secure: true,
     });
 
     res.status(200).json({
