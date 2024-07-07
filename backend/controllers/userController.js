@@ -69,7 +69,8 @@ exports.logoutUser = tryCatchWrapper(async (req, res, next) => {
 
     //options for cookie
     const options = {
-        secure: true,
+        Secure: true,
+        SameSite: 'None'
     }
     console.log("cookie from req", req.cookies);
     res.clearCookie('token', options);
