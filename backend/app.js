@@ -12,6 +12,7 @@ const corsOptions = {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Allow specific methods
     allowedHeaders: ['Content-Type', 'Authorization'],
     optionsSuccessStatus: 204, // Response status for successful OPTIONS requests
+    credentials: true
 };
 
 // Use the cors middleware with the defined options
