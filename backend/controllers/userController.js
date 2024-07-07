@@ -68,9 +68,17 @@ exports.loginUser = tryCatchWrapper(async (req, res, next) => {
 exports.logoutUser = tryCatchWrapper(async (req, res, next) => {
 
     res.cookie("token", null, {
-        expires: new Date(Date.now()),
+        expires: new Date(0),
         httponly: true,
         secure: true,
+        path: "/api/v1/login"
+    });
+
+    res.cookie("token", null, {
+        expires: new Date(0),
+        httponly: true,
+        secure: true,
+        path: "/api/v1/bioauth/login-verify"
     });
 
     res.status(200).json({
