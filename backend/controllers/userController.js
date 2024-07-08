@@ -68,7 +68,9 @@ exports.loginUser = tryCatchWrapper(async (req, res, next) => {
 exports.logoutUser = tryCatchWrapper(async (req, res, next) => {
 
     res.clearCookie('token', {
+        expires: new Date(0),
         httpOnly: true, 
+        secure: true
      });
  
 
