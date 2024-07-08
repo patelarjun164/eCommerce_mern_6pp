@@ -54,7 +54,7 @@ export const login = (email, password) => async (dispatch) => {
     try {
         dispatch({ type: LOGIN_REQUEST });
 
-        const config = { headers: { "Content-Type": "application/json" }, withCredentials: true }
+        const config = { headers: { "Content-Type": "application/json" }}
 
         const { data } = await api.post(
             `/api/v1/login`,
@@ -203,8 +203,7 @@ export const loadUser = () => async (dispatch) => {
 //LogOut User
 export const logout = () => async (dispatch) => {
     try {
-        const config = {withCredentials: true }
-        await api.post("/api/v1/logout", config);
+        await api.get("/api/v1/logout");
 
         dispatch({ type: LOGOUT_SUCCESS });
     } catch (error) {
