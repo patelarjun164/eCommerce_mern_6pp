@@ -67,13 +67,8 @@ exports.loginUser = tryCatchWrapper(async (req, res, next) => {
 //Logout User
 exports.logoutUser = tryCatchWrapper(async (req, res, next) => {
 
-    //options for cookie
-    const options = {
-        expires: new Date(Date.now()),
-        secure: true
-    }
 
-    res.status(200).cookie("token", null, options).json({
+    res.status(200).json({
         success: true,
         message: "Logged Out!",
     });
