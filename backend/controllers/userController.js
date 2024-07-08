@@ -67,12 +67,14 @@ exports.loginUser = tryCatchWrapper(async (req, res, next) => {
 //Logout User
 exports.logoutUser = tryCatchWrapper(async (req, res, next) => {
 
-    res.clearCookie("token", {
+    const options = {
         expires: new Date(0),
-        httpOnly: true, 
+        httpOnly: true,
         secure: true,
-     });
- 
+        domain: "shoppynexxa-backend.onrender.com",
+    }
+
+    res.clearCookie("token", options);
 
     res.status(200).json({
         success: true,
