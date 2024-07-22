@@ -2,7 +2,7 @@
   "name": "backendshoppynexxa",
   "version": "1.0.0",
   "description": "full/mern stack ecommerce website",
-  "main": "backend/server.js",
+  "main": "backend/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
